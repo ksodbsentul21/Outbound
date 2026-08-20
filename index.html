@@ -2,6 +2,7 @@
 <html lang="id">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -10,6 +11,14 @@
 >
 
 <meta name="theme-color" content="#ff6a00">
+
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="H JOEL">
+
 
 <title>H JOEL LOGISTICS</title>
 
@@ -224,7 +233,7 @@ button:disabled{
   font-size:11px;
 }
 
-/* PHOTO */
+/* FOTO */
 
 #photoCameraBox{
   display:none;
@@ -234,9 +243,9 @@ button:disabled{
 #photoVideo{
   width:100%;
   max-height:420px;
+  object-fit:cover;
   background:#111;
   border-radius:12px;
-  object-fit:cover;
 }
 
 .photo-actions{
@@ -256,8 +265,8 @@ button:disabled{
   width:100%;
   max-height:380px;
   object-fit:contain;
-  background:#f5f5f5;
   border-radius:10px;
+  background:#f5f5f5;
 }
 
 /* SCANNER */
@@ -381,6 +390,29 @@ button:disabled{
   font-size:11px;
 }
 
+
+.install-wrap{
+  padding:12px 18px 0;
+}
+.install-btn{
+  width:100%;
+  min-height:49px;
+  border:0;
+  border-radius:9px;
+  background:#ff6a00;
+  color:#fff;
+  font-size:16px;
+  font-weight:900;
+  display:none;
+}
+.install-help{
+  margin-top:8px;
+  text-align:center;
+  color:#6b7178;
+  font-size:12px;
+  line-height:1.4;
+}
+
 </style>
 
 </head>
@@ -388,6 +420,14 @@ button:disabled{
 <body>
 
 <div class="app">
+
+<div class="install-wrap">
+  <button id="installAppBtn" class="install-btn" type="button">📲 INSTALL APLIKASI</button>
+  <div id="installHelp" class="install-help"></div>
+</div>
+
+
+<!-- HEADER -->
 
 <div class="header">
 
@@ -406,7 +446,7 @@ OPERASIONAL DISTRIBUSI
 
 <div class="content">
 
-<!-- MENU -->
+<!-- MENU DEPAN -->
 
 <div id="menuPage">
 
@@ -521,20 +561,14 @@ Plat No
 
 
 <!-- VENDOR MANUAL -->
-
 <div class="field">
-
-<label>
-Vendor
-</label>
-
+<label>Vendor</label>
 <input
   type="text"
   id="vendor"
   placeholder="Masukkan Vendor"
   autocomplete="off"
 >
-
 </div>
 
 
@@ -663,7 +697,7 @@ TUTUP
 <div class="divider"></div>
 
 
-<!-- AWB -->
+<!-- SCAN AWB -->
 
 <div class="section-title">
 SCAN AWB
@@ -706,6 +740,7 @@ SCAN AWB
 >
 0 AWB
 </div>
+
 
 <button
   type="button"
@@ -762,6 +797,10 @@ H JOEL LOGISTICS
 
 <script>
 
+/* =====================================================
+CONFIG
+===================================================== */
+
 const API_URL =
 'https://script.google.com/macros/s/AKfycbwvSTmZkm9CGrEW3kJG8Du_THFSNX0fE49y97wElfXzANkfewhp-LuMtyPqZD8P4DWwCg/exec';
 
@@ -781,9 +820,9 @@ let photoBase64 = '';
 let audioContext = null;
 
 
-/* ============================================
+/* =====================================================
 START
-============================================ */
+===================================================== */
 
 document.addEventListener(
 'DOMContentLoaded',
@@ -797,9 +836,9 @@ function(){
 );
 
 
-/* ============================================
-MENU
-============================================ */
+/* =====================================================
+PILIH PROSES
+===================================================== */
 
 function selectProcess(process){
 
@@ -941,6 +980,9 @@ function selectProcess(process){
       'block';
 
 
+    /*
+    KHUSUS RETURN
+    */
     photoTitle.textContent =
       'FOTO TV+MOBIL';
 
@@ -964,9 +1006,9 @@ function selectProcess(process){
 }
 
 
-/* ============================================
-BACK
-============================================ */
+/* =====================================================
+KEMBALI
+===================================================== */
 
 async function backMenu(){
 
@@ -998,9 +1040,9 @@ async function backMenu(){
 }
 
 
-/* ============================================
+/* =====================================================
 TANGGAL
-============================================ */
+===================================================== */
 
 function setToday(){
 
@@ -1038,9 +1080,9 @@ function setToday(){
 }
 
 
-/* ============================================
-KETERANGAN RETURN
-============================================ */
+/* =====================================================
+VALIDATION
+===================================================== */
 
 function loadValidation(){
 
@@ -1048,95 +1090,75 @@ function loadValidation(){
     'validationCallback_' +
     Date.now();
 
-
   const script =
     document.createElement(
       'script'
     );
 
-
   window[callbackName] =
     function(data){
-
 
       const keterangan =
         document.getElementById(
           'keterangan'
         );
 
-
       keterangan.innerHTML =
         '<option value="">-- Pilih Keterangan --</option>';
-
 
       if(
         data &&
         data.success
       ){
 
-
         (data.keterangans || [])
         .forEach(
           function(item){
-
 
             const option =
               document.createElement(
                 'option'
               );
 
-
             option.value =
               item;
 
-
             option.textContent =
               item;
-
 
             keterangan.appendChild(
               option
             );
 
-
           }
         );
 
-
       }else{
-
 
         showStatus(
           'Keterangan Return gagal dimuat.',
           'error'
         );
 
-
       }
-
 
       delete window[
         callbackName
       ];
 
-
       script.remove();
 
     };
 
-
   script.onerror =
     function(){
-
 
       showStatus(
         'Keterangan Return gagal dimuat.',
         'error'
       );
 
-
     };
-
 
   script.src =
     API_URL +
@@ -1146,7 +1168,6 @@ function loadValidation(){
     '&t=' +
     Date.now();
 
-
   document.body.appendChild(
     script
   );
@@ -1154,9 +1175,9 @@ function loadValidation(){
 }
 
 
-/* ============================================
-FOTO
-============================================ */
+/* =====================================================
+KAMERA FOTO
+===================================================== */
 
 async function openPhotoCamera(){
 
@@ -1250,7 +1271,7 @@ async function openPhotoCamera(){
 
 
     showStatus(
-      'Kamera tidak dapat dibuka. Izinkan kamera pada browser.',
+      'Kamera tidak dapat dibuka. Izinkan akses kamera.',
       'error'
     );
 
@@ -1260,9 +1281,9 @@ async function openPhotoCamera(){
 }
 
 
-/* ============================================
-CAPTURE FOTO
-============================================ */
+/* =====================================================
+AMBIL FOTO
+===================================================== */
 
 function capturePhoto(){
 
@@ -1390,9 +1411,9 @@ function capturePhoto(){
 }
 
 
-/* ============================================
-CLOSE FOTO
-============================================ */
+/* =====================================================
+TUTUP FOTO
+===================================================== */
 
 function closePhotoCamera(){
 
@@ -1444,9 +1465,9 @@ function closePhotoCamera(){
 }
 
 
-/* ============================================
-SCANNER
-============================================ */
+/* =====================================================
+START SCANNER
+===================================================== */
 
 async function startScanner(){
 
@@ -1454,7 +1475,8 @@ async function startScanner(){
 
 
   /*
-  RETURN hanya boleh punya 1 AWB.
+  RETURN SUDAH PUNYA 1 AWB
+  JANGAN SCAN LAGI
   */
 
   if(
@@ -1513,69 +1535,46 @@ async function startScanner(){
   }
 
 
-  scanner =
-    new Html5Qrcode(
-      'reader'
-    );
-
-
   try{
 
 
-    /*
-    KAMERA BELAKANG.
-    Lebih stabil untuk HP daripada cameraId.
-    */
+    scanner =
+      new Html5Qrcode(
+        'reader'
+      );
 
     await scanner.start(
 
       {
-        facingMode:
-          'environment'
+        facingMode:'environment'
       },
 
       {
 
-        fps:10,
+        fps:12,
 
         qrbox:
-          function(
-            width,
-            height
-          ){
+          function(width){
 
 
-            let boxWidth =
+            let w =
               Math.floor(
-                width*.88
+                width*.90
               );
 
 
-            if(
-              boxWidth > 360
-            ){
-
-              boxWidth =
-                360;
-
+            if(w>380){
+              w=380;
             }
 
 
             return{
-
-              width:
-                boxWidth,
-
-              height:
-                130
-
+              width:w,
+              height:140
             };
 
 
-          },
-
-        aspectRatio:
-          1.777778
+          }
 
       },
 
@@ -1614,7 +1613,7 @@ async function startScanner(){
 
 
       showStatus(
-        'Scanner aktif. Silakan scan AWB.',
+        'Scanner aktif. Scan AWB berulang.',
         'info'
       );
 
@@ -1625,71 +1624,15 @@ async function startScanner(){
   }catch(error){
 
 
-    console.error(
-      'Scanner error:',
-      error
-    );
-
-
-    try{
-
-      scanner.clear();
-
-    }catch(e){}
+    console.error(error);
 
 
     scanner =
       null;
 
 
-    let pesan =
-      'Kamera scanner gagal dibuka.';
-
-
-    if(
-      error &&
-      error.name ===
-      'NotAllowedError'
-    ){
-
-
-      pesan =
-        'Izin kamera ditolak. Izinkan kamera pada browser.';
-
-
-    }
-
-
-    else if(
-      error &&
-      error.name ===
-      'NotFoundError'
-    ){
-
-
-      pesan =
-        'Kamera belakang tidak ditemukan.';
-
-
-    }
-
-
-    else if(
-      error &&
-      error.name ===
-      'NotReadableError'
-    ){
-
-
-      pesan =
-        'Kamera sedang digunakan aplikasi lain.';
-
-
-    }
-
-
     showStatus(
-      pesan,
+      'Kamera scanner gagal dibuka.',
       'error'
     );
 
@@ -1699,9 +1642,9 @@ async function startScanner(){
 }
 
 
-/* ============================================
-SCAN SUCCESS
-============================================ */
+/* =====================================================
+HASIL SCAN
+===================================================== */
 
 async function scanSuccess(
   decodedText
@@ -1728,7 +1671,9 @@ async function scanSuccess(
 
 
   /*
-  RETURN = 1 AWB
+  ===================================================
+  RETURN = HANYA 1 AWB
+  ===================================================
   */
 
   if(
@@ -1792,7 +1737,8 @@ async function scanSuccess(
 
 
     /*
-    Berhenti otomatis.
+    SETELAH 1 AWB
+    SCANNER OTOMATIS BERHENTI
     */
 
     await stopScanner();
@@ -1808,7 +1754,9 @@ async function scanSuccess(
 
 
   /*
-  OUTBOUND & BAST MULTIPLE
+  ===================================================
+  OUTBOUND + BAST = SCAN BERULANG
+  ===================================================
   */
 
   if(
@@ -1893,9 +1841,9 @@ async function scanSuccess(
 }
 
 
-/* ============================================
+/* =====================================================
 STOP SCANNER
-============================================ */
+===================================================== */
 
 async function stopScanner(){
 
@@ -1907,36 +1855,13 @@ async function stopScanner(){
   try{
 
 
-    const state =
-      scanner.getState();
-
-
-    if(
-      state ===
-        Html5QrcodeScannerState.SCANNING ||
-      state ===
-        Html5QrcodeScannerState.PAUSED
-    ){
-
-
-      await scanner.stop();
-
-
-    }
+    await scanner.stop();
 
 
     scanner.clear();
 
 
-  }catch(error){
-
-
-    console.log(
-      error
-    );
-
-
-  }
+  }catch(error){}
 
 
   scanner =
@@ -1957,9 +1882,9 @@ async function stopScanner(){
 }
 
 
-/* ============================================
-SOUND
-============================================ */
+/* =====================================================
+SUARA
+===================================================== */
 
 function successBeep(){
 
@@ -2065,9 +1990,9 @@ function duplicateBeep(){
 }
 
 
-/* ============================================
-AWB LIST
-============================================ */
+/* =====================================================
+DAFTAR AWB
+===================================================== */
 
 function renderAwbs(){
 
@@ -2190,9 +2115,9 @@ function renderAwbs(){
 }
 
 
-/* ============================================
-CLEAR AWB
-============================================ */
+/* =====================================================
+HAPUS AWB
+===================================================== */
 
 function clearAwbs(){
 
@@ -2221,11 +2146,12 @@ function clearAwbs(){
 }
 
 
-/* ============================================
-RESET
-============================================ */
+/* =====================================================
+RESET SETELAH SIMPAN
+===================================================== */
 
 function resetApplication(){
+
 
   document.getElementById(
     'namaDriver'
@@ -2239,9 +2165,6 @@ function resetApplication(){
     '';
 
 
-  /*
-  Vendor manual dikosongkan.
-  */
   document.getElementById(
     'vendor'
   ).value =
@@ -2337,9 +2260,9 @@ function resetApplication(){
 }
 
 
-/* ============================================
+/* =====================================================
 SIMPAN
-============================================ */
+===================================================== */
 
 async function saveData(){
 
@@ -2364,9 +2287,6 @@ async function saveData(){
     ).value.trim();
 
 
-  /*
-  Vendor manual
-  */
   const vendor =
     document.getElementById(
       'vendor'
@@ -2384,6 +2304,8 @@ async function saveData(){
       'reason'
     ).value.trim();
 
+
+  /* VALIDASI */
 
   if(!tanggal){
 
@@ -2427,7 +2349,7 @@ async function saveData(){
 
   if(
     currentProcess ===
-      'RETURN' &&
+    'RETURN' &&
     !keterangan
   ){
 
@@ -2443,7 +2365,7 @@ async function saveData(){
 
   if(
     currentProcess ===
-      'RETURN' &&
+    'RETURN' &&
     !reason
   ){
 
@@ -2484,8 +2406,7 @@ async function saveData(){
 
 
   if(
-    scannedAwbs.length ===
-      0
+    scannedAwbs.length === 0
   ){
 
 
@@ -2498,11 +2419,15 @@ async function saveData(){
   }
 
 
+  /*
+  KEAMANAN TAMBAHAN
+  RETURN HARUS TEPAT 1 AWB
+  */
+
   if(
     currentProcess ===
-      'RETURN' &&
-    scannedAwbs.length !==
-      1
+    'RETURN' &&
+    scannedAwbs.length !== 1
   ){
 
 
@@ -2540,35 +2465,46 @@ async function saveData(){
 
     const payload = {
 
+
       action:
         'save',
+
 
       process:
         currentProcess,
 
+
       tanggal:
         tanggal,
+
 
       namaDriver:
         driver,
 
+
       platNo:
         plat,
+
 
       vendor:
         vendor,
 
+
       keterangan:
         keterangan,
+
 
       reason:
         reason,
 
+
       awbs:
         scannedAwbs,
 
+
       fotoDriver:
         photoBase64
+
 
     };
 
@@ -2632,8 +2568,8 @@ async function saveData(){
 
 
     /*
-    Setelah sukses:
-    kosongkan dan kembali ke menu depan.
+    KEMBALI KE DEPAN
+    DAN KOSONGKAN SEMUA
     */
 
     resetApplication();
@@ -2642,9 +2578,7 @@ async function saveData(){
   }catch(error){
 
 
-    console.error(
-      error
-    );
+    console.error(error);
 
 
     showStatus(
@@ -2670,9 +2604,9 @@ async function saveData(){
 }
 
 
-/* ============================================
+/* =====================================================
 STATUS
-============================================ */
+===================================================== */
 
 function showStatus(
   message,
@@ -2712,6 +2646,73 @@ function clearStatus(){
 
 }
 
+</script>
+
+
+<script>
+let hJoelInstallPrompt = null;
+
+function hJoelStandalone(){
+  return window.matchMedia('(display-mode: standalone)').matches ||
+         window.navigator.standalone === true;
+}
+
+window.addEventListener('beforeinstallprompt', function(event){
+  event.preventDefault();
+  hJoelInstallPrompt = event;
+
+  const button = document.getElementById('installAppBtn');
+  if(button && !hJoelStandalone()){
+    button.style.display = 'block';
+  }
+});
+
+window.addEventListener('appinstalled', function(){
+  hJoelInstallPrompt = null;
+  const button = document.getElementById('installAppBtn');
+  const help = document.getElementById('installHelp');
+  if(button) button.style.display = 'none';
+  if(help) help.textContent = 'Aplikasi berhasil terpasang.';
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  const button = document.getElementById('installAppBtn');
+  const help = document.getElementById('installHelp');
+
+  if(hJoelStandalone()){
+    if(button) button.style.display = 'none';
+    return;
+  }
+
+  if(/iphone|ipad|ipod/i.test(navigator.userAgent)){
+    if(help){
+      help.textContent = 'iPhone/iPad: Safari → Share → Add to Home Screen.';
+    }
+  }
+
+  if(button){
+    button.addEventListener('click', async function(){
+      if(hJoelInstallPrompt){
+        hJoelInstallPrompt.prompt();
+        await hJoelInstallPrompt.userChoice;
+        hJoelInstallPrompt = null;
+        button.style.display = 'none';
+      }else if(help){
+        help.textContent =
+          'Android: buka menu Chrome lalu pilih Install app / Instal aplikasi.';
+      }
+    });
+  }
+});
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('./service-worker.js', {scope:'./'})
+      .catch(function(error){
+        console.error('Service Worker gagal:', error);
+      });
+  });
+}
 </script>
 
 </body>

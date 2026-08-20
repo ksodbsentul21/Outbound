@@ -1,0 +1,14 @@
+FINAL H JOEL OUTBOUND PWA
+
+Upload SEMUA file langsung ke root repository:
+https://github.com/ksodbsentul21/Outbound
+
+Hapus manifest.json lama jika masih ada.
+Gunakan manifest.webmanifest dari paket ini.
+
+Setelah commit:
+1. Tunggu GitHub Pages deploy.
+2. Hapus shortcut/PWA H JOEL lama dari HP.
+3. Chrome Android > buka https://ksodbsentul21.github.io/Outbound/
+4. Refresh.
+5. Menu Chrome > Install app / Instal aplikasi.
