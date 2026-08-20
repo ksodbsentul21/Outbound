@@ -2,1534 +2,1865 @@
 <html lang="id">
 
 <head>
-  <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-  >
 
-  <meta name="theme-color" content="#ff6a00">
+<meta charset="UTF-8">
 
-  <title>SCAN OUTBOUND - H JOEL LOGISTICS</title>
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1"
+>
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
+<meta name="theme-color" content="#ff6a00">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>SCAN OUTBOUND - H JOEL LOGISTICS</title>
 
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f3f4f6;
-      color: #20252b;
-    }
+<script src="https://unpkg.com/html5-qrcode"></script>
 
-    .app {
-      max-width: 520px;
-      margin: 0 auto;
-      min-height: 100vh;
-      background: #ffffff;
-    }
 
-    .header {
-      background: #ffffff;
-      padding: 16px 18px 12px;
-      border-bottom: 4px solid #ff6a00;
-      text-align: center;
-    }
+<style>
 
-    .logo {
-      width: 100%;
-      max-width: 360px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    .app-title {
-      margin-top: 12px;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
+body {
+  margin: 0;
+  background: #f1f2f4;
+  font-family: Arial, sans-serif;
+  color: #20252b;
+}
 
-    .app-subtitle {
-      margin-top: 4px;
-      font-size: 12px;
-      color: #777;
-      letter-spacing: .5px;
-    }
+.app {
+  max-width: 520px;
+  min-height: 100vh;
+  margin: auto;
+  background: white;
+}
 
-    .content {
-      padding: 18px;
-    }
+.header {
+  text-align: center;
+  background: white;
+  padding: 14px 18px 12px;
+  border-bottom: 4px solid #ff6a00;
+}
 
-    .section-title {
-      font-size: 15px;
-      font-weight: 800;
-      margin: 6px 0 12px;
-    }
+.logo {
+  width: 100%;
+  max-width: 350px;
+}
 
-    .field {
-      margin-bottom: 15px;
-    }
+.title {
+  margin-top: 10px;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 14px;
-      font-weight: 700;
-    }
+.subtitle {
+  margin-top: 4px;
+  color: #777;
+  font-size: 12px;
+}
 
-    input,
-    select,
-    button {
-      width: 100%;
-      min-height: 48px;
-      border-radius: 9px;
-      font-size: 16px;
-    }
+.content {
+  padding: 18px;
+}
 
-    input,
-    select {
-      border: 1px solid #ced1d5;
-      padding: 11px 12px;
-      background: #fff;
-      outline: none;
-    }
+.section-title {
+  margin: 5px 0 13px;
+  font-size: 15px;
+  font-weight: 900;
+}
 
-    input:focus,
-    select:focus {
-      border-color: #ff6a00;
-      box-shadow: 0 0 0 2px rgba(255, 106, 0, .12);
-    }
+.field {
+  margin-bottom: 15px;
+}
 
-    button {
-      border: none;
-      cursor: pointer;
-      font-weight: 800;
-      padding: 12px;
-    }
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
 
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
+input,
+select,
+button {
+  width: 100%;
+  min-height: 49px;
+  border-radius: 9px;
+  font-size: 16px;
+}
 
-    .btn-orange {
-      background: #ff6a00;
-      color: white;
-    }
+input,
+select {
+  border: 1px solid #ccc;
+  padding: 11px;
+  background: white;
+}
 
-    .btn-dark {
-      background: #20252b;
-      color: white;
-    }
+button {
+  border: 0;
+  padding: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
 
-    .btn-red {
-      background: #d9342b;
-      color: white;
-    }
+button:disabled {
+  opacity: .5;
+}
 
-    .btn-green {
-      background: #148c47;
-      color: white;
-    }
+.btn-dark {
+  background: #20252b;
+  color: white;
+}
 
-    .divider {
-      height: 1px;
-      background: #ececec;
-      margin: 22px 0;
-    }
+.btn-orange {
+  background: #ff6a00;
+  color: white;
+}
 
-    #reader {
-      width: 100%;
-      margin-top: 12px;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #111;
-    }
+.btn-red {
+  background: #d9342b;
+  color: white;
+}
 
-    .scan-actions {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
+.btn-green {
+  background: #148c47;
+  color: white;
+}
 
-    .counter-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 15px 0 10px;
-      gap: 10px;
-    }
+.divider {
+  height: 1px;
+  background: #e8e8e8;
+  margin: 22px 0;
+}
 
-    .counter {
-      display: inline-block;
-      background: #20252b;
-      color: white;
-      padding: 8px 13px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 800;
-    }
 
-    .clear-btn {
-      width: auto;
-      min-height: 34px;
-      padding: 6px 11px;
-      background: #eceeef;
-      color: #20252b;
-      border-radius: 7px;
-      font-size: 12px;
-    }
+/* FOTO CAMERA */
 
-    .awb-box {
-      background: #f6f7f8;
-      border-radius: 10px;
-      padding: 10px;
-      max-height: 280px;
-      overflow-y: auto;
-    }
+#photoCameraBox {
+  display: none;
+  margin-top: 10px;
+}
 
-    .awb-empty {
-      text-align: center;
-      color: #888;
-      font-size: 13px;
-      padding: 18px 5px;
-    }
+#photoVideo {
+  width: 100%;
+  max-height: 380px;
+  background: #111;
+  border-radius: 12px;
+  object-fit: cover;
+}
 
-    .awb-item {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 10px;
-      margin-bottom: 7px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
+.photo-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
 
-    .awb-text {
-      font-size: 14px;
-      font-weight: 700;
-      word-break: break-all;
-      flex: 1;
-    }
+#photoPreviewBox {
+  display: none;
+  margin-top: 12px;
+  padding: 7px;
+  background: #f3f3f3;
+  border-radius: 10px;
+}
 
-    .delete-awb {
-      width: auto;
-      min-height: 33px;
-      padding: 6px 9px;
-      font-size: 12px;
-      background: #d9342b;
-      color: white;
-    }
+#photoPreview {
+  width: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  border-radius: 8px;
+}
 
-    .photo-box {
-      display: none;
-      margin-top: 10px;
-      background: #f4f4f4;
-      border-radius: 10px;
-      padding: 8px;
-    }
 
-    .photo-box img {
-      width: 100%;
-      max-height: 320px;
-      object-fit: contain;
-      border-radius: 8px;
-      display: block;
-    }
+/* SCANNER */
 
-    .hint {
-      margin-top: 5px;
-      font-size: 11px;
-      color: #7d8288;
-      line-height: 1.4;
-    }
+#reader {
+  width: 100%;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 12px;
+}
 
-    .status {
-      display: none;
-      margin-top: 15px;
-      border-radius: 9px;
-      padding: 12px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.5;
-    }
+.scan-buttons {
+  display: grid;
+  gap: 8px;
+}
 
-    .status.success {
-      display: block;
-      background: #e1f5e9;
-      color: #14723b;
-    }
+.counter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0 9px;
+}
 
-    .status.error {
-      display: block;
-      background: #fde5e3;
-      color: #af2e25;
-    }
+.counter {
+  background: #20252b;
+  color: white;
+  padding: 8px 13px;
+  border-radius: 18px;
+  font-size: 13px;
+  font-weight: bold;
+}
 
-    .status.info {
-      display: block;
-      background: #fff0df;
-      color: #9a5200;
-    }
+.clear {
+  width: auto;
+  min-height: 35px;
+  background: #eee;
+  padding: 6px 10px;
+  font-size: 12px;
+}
 
-    .manual-wrap {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 7px;
-      margin-top: 10px;
-    }
+.awb-list {
+  max-height: 280px;
+  overflow-y: auto;
+  background: #f5f6f7;
+  padding: 9px;
+  border-radius: 10px;
+}
 
-    .manual-wrap button {
-      width: auto;
-      padding: 10px 13px;
-    }
+.empty {
+  text-align: center;
+  padding: 18px;
+  color: #888;
+  font-size: 13px;
+}
 
-    .footer {
-      text-align: center;
-      color: #a0a0a0;
-      font-size: 11px;
-      padding: 20px 10px 30px;
-    }
-  </style>
+.awb-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+}
+
+.awb-number {
+  flex: 1;
+  font-weight: bold;
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.delete {
+  width: auto;
+  min-height: 32px;
+  background: #d9342b;
+  color: white;
+  font-size: 11px;
+  padding: 5px 8px;
+}
+
+
+/* STATUS */
+
+.status {
+  display: none;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 9px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.success {
+  display: block;
+  background: #e1f5e9;
+  color: #14723b;
+}
+
+.error {
+  display: block;
+  background: #fde5e3;
+  color: #b1261c;
+}
+
+.info {
+  display: block;
+  background: #fff0df;
+  color: #975300;
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  font-size: 11px;
+  color: #aaa;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
+
 <div class="app">
 
-  <div class="header">
-    <img
-      src="H_JOEL_LOGISTICS_logo.png"
-      alt="H JOEL LOGISTICS"
-      class="logo"
-    >
 
-    <div class="app-title">
-      SCAN OUTBOUND
-    </div>
+<div class="header">
 
-    <div class="app-subtitle">
-      H JOEL LOGISTICS
-    </div>
-  </div>
+<img
+  src="H_JOEL_LOGISTICS_logo.png"
+  class="logo"
+  alt="H JOEL LOGISTICS"
+>
 
-  <div class="content">
+<div class="title">
+SCAN OUTBOUND
+</div>
 
-    <div class="section-title">
-      INFORMASI PICK UP
-    </div>
-
-    <div class="field">
-      <label for="tanggalPickup">
-        Tanggal Pick Up
-      </label>
-
-      <input
-        type="date"
-        id="tanggalPickup"
-      >
-    </div>
-
-    <div class="field">
-      <label for="namaDriver">
-        Nama Driver
-      </label>
-
-      <input
-        type="text"
-        id="namaDriver"
-        placeholder="Masukkan nama driver"
-        autocomplete="off"
-      >
-    </div>
-
-    <div class="field">
-      <label for="platNo">
-        Plat No
-      </label>
-
-      <input
-        type="text"
-        id="platNo"
-        placeholder="Contoh: F 1234 ABC"
-        autocomplete="off"
-        oninput="this.value = this.value.toUpperCase()"
-      >
-    </div>
-
-    <div class="field">
-      <label for="vendor">
-        Vendor
-      </label>
-
-      <select id="vendor">
-        <option value="">
-          Memuat vendor...
-        </option>
-      </select>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="section-title">
-      FOTO DRIVER
-    </div>
-
-    <div class="field">
-      <input
-        type="file"
-        id="fotoDriver"
-        accept="image/*"
-        capture="environment"
-        onchange="handlePhoto(event)"
-      >
-
-      <div class="hint">
-        Tekan tombol di atas lalu ambil foto driver menggunakan kamera HP.
-      </div>
-
-      <div
-        class="photo-box"
-        id="photoBox"
-      >
-        <img
-          id="photoPreview"
-          alt="Preview Foto Driver"
-        >
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="section-title">
-      SCAN AWB
-    </div>
-
-    <div class="scan-actions">
-
-      <button
-        type="button"
-        class="btn-dark"
-        id="btnStartScanner"
-        onclick="startScanner()"
-      >
-        📷 MULAI SCAN AWB
-      </button>
-
-      <button
-        type="button"
-        class="btn-red"
-        id="btnStopScanner"
-        onclick="stopScanner()"
-        style="display:none;"
-      >
-        ⛔ STOP KAMERA
-      </button>
-
-    </div>
-
-    <div id="reader"></div>
-
-    <div class="manual-wrap">
-
-      <input
-        type="text"
-        id="manualAwb"
-        placeholder="AWB manual bila diperlukan"
-        autocomplete="off"
-      >
-
-      <button
-        class="btn-orange"
-        type="button"
-        onclick="addManualAwb()"
-      >
-        TAMBAH
-      </button>
-
-    </div>
-
-    <div class="counter-wrap">
-
-      <div
-        class="counter"
-        id="awbCounter"
-      >
-        0 AWB
-      </div>
-
-      <button
-        type="button"
-        class="clear-btn"
-        onclick="clearAllAwb()"
-      >
-        Hapus Semua
-      </button>
-
-    </div>
-
-    <div
-      class="awb-box"
-      id="awbList"
-    >
-      <div class="awb-empty">
-        Belum ada AWB yang discan.
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <button
-      type="button"
-      class="btn-green"
-      id="btnSave"
-      onclick="saveData()"
-    >
-      💾 SIMPAN SEMUA DATA
-    </button>
-
-    <div
-      id="status"
-      class="status"
-    ></div>
-
-  </div>
-
-  <div class="footer">
-    H JOEL LOGISTICS • SCAN OUTBOUND
-  </div>
+<div class="subtitle">
+H JOEL LOGISTICS
+</div>
 
 </div>
 
+
+<div class="content">
+
+
+<div class="section-title">
+INFORMASI PICK UP
+</div>
+
+
+<div class="field">
+
+<label>
+Tanggal Pick Up
+</label>
+
+<input
+  type="date"
+  id="tanggalPickup"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Nama Driver
+</label>
+
+<input
+  type="text"
+  id="namaDriver"
+  placeholder="Masukkan nama driver"
+  autocomplete="off"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Plat No
+</label>
+
+<input
+  type="text"
+  id="platNo"
+  placeholder="Contoh: F 1234 ABC"
+  autocomplete="off"
+  oninput="this.value=this.value.toUpperCase()"
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Vendor
+</label>
+
+<select id="vendor">
+
+<option value="">
+Memuat Vendor...
+</option>
+
+</select>
+
+</div>
+
+
+
+<div class="divider"></div>
+
+
+
+<div class="section-title">
+FOTO DRIVER
+</div>
+
+
+<button
+  type="button"
+  class="btn-orange"
+  id="btnOpenPhoto"
+  onclick="openPhotoCamera()"
+>
+📷 BUKA KAMERA DRIVER
+</button>
+
+
+<div id="photoCameraBox">
+
+<video
+  id="photoVideo"
+  autoplay
+  playsinline
+></video>
+
+
+<div class="photo-actions">
+
+<button
+  type="button"
+  class="btn-green"
+  onclick="captureDriverPhoto()"
+>
+📸 AMBIL FOTO
+</button>
+
+<button
+  type="button"
+  class="btn-red"
+  onclick="closePhotoCamera()"
+>
+TUTUP
+</button>
+
+</div>
+
+</div>
+
+
+<div id="photoPreviewBox">
+
+<img
+  id="photoPreview"
+  alt="Foto Driver"
+>
+
+<button
+  type="button"
+  class="btn-orange"
+  style="margin-top:8px;"
+  onclick="openPhotoCamera()"
+>
+🔄 FOTO ULANG
+</button>
+
+</div>
+
+
+
+<div class="divider"></div>
+
+
+
+<div class="section-title">
+SCAN AWB
+</div>
+
+
+<div class="scan-buttons">
+
+<button
+  type="button"
+  class="btn-dark"
+  id="btnStartScanner"
+  onclick="startScanner()"
+>
+📷 MULAI SCAN AWB
+</button>
+
+
+<button
+  type="button"
+  class="btn-red"
+  id="btnStopScanner"
+  onclick="stopScanner()"
+  style="display:none;"
+>
+⛔ STOP SCANNER
+</button>
+
+</div>
+
+
+<div id="reader"></div>
+
+
+<div class="counter-row">
+
+<div
+  class="counter"
+  id="awbCounter"
+>
+0 AWB
+</div>
+
+<button
+  class="clear"
+  onclick="clearAwbs()"
+>
+Hapus Semua
+</button>
+
+</div>
+
+
+<div
+  class="awb-list"
+  id="awbList"
+>
+
+<div class="empty">
+Belum ada AWB yang discan.
+</div>
+
+</div>
+
+
+
+<div class="divider"></div>
+
+
+<button
+  type="button"
+  class="btn-green"
+  id="btnSave"
+  onclick="saveData()"
+>
+💾 SIMPAN SEMUA DATA
+</button>
+
+
+<div
+  id="status"
+  class="status"
+></div>
+
+
+</div>
+
+
+<div class="footer">
+H JOEL LOGISTICS • SCAN OUTBOUND
+</div>
+
+
+</div>
+
+
+
 <script>
 
+
 const API_URL =
-  'https://script.google.com/macros/s/AKfycbwvSTmZkm9CGrEW3kJG8Du_THFSNX0fE49y97wElfXzANkfewhp-LuMtyPqZD8P4DWwCg/exec';
+'https://script.google.com/macros/s/AKfycbwvSTmZkm9CGrEW3kJG8Du_THFSNX0fE49y97wElfXzANkfewhp-LuMtyPqZD8P4DWwCg/exec';
+
 
 let scanner = null;
+
 let scannedAwbs = [];
+
+let scanLock = false;
+
+let photoStream = null;
+
 let photoBase64 = '';
-let scanLocked = false;
+
+let audioContext = null;
 
 
-/* =========================
-   START
-========================= */
+
+/* ==================================================
+START
+================================================== */
 
 document.addEventListener(
-  'DOMContentLoaded',
-  function () {
-    setToday();
-    loadVendors();
-  }
+'DOMContentLoaded',
+function() {
+
+  setToday();
+
+  loadVendors();
+
+}
 );
 
 
-/* =========================
-   TANGGAL HARI INI
-========================= */
 
 function setToday() {
 
-  const date = new Date();
+const now = new Date();
 
-  const year = date.getFullYear();
+const y =
+now.getFullYear();
 
-  const month =
-    String(date.getMonth() + 1)
-      .padStart(2, '0');
+const m =
+String(
+now.getMonth() + 1
+).padStart(2,'0');
 
-  const day =
-    String(date.getDate())
-      .padStart(2, '0');
+const d =
+String(
+now.getDate()
+).padStart(2,'0');
 
-  document.getElementById(
-    'tanggalPickup'
-  ).value =
-    year + '-' + month + '-' + day;
+document.getElementById(
+'tanggalPickup'
+).value =
+y + '-' + m + '-' + d;
+
 }
 
 
-/* =========================
-   VENDOR
-========================= */
 
-async function loadVendors() {
+/* ==================================================
+VENDOR - JSONP
+================================================== */
+
+function loadVendors() {
+
+const callbackName =
+'hjoelVendorCallback_' +
+Date.now();
+
+
+window[callbackName] =
+function(result) {
 
   const select =
-    document.getElementById('vendor');
-
-  try {
-
-    const response =
-      await fetch(
-        API_URL +
-        '?action=getVendors&t=' +
-        Date.now()
-      );
-
-    const text =
-      await response.text();
-
-    const result =
-      JSON.parse(text);
-
-    select.innerHTML =
-      '<option value="">-- Pilih Vendor --</option>';
-
-    if (
-      result.success &&
-      Array.isArray(result.vendors)
-    ) {
-
-      result.vendors.forEach(
-        function (vendor) {
-
-          const option =
-            document.createElement('option');
-
-          option.value =
-            vendor;
-
-          option.textContent =
-            vendor;
-
-          select.appendChild(option);
-
-        }
-      );
-
-    } else {
-
-      showStatus(
-        result.message ||
-        'Vendor tidak ditemukan.',
-        'error'
-      );
-
-    }
-
-  } catch (error) {
-
-    console.error(error);
-
-    select.innerHTML =
-      '<option value="">Vendor gagal dimuat</option>';
-
-    showStatus(
-      'Vendor gagal dimuat dari Google Sheet.',
-      'error'
-    );
-
-  }
-}
-
-
-/* =========================
-   SCANNER
-========================= */
-
-async function startScanner() {
-
-  clearStatus();
-
-  if (scanner) {
-    return;
-  }
-
-  try {
-
-    const cameras =
-      await Html5Qrcode.getCameras();
-
-    if (
-      !cameras ||
-      cameras.length === 0
-    ) {
-
-      throw new Error(
-        'Kamera tidak ditemukan.'
-      );
-
-    }
-
-    let cameraId =
-      cameras[cameras.length - 1].id;
-
-    const rearCamera =
-      cameras.find(
-        camera =>
-          /back|rear|environment/i.test(
-            camera.label
-          )
-      );
-
-    if (rearCamera) {
-      cameraId =
-        rearCamera.id;
-    }
-
-    scanner =
-      new Html5Qrcode('reader');
-
-    await scanner.start(
-
-      cameraId,
-
-      {
-        fps: 10,
-
-        qrbox: function (
-          width,
-          height
-        ) {
-
-          let scanWidth =
-            Math.floor(width * 0.88);
-
-          if (scanWidth > 360) {
-            scanWidth = 360;
-          }
-
-          return {
-            width: scanWidth,
-            height: 130
-          };
-
-        }
-      },
-
-      onScanSuccess,
-
-      function () {
-        // error frame tidak ditampilkan
-      }
-    );
-
-    document.getElementById(
-      'btnStartScanner'
-    ).style.display =
-      'none';
-
-    document.getElementById(
-      'btnStopScanner'
-    ).style.display =
-      'block';
-
-    showStatus(
-      'Scanner aktif. Arahkan barcode AWB ke kamera.',
-      'info'
-    );
-
-  } catch (error) {
-
-    console.error(error);
-
-    scanner = null;
-
-    showStatus(
-      'Kamera gagal dibuka. Pastikan izin kamera sudah diberikan pada browser.',
-      'error'
-    );
-
-  }
-}
-
-
-function onScanSuccess(
-  decodedText
-) {
-
-  if (scanLocked) {
-    return;
-  }
-
-  const awb =
-    String(decodedText || '')
-      .trim();
-
-  if (!awb) {
-    return;
-  }
-
-  scanLocked = true;
-
-  if (
-    scannedAwbs.includes(awb)
-  ) {
-
-    vibrateDuplicate();
-
-    showStatus(
-      'AWB sudah pernah discan: ' +
-      awb,
-      'error'
-    );
-
-  } else {
-
-    scannedAwbs.push(awb);
-
-    renderAwbs();
-
-    vibrate();
-
-    beep();
-
-    showStatus(
-      'AWB berhasil discan: ' +
-      awb,
-      'success'
-    );
-
-  }
-
-  setTimeout(
-    function () {
-      scanLocked = false;
-    },
-    1200
-  );
-}
-
-
-async function stopScanner() {
-
-  if (!scanner) {
-    return;
-  }
-
-  try {
-
-    await scanner.stop();
-
-    scanner.clear();
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  scanner = null;
-
   document.getElementById(
-    'btnStartScanner'
-  ).style.display =
-    'block';
-
-  document.getElementById(
-    'btnStopScanner'
-  ).style.display =
-    'none';
-}
-
-
-/* =========================
-   AWB MANUAL
-========================= */
-
-function addManualAwb() {
-
-  const input =
-    document.getElementById(
-      'manualAwb'
-    );
-
-  const awb =
-    input.value.trim();
-
-  if (!awb) {
-    return;
-  }
-
-  if (
-    scannedAwbs.includes(awb)
-  ) {
-
-    showStatus(
-      'AWB sudah ada.',
-      'error'
-    );
-
-    return;
-  }
-
-  scannedAwbs.push(awb);
-
-  input.value = '';
-
-  renderAwbs();
-
-  showStatus(
-    'AWB berhasil ditambahkan.',
-    'success'
-  );
-}
-
-
-function removeAwb(index) {
-
-  scannedAwbs.splice(
-    index,
-    1
+    'vendor'
   );
 
-  renderAwbs();
-}
+  select.innerHTML =
+  '<option value="">-- Pilih Vendor --</option>';
 
-
-function clearAllAwb() {
 
   if (
-    scannedAwbs.length === 0
-  ) {
-    return;
-  }
-
-  const confirmDelete =
-    confirm(
-      'Hapus semua AWB yang sudah discan?'
-    );
-
-  if (!confirmDelete) {
-    return;
-  }
-
-  scannedAwbs = [];
-
-  renderAwbs();
-}
-
-
-function renderAwbs() {
-
-  const list =
-    document.getElementById(
-      'awbList'
-    );
-
-  const counter =
-    document.getElementById(
-      'awbCounter'
-    );
-
-  counter.textContent =
-    scannedAwbs.length +
-    ' AWB';
-
-  if (
-    scannedAwbs.length === 0
-  ) {
-
-    list.innerHTML =
-      '<div class="awb-empty">Belum ada AWB yang discan.</div>';
-
-    return;
-  }
-
-  list.innerHTML = '';
-
-  scannedAwbs.forEach(
-    function (
-      awb,
-      index
-    ) {
-
-      const row =
-        document.createElement(
-          'div'
-        );
-
-      row.className =
-        'awb-item';
-
-      const text =
-        document.createElement(
-          'div'
-        );
-
-      text.className =
-        'awb-text';
-
-      text.textContent =
-        (index + 1) +
-        '. ' +
-        awb;
-
-      const button =
-        document.createElement(
-          'button'
-        );
-
-      button.className =
-        'delete-awb';
-
-      button.type =
-        'button';
-
-      button.textContent =
-        'Hapus';
-
-      button.onclick =
-        function () {
-          removeAwb(index);
-        };
-
-      row.appendChild(text);
-      row.appendChild(button);
-
-      list.appendChild(row);
-    }
-  );
-}
-
-
-/* =========================
-   FOTO DRIVER
-========================= */
-
-function handlePhoto(event) {
-
-  const file =
-    event.target.files[0];
-
-  if (!file) {
-    return;
-  }
-
-  if (
-    !file.type.startsWith(
-      'image/'
+    result &&
+    result.success &&
+    Array.isArray(
+      result.vendors
     )
   ) {
 
+    result.vendors.forEach(
+    function(vendor) {
+
+      const opt =
+      document.createElement(
+        'option'
+      );
+
+      opt.value = vendor;
+
+      opt.textContent = vendor;
+
+      select.appendChild(opt);
+
+    });
+
+  } else {
+
     showStatus(
-      'File harus berupa foto.',
+      result?.message ||
+      'Vendor gagal dimuat.',
       'error'
     );
 
-    return;
   }
 
-  compressImage(
-    file,
-    1280,
-    0.72
-  )
-  .then(
-    function (result) {
 
-      photoBase64 =
-        result;
+  delete window[
+    callbackName
+  ];
 
-      document.getElementById(
-        'photoPreview'
-      ).src =
-        result;
+  script.remove();
 
-      document.getElementById(
-        'photoBox'
-      ).style.display =
-        'block';
+};
 
-      showStatus(
-        'Foto driver berhasil diambil.',
-        'success'
-      );
 
-    }
-  )
-  .catch(
-    function () {
+const script =
+document.createElement(
+'script'
+);
 
-      showStatus(
-        'Foto gagal diproses.',
-        'error'
-      );
 
-    }
-  );
+script.onerror =
+function() {
+
+showStatus(
+  'Vendor gagal dimuat dari Google Sheet.',
+  'error'
+);
+
+};
+
+
+script.src =
+API_URL +
+'?action=getVendors' +
+'&callback=' +
+callbackName +
+'&t=' +
+Date.now();
+
+
+document.body.appendChild(
+script
+);
+
 }
 
 
-function compressImage(
-  file,
-  maxSize,
-  quality
+
+/* ==================================================
+KAMERA FOTO DRIVER
+================================================== */
+
+async function openPhotoCamera() {
+
+clearStatus();
+
+stopScanner();
+
+
+try {
+
+  if (photoStream) {
+
+    photoStream
+    .getTracks()
+    .forEach(
+      track =>
+      track.stop()
+    );
+
+  }
+
+
+  photoStream =
+  await navigator.mediaDevices
+  .getUserMedia({
+
+    video: {
+
+      facingMode: {
+        ideal:
+        'environment'
+      }
+
+    },
+
+    audio: false
+
+  });
+
+
+  const video =
+  document.getElementById(
+    'photoVideo'
+  );
+
+
+  video.srcObject =
+  photoStream;
+
+
+  document.getElementById(
+    'photoCameraBox'
+  ).style.display =
+  'block';
+
+
+  document.getElementById(
+    'btnOpenPhoto'
+  ).style.display =
+  'none';
+
+
+} catch(error) {
+
+  console.error(error);
+
+  showStatus(
+    'Kamera tidak dapat dibuka. Izinkan kamera pada browser.',
+    'error'
+  );
+
+}
+
+}
+
+
+
+function captureDriverPhoto() {
+
+const video =
+document.getElementById(
+'photoVideo'
+);
+
+
+if (
+!video.videoWidth
 ) {
 
-  return new Promise(
-    function (
-      resolve,
-      reject
-    ) {
+showStatus(
+  'Kamera belum siap.',
+  'error'
+);
 
-      const reader =
-        new FileReader();
+return;
 
-      reader.onload =
-        function (event) {
-
-          const image =
-            new Image();
-
-          image.onload =
-            function () {
-
-              let width =
-                image.width;
-
-              let height =
-                image.height;
-
-              if (
-                width > height &&
-                width > maxSize
-              ) {
-
-                height =
-                  Math.round(
-                    height *
-                    maxSize /
-                    width
-                  );
-
-                width =
-                  maxSize;
-
-              } else if (
-                height > maxSize
-              ) {
-
-                width =
-                  Math.round(
-                    width *
-                    maxSize /
-                    height
-                  );
-
-                height =
-                  maxSize;
-              }
-
-              const canvas =
-                document.createElement(
-                  'canvas'
-                );
-
-              canvas.width =
-                width;
-
-              canvas.height =
-                height;
-
-              const context =
-                canvas.getContext(
-                  '2d'
-                );
-
-              context.drawImage(
-                image,
-                0,
-                0,
-                width,
-                height
-              );
-
-              const compressed =
-                canvas.toDataURL(
-                  'image/jpeg',
-                  quality
-                );
-
-              resolve(
-                compressed
-              );
-
-            };
-
-          image.onerror =
-            reject;
-
-          image.src =
-            event.target.result;
-
-        };
-
-      reader.onerror =
-        reject;
-
-      reader.readAsDataURL(
-        file
-      );
-    }
-  );
 }
 
 
-/* =========================
-   SIMPAN
-========================= */
+const canvas =
+document.createElement(
+'canvas'
+);
 
-async function saveData() {
 
-  clearStatus();
+let width =
+video.videoWidth;
 
-  const tanggalPickup =
-    document.getElementById(
-      'tanggalPickup'
-    ).value;
+let height =
+video.videoHeight;
 
-  const namaDriver =
-    document.getElementById(
-      'namaDriver'
-    ).value.trim();
 
-  const platNo =
-    document.getElementById(
-      'platNo'
-    ).value.trim();
+const maxWidth =
+1280;
 
-  const vendor =
-    document.getElementById(
-      'vendor'
-    ).value;
 
-
-  if (!tanggalPickup) {
-
-    showStatus(
-      'Tanggal Pick Up wajib diisi.',
-      'error'
-    );
-
-    return;
-  }
-
-
-  if (!namaDriver) {
-
-    showStatus(
-      'Nama Driver wajib diisi.',
-      'error'
-    );
-
-    return;
-  }
-
-
-  if (!platNo) {
-
-    showStatus(
-      'Plat No wajib diisi.',
-      'error'
-    );
-
-    return;
-  }
-
-
-  if (!vendor) {
-
-    showStatus(
-      'Vendor wajib dipilih.',
-      'error'
-    );
-
-    return;
-  }
-
-
-  if (
-    scannedAwbs.length === 0
-  ) {
-
-    showStatus(
-      'Belum ada AWB yang discan.',
-      'error'
-    );
-
-    return;
-  }
-
-
-  if (!photoBase64) {
-
-    showStatus(
-      'Foto Driver wajib diambil.',
-      'error'
-    );
-
-    return;
-  }
-
-
-  const button =
-    document.getElementById(
-      'btnSave'
-    );
-
-  button.disabled =
-    true;
-
-  button.textContent =
-    '⏳ MENYIMPAN...';
-
-
-  try {
-
-    if (scanner) {
-      await stopScanner();
-    }
-
-
-    const payload = {
-
-      action:
-        'save',
-
-      tanggalPickup:
-        tanggalPickup,
-
-      namaDriver:
-        namaDriver,
-
-      platNo:
-        platNo,
-
-      vendor:
-        vendor,
-
-      awbs:
-        scannedAwbs,
-
-      fotoDriver:
-        photoBase64
-
-    };
-
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method: 'POST',
-
-          headers: {
-            'Content-Type':
-              'text/plain;charset=utf-8'
-          },
-
-          body:
-            JSON.stringify(
-              payload
-            )
-        }
-      );
-
-
-    const text =
-      await response.text();
-
-
-    let result;
-
-
-    try {
-
-      result =
-        JSON.parse(text);
-
-    } catch (error) {
-
-      throw new Error(
-        'Server tidak memberikan response JSON yang valid.'
-      );
-    }
-
-
-    if (!result.success) {
-
-      throw new Error(
-        result.message ||
-        'Data gagal disimpan.'
-      );
-    }
-
-
-    showStatus(
-      '✅ BERHASIL! ' +
-      result.jumlah +
-      ' AWB berhasil disimpan.',
-      'success'
-    );
-
-
-    scannedAwbs = [];
-
-    renderAwbs();
-
-
-    photoBase64 = '';
-
-
-    document.getElementById(
-      'fotoDriver'
-    ).value =
-      '';
-
-
-    document.getElementById(
-      'photoBox'
-    ).style.display =
-      'none';
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    showStatus(
-      '❌ Gagal menyimpan: ' +
-      error.message,
-      'error'
-    );
-
-  } finally {
-
-    button.disabled =
-      false;
-
-    button.textContent =
-      '💾 SIMPAN SEMUA DATA';
-  }
-}
-
-
-/* =========================
-   STATUS
-========================= */
-
-function showStatus(
-  message,
-  type
+if (
+width > maxWidth
 ) {
 
-  const status =
-    document.getElementById(
-      'status'
-    );
+height =
+Math.round(
+height *
+maxWidth /
+width
+);
 
-  status.className =
-    'status ' +
-    type;
+width =
+maxWidth;
 
-  status.textContent =
-    message;
 }
 
 
-function clearStatus() {
+canvas.width =
+width;
 
-  const status =
-    document.getElementById(
-      'status'
-    );
+canvas.height =
+height;
 
-  status.className =
-    'status';
 
-  status.textContent =
-    '';
+const ctx =
+canvas.getContext(
+'2d'
+);
+
+
+ctx.drawImage(
+video,
+0,
+0,
+width,
+height
+);
+
+
+photoBase64 =
+canvas.toDataURL(
+'image/jpeg',
+0.72
+);
+
+
+document.getElementById(
+'photoPreview'
+).src =
+photoBase64;
+
+
+document.getElementById(
+'photoPreviewBox'
+).style.display =
+'block';
+
+
+closePhotoCamera();
+
+
+showStatus(
+'✅ Foto Driver berhasil diambil.',
+'success'
+);
+
 }
 
 
-/* =========================
-   GETAR + BEEP
-========================= */
 
-function vibrate() {
+function closePhotoCamera() {
 
-  if (
-    navigator.vibrate
-  ) {
+if (photoStream) {
 
-    navigator.vibrate(
-      120
-    );
-  }
+photoStream
+.getTracks()
+.forEach(
+track =>
+track.stop()
+);
+
+photoStream =
+null;
+
 }
+
+
+document.getElementById(
+'photoCameraBox'
+).style.display =
+'none';
+
+
+document.getElementById(
+'btnOpenPhoto'
+).style.display =
+'block';
+
+}
+
+
+
+/* ==================================================
+SCANNER AWB
+================================================== */
+
+async function startScanner() {
+
+clearStatus();
+
+
+/*
+Membuat AudioContext melalui klik pengguna,
+supaya beep tidak diblokir Chrome.
+*/
+
+try {
+
+if (!audioContext) {
+
+audioContext =
+new (
+window.AudioContext ||
+window.webkitAudioContext
+)();
+
+}
+
+if (
+audioContext.state ===
+'suspended'
+) {
+
+await audioContext.resume();
+
+}
+
+} catch(error) {
+
+console.log(error);
+
+}
+
+
+closePhotoCamera();
+
+
+if (scanner) {
+return;
+}
+
+
+try {
+
+const cameras =
+await Html5Qrcode.getCameras();
+
+
+if (
+!cameras ||
+cameras.length === 0
+) {
+
+throw new Error(
+'Kamera tidak ditemukan.'
+);
+
+}
+
+
+let cameraId =
+cameras[
+cameras.length - 1
+].id;
+
+
+const rear =
+cameras.find(
+camera =>
+/back|rear|environment/i
+.test(camera.label)
+);
+
+
+if (rear) {
+
+cameraId =
+rear.id;
+
+}
+
+
+scanner =
+new Html5Qrcode(
+'reader'
+);
+
+
+await scanner.start(
+
+cameraId,
+
+{
+
+fps: 12,
+
+qrbox:
+function(
+width,
+height
+) {
+
+let boxWidth =
+Math.floor(
+width * .90
+);
+
+if (
+boxWidth > 380
+) {
+
+boxWidth = 380;
+
+}
+
+
+return {
+
+width:
+boxWidth,
+
+height:
+140
+
+};
+
+}
+
+},
+
+onScanSuccess,
+
+function() {}
+
+);
+
+
+document.getElementById(
+'btnStartScanner'
+).style.display =
+'none';
+
+
+document.getElementById(
+'btnStopScanner'
+).style.display =
+'block';
+
+
+showStatus(
+'Scanner aktif. Arahkan barcode AWB ke kamera.',
+'info'
+);
+
+
+} catch(error) {
+
+console.error(error);
+
+scanner = null;
+
+
+showStatus(
+'Kamera scanner gagal dibuka. Pastikan izin kamera aktif.',
+'error'
+);
+
+}
+
+}
+
+
+
+function onScanSuccess(
+decodedText
+) {
+
+if (
+scanLock
+) {
+return;
+}
+
+
+const awb =
+String(
+decodedText || ''
+).trim();
+
+
+if (!awb) {
+return;
+}
+
+
+scanLock =
+true;
+
+
+if (
+scannedAwbs.includes(
+awb
+)
+) {
+
+duplicateSound();
+
+vibrateDuplicate();
+
+
+showStatus(
+'AWB sudah discan: ' +
+awb,
+'error'
+);
+
+
+} else {
+
+scannedAwbs.push(
+awb
+);
+
+
+renderAwbs();
+
+
+scanSound();
+
+
+if (
+navigator.vibrate
+) {
+
+navigator.vibrate(
+130
+);
+
+}
+
+
+showStatus(
+'✅ SCAN BERHASIL: ' +
+awb,
+'success'
+);
+
+}
+
+
+setTimeout(
+function() {
+
+scanLock =
+false;
+
+},
+1000
+);
+
+}
+
+
+
+/* ==================================================
+SUARA SCAN
+================================================== */
+
+function scanSound() {
+
+try {
+
+if (!audioContext) {
+
+audioContext =
+new (
+window.AudioContext ||
+window.webkitAudioContext
+)();
+
+}
+
+
+const oscillator =
+audioContext
+.createOscillator();
+
+
+const gain =
+audioContext
+.createGain();
+
+
+oscillator
+.connect(gain);
+
+
+gain.connect(
+audioContext.destination
+);
+
+
+oscillator.type =
+'sine';
+
+
+oscillator.frequency
+.setValueAtTime(
+1050,
+audioContext.currentTime
+);
+
+
+gain.gain
+.setValueAtTime(
+0.25,
+audioContext.currentTime
+);
+
+
+gain.gain
+.exponentialRampToValueAtTime(
+0.01,
+audioContext.currentTime + .14
+);
+
+
+oscillator.start(
+audioContext.currentTime
+);
+
+
+oscillator.stop(
+audioContext.currentTime +
+.15
+);
+
+
+} catch(error) {
+
+console.log(error);
+
+}
+
+}
+
+
+
+function duplicateSound() {
+
+try {
+
+if (!audioContext) {
+return;
+}
+
+
+const oscillator =
+audioContext
+.createOscillator();
+
+
+const gain =
+audioContext
+.createGain();
+
+
+oscillator.connect(
+gain
+);
+
+gain.connect(
+audioContext.destination
+);
+
+
+oscillator.frequency.value =
+350;
+
+
+gain.gain.value =
+.18;
+
+
+oscillator.start();
+
+
+oscillator.stop(
+audioContext.currentTime +
+.20
+);
+
+
+} catch(error) {}
+
+}
+
 
 
 function vibrateDuplicate() {
 
-  if (
-    navigator.vibrate
-  ) {
+if (
+navigator.vibrate
+) {
 
-    navigator.vibrate(
-      [100, 80, 100]
-    );
-  }
+navigator.vibrate([
+100,
+70,
+100
+]);
+
+}
+
 }
 
 
-function beep() {
 
-  try {
+async function stopScanner() {
 
-    const AudioContext =
-      window.AudioContext ||
-      window.webkitAudioContext;
-
-    const context =
-      new AudioContext();
-
-    const oscillator =
-      context.createOscillator();
-
-    const gain =
-      context.createGain();
-
-    oscillator.connect(
-      gain
-    );
-
-    gain.connect(
-      context.destination
-    );
-
-    oscillator.frequency.value =
-      950;
-
-    gain.gain.value =
-      0.08;
-
-    oscillator.start();
-
-    setTimeout(
-      function () {
-
-        oscillator.stop();
-
-        context.close();
-
-      },
-      100
-    );
-
-  } catch (error) {
-  }
+if (!scanner) {
+return;
 }
+
+
+try {
+
+await scanner.stop();
+
+scanner.clear();
+
+} catch(error) {
+
+console.log(error);
+
+}
+
+
+scanner =
+null;
+
+
+document.getElementById(
+'btnStartScanner'
+).style.display =
+'block';
+
+
+document.getElementById(
+'btnStopScanner'
+).style.display =
+'none';
+
+}
+
+
+
+/* ==================================================
+DAFTAR AWB
+================================================== */
+
+function renderAwbs() {
+
+const list =
+document.getElementById(
+'awbList'
+);
+
+
+const counter =
+document.getElementById(
+'awbCounter'
+);
+
+
+counter.textContent =
+scannedAwbs.length +
+' AWB';
+
+
+if (
+scannedAwbs.length === 0
+) {
+
+list.innerHTML =
+'<div class="empty">Belum ada AWB yang discan.</div>';
+
+return;
+
+}
+
+
+list.innerHTML =
+'';
+
+
+scannedAwbs.forEach(
+function(
+awb,
+index
+) {
+
+const row =
+document.createElement(
+'div'
+);
+
+
+row.className =
+'awb-item';
+
+
+const text =
+document.createElement(
+'div'
+);
+
+
+text.className =
+'awb-number';
+
+
+text.textContent =
+(index + 1) +
+'. ' +
+awb;
+
+
+const del =
+document.createElement(
+'button'
+);
+
+
+del.type =
+'button';
+
+
+del.className =
+'delete';
+
+
+del.textContent =
+'Hapus';
+
+
+del.onclick =
+function() {
+
+scannedAwbs.splice(
+index,
+1
+);
+
+renderAwbs();
+
+};
+
+
+row.appendChild(
+text
+);
+
+row.appendChild(
+del
+);
+
+list.appendChild(
+row
+);
+
+});
+
+}
+
+
+
+function clearAwbs() {
+
+if (
+scannedAwbs.length === 0
+) {
+return;
+}
+
+
+if (
+!confirm(
+'Hapus semua AWB?'
+)
+) {
+return;
+}
+
+
+scannedAwbs =
+[];
+
+
+renderAwbs();
+
+}
+
+
+
+/* ==================================================
+SIMPAN
+================================================== */
+
+async function saveData() {
+
+clearStatus();
+
+
+const tanggal =
+document.getElementById(
+'tanggalPickup'
+).value;
+
+
+const driver =
+document.getElementById(
+'namaDriver'
+).value.trim();
+
+
+const plat =
+document.getElementById(
+'platNo'
+).value.trim();
+
+
+const vendor =
+document.getElementById(
+'vendor'
+).value;
+
+
+if (!tanggal) {
+
+showStatus(
+'Tanggal Pick Up wajib diisi.',
+'error'
+);
+
+return;
+
+}
+
+
+if (!driver) {
+
+showStatus(
+'Nama Driver wajib diisi.',
+'error'
+);
+
+return;
+
+}
+
+
+if (!plat) {
+
+showStatus(
+'Plat No wajib diisi.',
+'error'
+);
+
+return;
+
+}
+
+
+if (!vendor) {
+
+showStatus(
+'Vendor wajib dipilih.',
+'error'
+);
+
+return;
+
+}
+
+
+if (
+!photoBase64
+) {
+
+showStatus(
+'Foto Driver wajib diambil.',
+'error'
+);
+
+return;
+
+}
+
+
+if (
+scannedAwbs.length === 0
+) {
+
+showStatus(
+'Belum ada AWB yang discan.',
+'error'
+);
+
+return;
+
+}
+
+
+const btn =
+document.getElementById(
+'btnSave'
+);
+
+
+btn.disabled =
+true;
+
+
+btn.textContent =
+'⏳ MENYIMPAN...';
+
+
+try {
+
+await stopScanner();
+
+
+const payload = {
+
+action:
+'save',
+
+tanggalPickup:
+tanggal,
+
+namaDriver:
+driver,
+
+platNo:
+plat,
+
+vendor:
+vendor,
+
+awbs:
+scannedAwbs,
+
+fotoDriver:
+photoBase64
+
+};
+
+
+const response =
+await fetch(
+
+API_URL,
+
+{
+
+method:
+'POST',
+
+headers: {
+
+'Content-Type':
+'text/plain;charset=utf-8'
+
+},
+
+body:
+JSON.stringify(
+payload
+)
+
+}
+
+);
+
+
+const text =
+await response.text();
+
+
+const result =
+JSON.parse(text);
+
+
+if (
+!result.success
+) {
+
+throw new Error(
+result.message ||
+'Gagal menyimpan.'
+);
+
+}
+
+
+showStatus(
+'✅ ' +
+result.jumlah +
+' AWB BERHASIL DISIMPAN',
+'success'
+);
+
+
+scannedAwbs =
+[];
+
+
+renderAwbs();
+
+
+photoBase64 =
+'';
+
+
+document.getElementById(
+'photoPreviewBox'
+).style.display =
+'none';
+
+
+} catch(error) {
+
+console.error(error);
+
+
+showStatus(
+'❌ Gagal menyimpan: ' +
+error.message,
+'error'
+);
+
+}
+
+
+btn.disabled =
+false;
+
+
+btn.textContent =
+'💾 SIMPAN SEMUA DATA';
+
+}
+
+
+
+/* ==================================================
+STATUS
+================================================== */
+
+function showStatus(
+message,
+type
+) {
+
+const status =
+document.getElementById(
+'status'
+);
+
+
+status.className =
+'status ' +
+type;
+
+
+status.textContent =
+message;
+
+}
+
+
+
+function clearStatus() {
+
+const status =
+document.getElementById(
+'status'
+);
+
+
+status.className =
+'status';
+
+
+status.textContent =
+'';
+
+}
+
+
 
 </script>
 
