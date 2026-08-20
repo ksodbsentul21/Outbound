@@ -1,715 +1,1537 @@
-const SHEET_NAME = 'Outbound';
-const VALIDATION_SHEET = 'Validation';
+<!DOCTYPE html>
+<html lang="id">
 
-/*
-==========================================================
-WAJIB DIISI
-==========================================================
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  >
 
-Masukkan ID folder Google Drive untuk menyimpan Foto Driver.
+  <meta name="theme-color" content="#ff6a00">
 
-Contoh URL folder:
-https://drive.google.com/drive/folders/1ABCxxxxxxxxxxxx
+  <title>SCAN OUTBOUND - H JOEL LOGISTICS</title>
 
-Yang dimasukkan hanya:
-1ABCxxxxxxxxxxxx
-*/
+  <script src="https://unpkg.com/html5-qrcode"></script>
 
-const FOTO_FOLDER_ID = 'PASTE_ID_FOLDER_FOTO_DI_SINI';
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f4f6;
+      color: #20252b;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #ffffff;
+    }
+
+    .header {
+      background: #ffffff;
+      padding: 16px 18px 12px;
+      border-bottom: 4px solid #ff6a00;
+      text-align: center;
+    }
+
+    .logo {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .app-title {
+      margin-top: 12px;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .app-subtitle {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #777;
+      letter-spacing: .5px;
+    }
+
+    .content {
+      padding: 18px;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin: 6px 0 12px;
+    }
+
+    .field {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      min-height: 48px;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+
+    input,
+    select {
+      border: 1px solid #ced1d5;
+      padding: 11px 12px;
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #ff6a00;
+      box-shadow: 0 0 0 2px rgba(255, 106, 0, .12);
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      padding: 12px;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: not-allowed;
+    }
+
+    .btn-orange {
+      background: #ff6a00;
+      color: white;
+    }
+
+    .btn-dark {
+      background: #20252b;
+      color: white;
+    }
+
+    .btn-red {
+      background: #d9342b;
+      color: white;
+    }
+
+    .btn-green {
+      background: #148c47;
+      color: white;
+    }
+
+    .divider {
+      height: 1px;
+      background: #ececec;
+      margin: 22px 0;
+    }
+
+    #reader {
+      width: 100%;
+      margin-top: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .scan-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .counter-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 15px 0 10px;
+      gap: 10px;
+    }
+
+    .counter {
+      display: inline-block;
+      background: #20252b;
+      color: white;
+      padding: 8px 13px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .clear-btn {
+      width: auto;
+      min-height: 34px;
+      padding: 6px 11px;
+      background: #eceeef;
+      color: #20252b;
+      border-radius: 7px;
+      font-size: 12px;
+    }
+
+    .awb-box {
+      background: #f6f7f8;
+      border-radius: 10px;
+      padding: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .awb-empty {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      padding: 18px 5px;
+    }
+
+    .awb-item {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .awb-text {
+      font-size: 14px;
+      font-weight: 700;
+      word-break: break-all;
+      flex: 1;
+    }
+
+    .delete-awb {
+      width: auto;
+      min-height: 33px;
+      padding: 6px 9px;
+      font-size: 12px;
+      background: #d9342b;
+      color: white;
+    }
+
+    .photo-box {
+      display: none;
+      margin-top: 10px;
+      background: #f4f4f4;
+      border-radius: 10px;
+      padding: 8px;
+    }
+
+    .photo-box img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .hint {
+      margin-top: 5px;
+      font-size: 11px;
+      color: #7d8288;
+      line-height: 1.4;
+    }
+
+    .status {
+      display: none;
+      margin-top: 15px;
+      border-radius: 9px;
+      padding: 12px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .status.success {
+      display: block;
+      background: #e1f5e9;
+      color: #14723b;
+    }
+
+    .status.error {
+      display: block;
+      background: #fde5e3;
+      color: #af2e25;
+    }
+
+    .status.info {
+      display: block;
+      background: #fff0df;
+      color: #9a5200;
+    }
+
+    .manual-wrap {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .manual-wrap button {
+      width: auto;
+      padding: 10px 13px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #a0a0a0;
+      font-size: 11px;
+      padding: 20px 10px 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="header">
+    <img
+      src="H_JOEL_LOGISTICS_logo.png"
+      alt="H JOEL LOGISTICS"
+      class="logo"
+    >
+
+    <div class="app-title">
+      SCAN OUTBOUND
+    </div>
+
+    <div class="app-subtitle">
+      H JOEL LOGISTICS
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section-title">
+      INFORMASI PICK UP
+    </div>
+
+    <div class="field">
+      <label for="tanggalPickup">
+        Tanggal Pick Up
+      </label>
+
+      <input
+        type="date"
+        id="tanggalPickup"
+      >
+    </div>
+
+    <div class="field">
+      <label for="namaDriver">
+        Nama Driver
+      </label>
+
+      <input
+        type="text"
+        id="namaDriver"
+        placeholder="Masukkan nama driver"
+        autocomplete="off"
+      >
+    </div>
+
+    <div class="field">
+      <label for="platNo">
+        Plat No
+      </label>
+
+      <input
+        type="text"
+        id="platNo"
+        placeholder="Contoh: F 1234 ABC"
+        autocomplete="off"
+        oninput="this.value = this.value.toUpperCase()"
+      >
+    </div>
+
+    <div class="field">
+      <label for="vendor">
+        Vendor
+      </label>
+
+      <select id="vendor">
+        <option value="">
+          Memuat vendor...
+        </option>
+      </select>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">
+      FOTO DRIVER
+    </div>
+
+    <div class="field">
+      <input
+        type="file"
+        id="fotoDriver"
+        accept="image/*"
+        capture="environment"
+        onchange="handlePhoto(event)"
+      >
+
+      <div class="hint">
+        Tekan tombol di atas lalu ambil foto driver menggunakan kamera HP.
+      </div>
+
+      <div
+        class="photo-box"
+        id="photoBox"
+      >
+        <img
+          id="photoPreview"
+          alt="Preview Foto Driver"
+        >
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-title">
+      SCAN AWB
+    </div>
+
+    <div class="scan-actions">
+
+      <button
+        type="button"
+        class="btn-dark"
+        id="btnStartScanner"
+        onclick="startScanner()"
+      >
+        📷 MULAI SCAN AWB
+      </button>
+
+      <button
+        type="button"
+        class="btn-red"
+        id="btnStopScanner"
+        onclick="stopScanner()"
+        style="display:none;"
+      >
+        ⛔ STOP KAMERA
+      </button>
+
+    </div>
+
+    <div id="reader"></div>
+
+    <div class="manual-wrap">
+
+      <input
+        type="text"
+        id="manualAwb"
+        placeholder="AWB manual bila diperlukan"
+        autocomplete="off"
+      >
+
+      <button
+        class="btn-orange"
+        type="button"
+        onclick="addManualAwb()"
+      >
+        TAMBAH
+      </button>
+
+    </div>
+
+    <div class="counter-wrap">
+
+      <div
+        class="counter"
+        id="awbCounter"
+      >
+        0 AWB
+      </div>
+
+      <button
+        type="button"
+        class="clear-btn"
+        onclick="clearAllAwb()"
+      >
+        Hapus Semua
+      </button>
+
+    </div>
+
+    <div
+      class="awb-box"
+      id="awbList"
+    >
+      <div class="awb-empty">
+        Belum ada AWB yang discan.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <button
+      type="button"
+      class="btn-green"
+      id="btnSave"
+      onclick="saveData()"
+    >
+      💾 SIMPAN SEMUA DATA
+    </button>
+
+    <div
+      id="status"
+      class="status"
+    ></div>
+
+  </div>
+
+  <div class="footer">
+    H JOEL LOGISTICS • SCAN OUTBOUND
+  </div>
+
+</div>
+
+<script>
+
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbwvSTmZkm9CGrEW3kJG8Du_THFSNX0fE49y97wElfXzANkfewhp-LuMtyPqZD8P4DWwCg/exec';
+
+let scanner = null;
+let scannedAwbs = [];
+let photoBase64 = '';
+let scanLocked = false;
 
 
-function doGet(e) {
+/* =========================
+   START
+========================= */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  function () {
+    setToday();
+    loadVendors();
+  }
+);
+
+
+/* =========================
+   TANGGAL HARI INI
+========================= */
+
+function setToday() {
+
+  const date = new Date();
+
+  const year = date.getFullYear();
+
+  const month =
+    String(date.getMonth() + 1)
+      .padStart(2, '0');
+
+  const day =
+    String(date.getDate())
+      .padStart(2, '0');
+
+  document.getElementById(
+    'tanggalPickup'
+  ).value =
+    year + '-' + month + '-' + day;
+}
+
+
+/* =========================
+   VENDOR
+========================= */
+
+async function loadVendors() {
+
+  const select =
+    document.getElementById('vendor');
 
   try {
 
-    const action =
-      e && e.parameter
-        ? e.parameter.action
-        : '';
+    const response =
+      await fetch(
+        API_URL +
+        '?action=getVendors&t=' +
+        Date.now()
+      );
 
+    const text =
+      await response.text();
 
-    if (action === 'getVendors') {
+    const result =
+      JSON.parse(text);
 
-      return jsonResponse(
-        getVendors()
+    select.innerHTML =
+      '<option value="">-- Pilih Vendor --</option>';
+
+    if (
+      result.success &&
+      Array.isArray(result.vendors)
+    ) {
+
+      result.vendors.forEach(
+        function (vendor) {
+
+          const option =
+            document.createElement('option');
+
+          option.value =
+            vendor;
+
+          option.textContent =
+            vendor;
+
+          select.appendChild(option);
+
+        }
+      );
+
+    } else {
+
+      showStatus(
+        result.message ||
+        'Vendor tidak ditemukan.',
+        'error'
       );
 
     }
 
-
-    return jsonResponse({
-      success: true,
-      message: 'H JOEL LOGISTICS API aktif.'
-    });
-
-
   } catch (error) {
 
-    return jsonResponse({
-      success: false,
-      message: error.message
-    });
+    console.error(error);
+
+    select.innerHTML =
+      '<option value="">Vendor gagal dimuat</option>';
+
+    showStatus(
+      'Vendor gagal dimuat dari Google Sheet.',
+      'error'
+    );
 
   }
-
 }
 
 
+/* =========================
+   SCANNER
+========================= */
 
-function doPost(e) {
+async function startScanner() {
+
+  clearStatus();
+
+  if (scanner) {
+    return;
+  }
 
   try {
 
+    const cameras =
+      await Html5Qrcode.getCameras();
+
     if (
-      !e ||
-      !e.postData ||
-      !e.postData.contents
+      !cameras ||
+      cameras.length === 0
     ) {
 
       throw new Error(
-        'Data POST tidak ditemukan.'
+        'Kamera tidak ditemukan.'
       );
 
     }
 
+    let cameraId =
+      cameras[cameras.length - 1].id;
 
-    const data =
-      JSON.parse(
-        e.postData.contents
+    const rearCamera =
+      cameras.find(
+        camera =>
+          /back|rear|environment/i.test(
+            camera.label
+          )
       );
 
-
-    if (
-      data.action === 'save'
-    ) {
-
-      return jsonResponse(
-        saveOutbound(data)
-      );
-
+    if (rearCamera) {
+      cameraId =
+        rearCamera.id;
     }
 
+    scanner =
+      new Html5Qrcode('reader');
 
-    throw new Error(
-      'Action tidak dikenal.'
+    await scanner.start(
+
+      cameraId,
+
+      {
+        fps: 10,
+
+        qrbox: function (
+          width,
+          height
+        ) {
+
+          let scanWidth =
+            Math.floor(width * 0.88);
+
+          if (scanWidth > 360) {
+            scanWidth = 360;
+          }
+
+          return {
+            width: scanWidth,
+            height: 130
+          };
+
+        }
+      },
+
+      onScanSuccess,
+
+      function () {
+        // error frame tidak ditampilkan
+      }
     );
 
+    document.getElementById(
+      'btnStartScanner'
+    ).style.display =
+      'none';
+
+    document.getElementById(
+      'btnStopScanner'
+    ).style.display =
+      'block';
+
+    showStatus(
+      'Scanner aktif. Arahkan barcode AWB ke kamera.',
+      'info'
+    );
 
   } catch (error) {
 
-    return jsonResponse({
-      success: false,
-      message: error.message
-    });
+    console.error(error);
+
+    scanner = null;
+
+    showStatus(
+      'Kamera gagal dibuka. Pastikan izin kamera sudah diberikan pada browser.',
+      'error'
+    );
 
   }
-
 }
 
 
+function onScanSuccess(
+  decodedText
+) {
 
-function jsonResponse(data) {
+  if (scanLocked) {
+    return;
+  }
 
-  return ContentService
-    .createTextOutput(
-      JSON.stringify(data)
+  const awb =
+    String(decodedText || '')
+      .trim();
+
+  if (!awb) {
+    return;
+  }
+
+  scanLocked = true;
+
+  if (
+    scannedAwbs.includes(awb)
+  ) {
+
+    vibrateDuplicate();
+
+    showStatus(
+      'AWB sudah pernah discan: ' +
+      awb,
+      'error'
+    );
+
+  } else {
+
+    scannedAwbs.push(awb);
+
+    renderAwbs();
+
+    vibrate();
+
+    beep();
+
+    showStatus(
+      'AWB berhasil discan: ' +
+      awb,
+      'success'
+    );
+
+  }
+
+  setTimeout(
+    function () {
+      scanLocked = false;
+    },
+    1200
+  );
+}
+
+
+async function stopScanner() {
+
+  if (!scanner) {
+    return;
+  }
+
+  try {
+
+    await scanner.stop();
+
+    scanner.clear();
+
+  } catch (error) {
+    console.log(error);
+  }
+
+  scanner = null;
+
+  document.getElementById(
+    'btnStartScanner'
+  ).style.display =
+    'block';
+
+  document.getElementById(
+    'btnStopScanner'
+  ).style.display =
+    'none';
+}
+
+
+/* =========================
+   AWB MANUAL
+========================= */
+
+function addManualAwb() {
+
+  const input =
+    document.getElementById(
+      'manualAwb'
+    );
+
+  const awb =
+    input.value.trim();
+
+  if (!awb) {
+    return;
+  }
+
+  if (
+    scannedAwbs.includes(awb)
+  ) {
+
+    showStatus(
+      'AWB sudah ada.',
+      'error'
+    );
+
+    return;
+  }
+
+  scannedAwbs.push(awb);
+
+  input.value = '';
+
+  renderAwbs();
+
+  showStatus(
+    'AWB berhasil ditambahkan.',
+    'success'
+  );
+}
+
+
+function removeAwb(index) {
+
+  scannedAwbs.splice(
+    index,
+    1
+  );
+
+  renderAwbs();
+}
+
+
+function clearAllAwb() {
+
+  if (
+    scannedAwbs.length === 0
+  ) {
+    return;
+  }
+
+  const confirmDelete =
+    confirm(
+      'Hapus semua AWB yang sudah discan?'
+    );
+
+  if (!confirmDelete) {
+    return;
+  }
+
+  scannedAwbs = [];
+
+  renderAwbs();
+}
+
+
+function renderAwbs() {
+
+  const list =
+    document.getElementById(
+      'awbList'
+    );
+
+  const counter =
+    document.getElementById(
+      'awbCounter'
+    );
+
+  counter.textContent =
+    scannedAwbs.length +
+    ' AWB';
+
+  if (
+    scannedAwbs.length === 0
+  ) {
+
+    list.innerHTML =
+      '<div class="awb-empty">Belum ada AWB yang discan.</div>';
+
+    return;
+  }
+
+  list.innerHTML = '';
+
+  scannedAwbs.forEach(
+    function (
+      awb,
+      index
+    ) {
+
+      const row =
+        document.createElement(
+          'div'
+        );
+
+      row.className =
+        'awb-item';
+
+      const text =
+        document.createElement(
+          'div'
+        );
+
+      text.className =
+        'awb-text';
+
+      text.textContent =
+        (index + 1) +
+        '. ' +
+        awb;
+
+      const button =
+        document.createElement(
+          'button'
+        );
+
+      button.className =
+        'delete-awb';
+
+      button.type =
+        'button';
+
+      button.textContent =
+        'Hapus';
+
+      button.onclick =
+        function () {
+          removeAwb(index);
+        };
+
+      row.appendChild(text);
+      row.appendChild(button);
+
+      list.appendChild(row);
+    }
+  );
+}
+
+
+/* =========================
+   FOTO DRIVER
+========================= */
+
+function handlePhoto(event) {
+
+  const file =
+    event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  if (
+    !file.type.startsWith(
+      'image/'
     )
-    .setMimeType(
-      ContentService.MimeType.JSON
+  ) {
+
+    showStatus(
+      'File harus berupa foto.',
+      'error'
     );
 
+    return;
+  }
+
+  compressImage(
+    file,
+    1280,
+    0.72
+  )
+  .then(
+    function (result) {
+
+      photoBase64 =
+        result;
+
+      document.getElementById(
+        'photoPreview'
+      ).src =
+        result;
+
+      document.getElementById(
+        'photoBox'
+      ).style.display =
+        'block';
+
+      showStatus(
+        'Foto driver berhasil diambil.',
+        'success'
+      );
+
+    }
+  )
+  .catch(
+    function () {
+
+      showStatus(
+        'Foto gagal diproses.',
+        'error'
+      );
+
+    }
+  );
 }
 
 
+function compressImage(
+  file,
+  maxSize,
+  quality
+) {
 
-function getVendors() {
+  return new Promise(
+    function (
+      resolve,
+      reject
+    ) {
 
-  const ss =
-    SpreadsheetApp
-      .getActiveSpreadsheet();
+      const reader =
+        new FileReader();
 
+      reader.onload =
+        function (event) {
 
-  const sheet =
-    ss.getSheetByName(
-      VALIDATION_SHEET
-    );
+          const image =
+            new Image();
 
+          image.onload =
+            function () {
 
-  if (!sheet) {
+              let width =
+                image.width;
 
-    return {
-      success: false,
-      message:
-        'Sheet Validation tidak ditemukan.',
-      vendors: []
-    };
+              let height =
+                image.height;
 
-  }
+              if (
+                width > height &&
+                width > maxSize
+              ) {
 
+                height =
+                  Math.round(
+                    height *
+                    maxSize /
+                    width
+                  );
 
-  const lastRow =
-    sheet.getLastRow();
+                width =
+                  maxSize;
 
+              } else if (
+                height > maxSize
+              ) {
 
-  if (lastRow < 2) {
+                width =
+                  Math.round(
+                    width *
+                    maxSize /
+                    height
+                  );
 
-    return {
-      success: true,
-      vendors: []
-    };
+                height =
+                  maxSize;
+              }
 
-  }
+              const canvas =
+                document.createElement(
+                  'canvas'
+                );
 
+              canvas.width =
+                width;
 
-  /*
-  ==========================================================
-  DAFTAR VENDOR DIAMBIL DARI KOLOM A
-  MULAI BARIS 2
-  ==========================================================
-  */
+              canvas.height =
+                height;
 
-  let vendors =
-    sheet
-      .getRange(
-        2,
-        1,
-        lastRow - 1,
-        1
-      )
-      .getDisplayValues()
-      .flat()
-      .map(
-        value =>
-          String(value).trim()
-      )
-      .filter(Boolean);
+              const context =
+                canvas.getContext(
+                  '2d'
+                );
 
+              context.drawImage(
+                image,
+                0,
+                0,
+                width,
+                height
+              );
 
-  /*
-  Hilangkan vendor duplikat.
-  */
+              const compressed =
+                canvas.toDataURL(
+                  'image/jpeg',
+                  quality
+                );
 
-  vendors =
-    [...new Set(vendors)];
+              resolve(
+                compressed
+              );
 
+            };
 
-  return {
-    success: true,
-    vendors: vendors
-  };
+          image.onerror =
+            reject;
 
+          image.src =
+            event.target.result;
+
+        };
+
+      reader.onerror =
+        reject;
+
+      reader.readAsDataURL(
+        file
+      );
+    }
+  );
 }
 
 
+/* =========================
+   SIMPAN
+========================= */
 
-function saveOutbound(data) {
+async function saveData() {
+
+  clearStatus();
 
   const tanggalPickup =
-    String(
-      data.tanggalPickup || ''
-    ).trim();
-
+    document.getElementById(
+      'tanggalPickup'
+    ).value;
 
   const namaDriver =
-    String(
-      data.namaDriver || ''
-    ).trim();
-
+    document.getElementById(
+      'namaDriver'
+    ).value.trim();
 
   const platNo =
-    String(
-      data.platNo || ''
-    )
-      .trim()
-      .toUpperCase();
-
+    document.getElementById(
+      'platNo'
+    ).value.trim();
 
   const vendor =
-    String(
-      data.vendor || ''
-    ).trim();
-
-
-  let awbs =
-    Array.isArray(data.awbs)
-      ? data.awbs
-      : [];
-
-
-  awbs =
-    awbs
-      .map(
-        awb =>
-          String(awb).trim()
-      )
-      .filter(Boolean);
-
-
-  /*
-  Hilangkan AWB duplikat.
-  */
-
-  awbs =
-    [...new Set(awbs)];
-
+    document.getElementById(
+      'vendor'
+    ).value;
 
 
   if (!tanggalPickup) {
 
-    throw new Error(
-      'Tanggal Pick Up wajib diisi.'
+    showStatus(
+      'Tanggal Pick Up wajib diisi.',
+      'error'
     );
 
+    return;
   }
 
 
   if (!namaDriver) {
 
-    throw new Error(
-      'Nama Driver wajib diisi.'
+    showStatus(
+      'Nama Driver wajib diisi.',
+      'error'
     );
 
+    return;
   }
 
 
   if (!platNo) {
 
-    throw new Error(
-      'Plat No wajib diisi.'
+    showStatus(
+      'Plat No wajib diisi.',
+      'error'
     );
 
+    return;
   }
 
 
   if (!vendor) {
 
-    throw new Error(
-      'Vendor wajib dipilih.'
+    showStatus(
+      'Vendor wajib dipilih.',
+      'error'
     );
 
+    return;
   }
 
 
   if (
-    awbs.length === 0
+    scannedAwbs.length === 0
   ) {
 
-    throw new Error(
-      'Belum ada AWB.'
+    showStatus(
+      'Belum ada AWB yang discan.',
+      'error'
     );
 
+    return;
   }
 
 
-  if (
-    !data.fotoDriver
-  ) {
+  if (!photoBase64) {
 
-    throw new Error(
-      'Foto Driver wajib diambil.'
+    showStatus(
+      'Foto Driver wajib diambil.',
+      'error'
     );
 
+    return;
   }
 
 
-
-  /*
-  ==========================================================
-  AMBIL SHEET OUTBOUND
-  ==========================================================
-  */
-
-  const ss =
-    SpreadsheetApp
-      .getActiveSpreadsheet();
-
-
-  let sheet =
-    ss.getSheetByName(
-      SHEET_NAME
+  const button =
+    document.getElementById(
+      'btnSave'
     );
 
+  button.disabled =
+    true;
 
-  /*
-  Kalau sheet Outbound belum ada,
-  otomatis dibuat.
-  */
+  button.textContent =
+    '⏳ MENYIMPAN...';
 
-  if (!sheet) {
-
-    sheet =
-      ss.insertSheet(
-        SHEET_NAME
-      );
-
-
-    sheet.getRange(
-      1,
-      1,
-      1,
-      7
-    ).setValues([
-      [
-        'Tanggal Pick Up',
-        'Timestamp',
-        'AWB',
-        'Nama Driver',
-        'Plat No',
-        'Vendor',
-        'Foto Driver'
-      ]
-    ]);
-
-  }
-
-
-
-  /*
-  ==========================================================
-  UPLOAD FOTO DRIVER
-  ==========================================================
-  */
-
-  const fotoUrl =
-    saveDriverPhoto(
-      data.fotoDriver,
-      namaDriver,
-      platNo
-    );
-
-
-
-  /*
-  ==========================================================
-  TANGGAL PICK UP
-  ==========================================================
-  */
-
-  const pickupParts =
-    tanggalPickup.split('-');
-
-
-  const pickupDate =
-    new Date(
-      Number(pickupParts[0]),
-      Number(pickupParts[1]) - 1,
-      Number(pickupParts[2])
-    );
-
-
-
-  /*
-  ==========================================================
-  TIMESTAMP
-  ==========================================================
-  */
-
-  const timestamp =
-    new Date();
-
-
-
-  /*
-  ==========================================================
-  BUAT BARIS
-  ==========================================================
-  */
-
-  const rows =
-    awbs.map(
-      awb => [
-
-        pickupDate,
-
-        timestamp,
-
-        awb,
-
-        namaDriver,
-
-        platNo,
-
-        vendor,
-
-        fotoUrl
-
-      ]
-    );
-
-
-
-  const startRow =
-    sheet.getLastRow() + 1;
-
-
-
-  /*
-  Tulis semua AWB sekaligus.
-  */
-
-  sheet
-    .getRange(
-      startRow,
-      1,
-      rows.length,
-      7
-    )
-    .setValues(rows);
-
-
-
-  /*
-  ==========================================================
-  FORMAT
-  ==========================================================
-  */
-
-  sheet
-    .getRange(
-      startRow,
-      1,
-      rows.length,
-      1
-    )
-    .setNumberFormat(
-      'dd/MM/yyyy'
-    );
-
-
-  sheet
-    .getRange(
-      startRow,
-      2,
-      rows.length,
-      1
-    )
-    .setNumberFormat(
-      'dd/MM/yyyy HH:mm:ss'
-    );
-
-
-  /*
-  AWB dibuat TEXT agar angka panjang
-  tidak berubah menjadi notasi ilmiah.
-  */
-
-  sheet
-    .getRange(
-      startRow,
-      3,
-      rows.length,
-      1
-    )
-    .setNumberFormat('@');
-
-
-  /*
-  Plat nomor dibuat TEXT.
-  */
-
-  sheet
-    .getRange(
-      startRow,
-      5,
-      rows.length,
-      1
-    )
-    .setNumberFormat('@');
-
-
-
-  return {
-
-    success: true,
-
-    jumlah:
-      rows.length,
-
-    message:
-      rows.length +
-      ' AWB berhasil disimpan.',
-
-    fotoUrl:
-      fotoUrl
-
-  };
-
-}
-
-
-
-function saveDriverPhoto(
-  dataUrl,
-  namaDriver,
-  platNo
-) {
-
-  if (
-    !FOTO_FOLDER_ID ||
-    FOTO_FOLDER_ID ===
-      'PASTE_ID_FOLDER_FOTO_DI_SINI'
-  ) {
-
-    throw new Error(
-      'ID Folder Foto Driver belum dimasukkan di Kode.gs.'
-    );
-
-  }
-
-
-
-  /*
-  Ambil folder Drive berdasarkan ID.
-  */
-
-  const folder =
-    DriveApp.getFolderById(
-      FOTO_FOLDER_ID
-    );
-
-
-
-  /*
-  Pisahkan header Base64.
-  */
-
-  const parts =
-    String(dataUrl)
-      .split(',');
-
-
-  if (
-    parts.length < 2
-  ) {
-
-    throw new Error(
-      'Format Foto Driver tidak valid.'
-    );
-
-  }
-
-
-
-  const header =
-    parts[0];
-
-
-  const base64 =
-    parts[1];
-
-
-
-  const mimeMatch =
-    header.match(
-      /data:(.*?);base64/
-    );
-
-
-  const mimeType =
-    mimeMatch
-      ? mimeMatch[1]
-      : 'image/jpeg';
-
-
-
-  const bytes =
-    Utilities
-      .base64Decode(
-        base64
-      );
-
-
-
-  /*
-  Bersihkan nama driver untuk
-  dijadikan nama file.
-  */
-
-  const safeDriver =
-    namaDriver
-      .replace(
-        /[^a-zA-Z0-9\s_-]/g,
-        ''
-      )
-      .replace(
-        /\s+/g,
-        '_'
-      );
-
-
-  const safePlat =
-    platNo
-      .replace(
-        /[^a-zA-Z0-9]/g,
-        '_'
-      );
-
-
-
-  const timestamp =
-    Utilities.formatDate(
-      new Date(),
-      Session.getScriptTimeZone(),
-      'yyyyMMdd_HHmmss'
-    );
-
-
-
-  const fileName =
-    'DRIVER_' +
-    safeDriver +
-    '_' +
-    safePlat +
-    '_' +
-    timestamp +
-    '.jpg';
-
-
-
-  const blob =
-    Utilities.newBlob(
-      bytes,
-      mimeType,
-      fileName
-    );
-
-
-
-  const file =
-    folder.createFile(
-      blob
-    );
-
-
-
-  /*
-  Mencoba membuat link foto
-  dapat dilihat melalui link.
-  */
 
   try {
 
-    file.setSharing(
-      DriveApp.Access.ANYONE_WITH_LINK,
-      DriveApp.Permission.VIEW
+    if (scanner) {
+      await stopScanner();
+    }
+
+
+    const payload = {
+
+      action:
+        'save',
+
+      tanggalPickup:
+        tanggalPickup,
+
+      namaDriver:
+        namaDriver,
+
+      platNo:
+        platNo,
+
+      vendor:
+        vendor,
+
+      awbs:
+        scannedAwbs,
+
+      fotoDriver:
+        photoBase64
+
+    };
+
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'text/plain;charset=utf-8'
+          },
+
+          body:
+            JSON.stringify(
+              payload
+            )
+        }
+      );
+
+
+    const text =
+      await response.text();
+
+
+    let result;
+
+
+    try {
+
+      result =
+        JSON.parse(text);
+
+    } catch (error) {
+
+      throw new Error(
+        'Server tidak memberikan response JSON yang valid.'
+      );
+    }
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.message ||
+        'Data gagal disimpan.'
+      );
+    }
+
+
+    showStatus(
+      '✅ BERHASIL! ' +
+      result.jumlah +
+      ' AWB berhasil disimpan.',
+      'success'
     );
+
+
+    scannedAwbs = [];
+
+    renderAwbs();
+
+
+    photoBase64 = '';
+
+
+    document.getElementById(
+      'fotoDriver'
+    ).value =
+      '';
+
+
+    document.getElementById(
+      'photoBox'
+    ).style.display =
+      'none';
+
 
   } catch (error) {
 
-    /*
-    Jika Google Workspace melarang
-    public sharing, file tetap tersimpan.
-    */
+    console.error(error);
 
-    console.log(
-      'Sharing foto tidak dapat diubah: ' +
-      error.message
+    showStatus(
+      '❌ Gagal menyimpan: ' +
+      error.message,
+      'error'
     );
 
+  } finally {
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      '💾 SIMPAN SEMUA DATA';
   }
-
-
-
-  return file.getUrl();
-
 }
+
+
+/* =========================
+   STATUS
+========================= */
+
+function showStatus(
+  message,
+  type
+) {
+
+  const status =
+    document.getElementById(
+      'status'
+    );
+
+  status.className =
+    'status ' +
+    type;
+
+  status.textContent =
+    message;
+}
+
+
+function clearStatus() {
+
+  const status =
+    document.getElementById(
+      'status'
+    );
+
+  status.className =
+    'status';
+
+  status.textContent =
+    '';
+}
+
+
+/* =========================
+   GETAR + BEEP
+========================= */
+
+function vibrate() {
+
+  if (
+    navigator.vibrate
+  ) {
+
+    navigator.vibrate(
+      120
+    );
+  }
+}
+
+
+function vibrateDuplicate() {
+
+  if (
+    navigator.vibrate
+  ) {
+
+    navigator.vibrate(
+      [100, 80, 100]
+    );
+  }
+}
+
+
+function beep() {
+
+  try {
+
+    const AudioContext =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    const context =
+      new AudioContext();
+
+    const oscillator =
+      context.createOscillator();
+
+    const gain =
+      context.createGain();
+
+    oscillator.connect(
+      gain
+    );
+
+    gain.connect(
+      context.destination
+    );
+
+    oscillator.frequency.value =
+      950;
+
+    gain.gain.value =
+      0.08;
+
+    oscillator.start();
+
+    setTimeout(
+      function () {
+
+        oscillator.stop();
+
+        context.close();
+
+      },
+      100
+    );
+
+  } catch (error) {
+  }
+}
+
+</script>
+
+</body>
+</html>
