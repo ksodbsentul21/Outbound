@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1"
+>
+
 <meta name="theme-color" content="#ff6a00">
 
 <title>H JOEL LOGISTICS</title>
@@ -26,13 +33,13 @@ body{
   max-width:520px;
   min-height:100vh;
   margin:auto;
-  background:white;
+  background:#fff;
 }
 
 .header{
   padding:15px;
   text-align:center;
-  background:white;
+  background:#fff;
   border-bottom:4px solid #ff6a00;
 }
 
@@ -79,17 +86,17 @@ body{
 
 .outbound{
   background:#ff6a00;
-  color:white;
+  color:#fff;
 }
 
 .bast{
   background:#20252b;
-  color:white;
+  color:#fff;
 }
 
 .return{
   background:#148c47;
-  color:white;
+  color:#fff;
 }
 
 /* FORM */
@@ -128,17 +135,9 @@ body{
 
 label{
   display:block;
+  margin-bottom:6px;
   font-size:14px;
   font-weight:700;
-  margin-bottom:6px;
-}
-
-input,
-select,
-button{
-  font-family:Arial,Helvetica,sans-serif;
-  font-size:16px;
-  border-radius:9px;
 }
 
 input,
@@ -146,21 +145,22 @@ select{
   width:100%;
   min-height:49px;
   padding:11px;
-  background:white;
   border:1px solid #ccd0d5;
+  border-radius:9px;
+  background:#fff;
+  font-size:16px;
   outline:none;
 }
 
 input:focus,
 select:focus{
   border-color:#ff6a00;
-  box-shadow:0 0 0 2px rgba(255,106,0,.10);
 }
 
 .section-title{
+  margin:20px 0 12px;
   font-size:15px;
   font-weight:900;
-  margin:20px 0 12px;
 }
 
 .divider{
@@ -172,7 +172,9 @@ select:focus{
 /* BUTTON */
 
 button{
+  font-family:Arial,Helvetica,sans-serif;
   cursor:pointer;
+  border-radius:9px;
 }
 
 .btn-orange,
@@ -182,27 +184,28 @@ button{
   width:100%;
   min-height:49px;
   border:0;
+  font-size:16px;
   font-weight:900;
 }
 
 .btn-orange{
   background:#ff6a00;
-  color:white;
+  color:#fff;
 }
 
 .btn-dark{
   background:#20252b;
-  color:white;
+  color:#fff;
 }
 
 .btn-red{
   background:#d9342b;
-  color:white;
+  color:#fff;
 }
 
 .btn-green{
   background:#148c47;
-  color:white;
+  color:#fff;
 }
 
 button:disabled{
@@ -211,10 +214,7 @@ button:disabled{
 
 /* RETURN */
 
-#keteranganBox{
-  display:none;
-}
-
+#keteranganBox,
 #reasonBox{
   display:none;
 }
@@ -286,10 +286,10 @@ button:disabled{
 }
 
 .counter{
-  background:#20252b;
-  color:white;
-  border-radius:20px;
   padding:7px 12px;
+  background:#20252b;
+  color:#fff;
+  border-radius:20px;
   font-size:13px;
   font-weight:bold;
 }
@@ -297,18 +297,18 @@ button:disabled{
 .clear-btn{
   width:auto;
   min-height:34px;
+  padding:6px 12px;
   border:0;
   background:#eee;
-  padding:6px 12px;
   font-size:12px;
 }
 
 .awb-list{
   max-height:280px;
   overflow-y:auto;
+  padding:9px;
   background:#f5f6f7;
   border-radius:10px;
-  padding:9px;
 }
 
 .awb-empty{
@@ -322,10 +322,10 @@ button:disabled{
   align-items:center;
   gap:8px;
   padding:10px;
-  background:white;
+  margin-bottom:6px;
+  background:#fff;
   border:1px solid #ddd;
   border-radius:8px;
-  margin-bottom:6px;
 }
 
 .awb-text{
@@ -338,10 +338,10 @@ button:disabled{
 .delete-btn{
   width:auto;
   min-height:31px;
+  padding:5px 8px;
   border:0;
   background:#d9342b;
-  color:white;
-  padding:5px 8px;
+  color:#fff;
   font-size:11px;
 }
 
@@ -383,374 +383,393 @@ button:disabled{
 }
 
 </style>
+
 </head>
 
 <body>
 
 <div class="app">
 
-  <div class="header">
+<!-- HEADER -->
 
-    <img
-      src="./H_JOEL_LOGISTICS_logo.png"
-      class="logo"
-      alt="H JOEL LOGISTICS"
-    >
+<div class="header">
 
-    <div class="header-title">
-      OPERASIONAL DISTRIBUSI
-    </div>
+<img
+  src="./H_JOEL_LOGISTICS_logo.png"
+  class="logo"
+  alt="H JOEL LOGISTICS"
+>
 
-  </div>
+<div class="header-title">
+OPERASIONAL DISTRIBUSI
+</div>
 
+</div>
 
-  <div class="content">
 
-    <!-- MENU DEPAN -->
+<div class="content">
 
-    <div id="menuPage">
+<!-- MENU DEPAN -->
 
-      <div class="menu-title">
-        PILIH PROSES
-      </div>
+<div id="menuPage">
 
-      <div class="menu-grid">
+<div class="menu-title">
+PILIH PROSES
+</div>
 
-        <button
-          type="button"
-          class="menu-btn outbound"
-          onclick="selectProcess('OUTBOUND')"
-        >
-          📦 OUTBOUND
-        </button>
+<div class="menu-grid">
 
-        <button
-          type="button"
-          class="menu-btn bast"
-          onclick="selectProcess('BAST')"
-        >
-          🏭 BAST BACK TO WH
-        </button>
+<button
+  type="button"
+  class="menu-btn outbound"
+  onclick="selectProcess('OUTBOUND')"
+>
+📦 OUTBOUND
+</button>
 
-        <button
-          type="button"
-          class="menu-btn return"
-          onclick="selectProcess('RETURN')"
-        >
-          ↩️ RETURN
-        </button>
+<button
+  type="button"
+  class="menu-btn bast"
+  onclick="selectProcess('BAST')"
+>
+🏭 BAST BACK TO WH
+</button>
 
-      </div>
+<button
+  type="button"
+  class="menu-btn return"
+  onclick="selectProcess('RETURN')"
+>
+↩️ RETURN
+</button>
 
-    </div>
+</div>
 
+</div>
 
-    <!-- FORM -->
 
-    <div id="formPage">
+<!-- FORM -->
 
-      <div class="process-header">
+<div id="formPage">
 
-        <button
-          type="button"
-          class="back-btn"
-          onclick="backMenu()"
-        >
-          ←
-        </button>
+<div class="process-header">
 
-        <div
-          class="process-title"
-          id="processTitle"
-        ></div>
+<button
+  type="button"
+  class="back-btn"
+  onclick="backMenu()"
+>
+←
+</button>
 
-      </div>
+<div
+  class="process-title"
+  id="processTitle"
+></div>
 
+</div>
 
-      <div class="field">
 
-        <label id="tanggalLabel">
-          Tanggal
-        </label>
+<!-- TANGGAL -->
 
-        <input
-          type="date"
-          id="tanggal"
-        >
+<div class="field">
 
-      </div>
+<label id="tanggalLabel">
+Tanggal
+</label>
 
+<input
+  type="date"
+  id="tanggal"
+>
 
-      <div class="field">
+</div>
 
-        <label>
-          Nama Driver
-        </label>
 
-        <input
-          type="text"
-          id="namaDriver"
-          placeholder="Masukkan Nama Driver"
-          autocomplete="off"
-        >
+<!-- DRIVER -->
 
-      </div>
+<div class="field">
 
+<label>
+Nama Driver
+</label>
 
-      <div class="field">
+<input
+  type="text"
+  id="namaDriver"
+  placeholder="Masukkan Nama Driver"
+  autocomplete="off"
+>
 
-        <label>
-          Plat No
-        </label>
+</div>
 
-        <input
-          type="text"
-          id="platNo"
-          placeholder="Contoh: F 1234 ABC"
-          autocomplete="off"
-          oninput="this.value=this.value.toUpperCase()"
-        >
 
-      </div>
+<!-- PLAT -->
 
+<div class="field">
 
-      <div class="field">
+<label>
+Plat No
+</label>
 
-        <label>
-          Vendor
-        </label>
+<input
+  type="text"
+  id="platNo"
+  placeholder="Contoh: F 1234 ABC"
+  autocomplete="off"
+  oninput="this.value=this.value.toUpperCase()"
+>
 
-        <select id="vendor">
+</div>
 
-          <option value="">
-            Memuat Vendor...
-          </option>
 
-        </select>
+<!-- VENDOR -->
 
-      </div>
+<div class="field">
 
+<label>
+Vendor
+</label>
 
-      <!-- KHUSUS RETURN -->
+<select id="vendor">
 
-      <div
-        class="field"
-        id="keteranganBox"
-      >
+<option value="">
+Memuat Vendor...
+</option>
 
-        <label>
-          Keterangan
-        </label>
+</select>
 
-        <select id="keterangan">
+</div>
 
-          <option value="">
-            -- Pilih Keterangan --
-          </option>
 
-        </select>
+<!-- KETERANGAN RETURN -->
 
-      </div>
+<div
+  class="field"
+  id="keteranganBox"
+>
 
+<label>
+Keterangan
+</label>
 
-      <!-- REASON RETURN - KETIK MANUAL -->
+<select id="keterangan">
 
-      <div
-        class="field"
-        id="reasonBox"
-      >
+<option value="">
+-- Pilih Keterangan --
+</option>
 
-        <label>
-          Reason
-        </label>
+</select>
 
-        <input
-          type="text"
-          id="reason"
-          placeholder="Ketik Reason"
-          autocomplete="off"
-        >
+</div>
 
-        <div class="reason-note">
-          Reason diisi manual.
-        </div>
 
-      </div>
+<!-- REASON RETURN -->
 
+<div
+  class="field"
+  id="reasonBox"
+>
 
-      <div class="divider"></div>
+<label>
+Reason
+</label>
 
+<input
+  type="text"
+  id="reason"
+  placeholder="Ketik Reason"
+  autocomplete="off"
+>
 
-      <!-- FOTO DRIVER -->
+<div class="reason-note">
+Reason diisi manual.
+</div>
 
-      <div class="section-title">
-        FOTO DRIVER
-      </div>
+</div>
 
 
-      <button
-        type="button"
-        class="btn-orange"
-        id="btnOpenPhoto"
-        onclick="openPhotoCamera()"
-      >
-        📷 BUKA KAMERA DRIVER
-      </button>
+<div class="divider"></div>
 
 
-      <div id="photoCameraBox">
+<!-- FOTO -->
 
-        <video
-          id="photoVideo"
-          autoplay
-          playsinline
-          muted
-        ></video>
+<div
+  class="section-title"
+  id="photoTitle"
+>
+FOTO DRIVER
+</div>
 
 
-        <div class="photo-actions">
+<button
+  type="button"
+  class="btn-orange"
+  id="btnOpenPhoto"
+  onclick="openPhotoCamera()"
+>
+📷 BUKA KAMERA DRIVER
+</button>
 
-          <button
-            type="button"
-            class="btn-green"
-            onclick="capturePhoto()"
-          >
-            📸 AMBIL FOTO
-          </button>
 
-          <button
-            type="button"
-            class="btn-red"
-            onclick="closePhotoCamera()"
-          >
-            TUTUP
-          </button>
+<div id="photoCameraBox">
 
-        </div>
+<video
+  id="photoVideo"
+  autoplay
+  playsinline
+  muted
+></video>
 
-      </div>
 
+<div class="photo-actions">
 
-      <div id="photoPreviewBox">
+<button
+  type="button"
+  class="btn-green"
+  onclick="capturePhoto()"
+>
+📸 AMBIL FOTO
+</button>
 
-        <img
-          id="photoPreview"
-          alt="Foto Driver"
-        >
+<button
+  type="button"
+  class="btn-red"
+  onclick="closePhotoCamera()"
+>
+TUTUP
+</button>
 
-        <button
-          type="button"
-          class="btn-orange"
-          style="margin-top:8px;"
-          onclick="openPhotoCamera()"
-        >
-          🔄 FOTO ULANG
-        </button>
+</div>
 
-      </div>
+</div>
 
 
-      <div class="divider"></div>
+<div id="photoPreviewBox">
 
+<img
+  id="photoPreview"
+  alt="Foto"
+>
 
-      <!-- SCAN AWB -->
+<button
+  type="button"
+  class="btn-orange"
+  style="margin-top:8px;"
+  onclick="openPhotoCamera()"
+>
+🔄 FOTO ULANG
+</button>
 
-      <div class="section-title">
-        SCAN AWB
-      </div>
+</div>
 
 
-      <div class="scan-buttons">
+<div class="divider"></div>
 
-        <button
-          type="button"
-          class="btn-dark"
-          id="btnStartScanner"
-          onclick="startScanner()"
-        >
-          📷 MULAI SCAN AWB
-        </button>
 
+<!-- SCAN AWB -->
 
-        <button
-          type="button"
-          class="btn-red"
-          id="btnStopScanner"
-          onclick="stopScanner()"
-          style="display:none;"
-        >
-          ⛔ STOP SCANNER
-        </button>
+<div class="section-title">
+SCAN AWB
+</div>
 
-      </div>
 
+<div class="scan-buttons">
 
-      <div id="reader"></div>
+<button
+  type="button"
+  class="btn-dark"
+  id="btnStartScanner"
+  onclick="startScanner()"
+>
+📷 MULAI SCAN AWB
+</button>
 
 
-      <div class="counter-row">
+<button
+  type="button"
+  class="btn-red"
+  id="btnStopScanner"
+  onclick="stopScanner()"
+  style="display:none;"
+>
+⛔ STOP SCANNER
+</button>
 
-        <div
-          class="counter"
-          id="awbCounter"
-        >
-          0 AWB
-        </div>
+</div>
 
-        <button
-          type="button"
-          class="clear-btn"
-          onclick="clearAwbs()"
-        >
-          Hapus Semua
-        </button>
 
-      </div>
+<div id="reader"></div>
 
 
-      <div
-        class="awb-list"
-        id="awbList"
-      >
+<div class="counter-row">
 
-        <div class="awb-empty">
-          Belum ada AWB.
-        </div>
+<div
+  class="counter"
+  id="awbCounter"
+>
+0 AWB
+</div>
 
-      </div>
 
+<button
+  type="button"
+  class="clear-btn"
+  onclick="clearAwbs()"
+>
+Hapus Semua
+</button>
 
-      <div class="divider"></div>
+</div>
 
 
-      <button
-        type="button"
-        class="btn-green"
-        id="btnSave"
-        onclick="saveData()"
-      >
-        💾 SIMPAN DATA
-      </button>
+<div
+  class="awb-list"
+  id="awbList"
+>
 
+<div class="awb-empty">
+Belum ada AWB.
+</div>
 
-      <div
-        id="status"
-        class="status"
-      ></div>
+</div>
 
-    </div>
 
-  </div>
+<div class="divider"></div>
 
 
-  <div class="footer">
-    H JOEL LOGISTICS
-  </div>
+<button
+  type="button"
+  class="btn-green"
+  id="btnSave"
+  onclick="saveData()"
+>
+💾 SIMPAN DATA
+</button>
+
+
+<div
+  id="status"
+  class="status"
+></div>
+
+</div>
+
+</div>
+
+
+<div class="footer">
+H JOEL LOGISTICS
+</div>
 
 </div>
 
 
 <script>
+
+/* =====================================================
+CONFIG
+===================================================== */
 
 const API_URL =
 'https://script.google.com/macros/s/AKfycbwvSTmZkm9CGrEW3kJG8Du_THFSNX0fE49y97wElfXzANkfewhp-LuMtyPqZD8P4DWwCg/exec';
@@ -776,19 +795,19 @@ START
 ===================================================== */
 
 document.addEventListener(
-  'DOMContentLoaded',
-  function(){
+'DOMContentLoaded',
+function(){
 
-    setToday();
+  setToday();
 
-    loadValidation();
+  loadValidation();
 
-  }
+}
 );
 
 
 /* =====================================================
-MENU
+PILIH PROSES
 ===================================================== */
 
 function selectProcess(process){
@@ -833,7 +852,23 @@ function selectProcess(process){
     );
 
 
-  if(process === 'OUTBOUND'){
+  const photoTitle =
+    document.getElementById(
+      'photoTitle'
+    );
+
+
+  const photoButton =
+    document.getElementById(
+      'btnOpenPhoto'
+    );
+
+
+  /* OUTBOUND */
+
+  if(
+    process === 'OUTBOUND'
+  ){
 
     title.textContent =
       'OUTBOUND';
@@ -850,10 +885,22 @@ function selectProcess(process){
     reasonBox.style.display =
       'none';
 
+
+    photoTitle.textContent =
+      'FOTO DRIVER';
+
+
+    photoButton.textContent =
+      '📷 BUKA KAMERA DRIVER';
+
   }
 
 
-  else if(process === 'BAST'){
+  /* BAST */
+
+  else if(
+    process === 'BAST'
+  ){
 
     title.textContent =
       'BAST BACK TO WH';
@@ -870,10 +917,22 @@ function selectProcess(process){
     reasonBox.style.display =
       'none';
 
+
+    photoTitle.textContent =
+      'FOTO DRIVER';
+
+
+    photoButton.textContent =
+      '📷 BUKA KAMERA DRIVER';
+
   }
 
 
-  else if(process === 'RETURN'){
+  /* RETURN */
+
+  else if(
+    process === 'RETURN'
+  ){
 
     title.textContent =
       'RETURN';
@@ -883,15 +942,23 @@ function selectProcess(process){
       'Tanggal Return';
 
 
-    /*
-    PASTI TAMPIL DI RETURN
-    */
     keteranganBox.style.display =
       'block';
 
 
     reasonBox.style.display =
       'block';
+
+
+    /*
+    KHUSUS RETURN
+    */
+    photoTitle.textContent =
+      'FOTO TV+MOBIL';
+
+
+    photoButton.textContent =
+      '📷 BUKA KAMERA TV+MOBIL';
 
   }
 
@@ -910,7 +977,7 @@ function selectProcess(process){
 
 
 /* =====================================================
-BACK
+KEMBALI
 ===================================================== */
 
 async function backMenu(){
@@ -944,7 +1011,7 @@ async function backMenu(){
 
 
 /* =====================================================
-TODAY
+TANGGAL
 ===================================================== */
 
 function setToday(){
@@ -960,13 +1027,19 @@ function setToday(){
   const m =
     String(
       now.getMonth()+1
-    ).padStart(2,'0');
+    ).padStart(
+      2,
+      '0'
+    );
 
 
   const d =
     String(
       now.getDate()
-    ).padStart(2,'0');
+    ).padStart(
+      2,
+      '0'
+    );
 
 
   document.getElementById(
@@ -1024,15 +1097,8 @@ function loadValidation(){
       ){
 
 
-        const vendors =
-          data.vendors || [];
-
-
-        const keterangans =
-          data.keterangans || [];
-
-
-        vendors.forEach(
+        (data.vendors || [])
+        .forEach(
           function(item){
 
 
@@ -1059,7 +1125,13 @@ function loadValidation(){
         );
 
 
-        keterangans.forEach(
+        /*
+        Keterangan dari Validation D4:D15
+        disediakan oleh Kode.gs
+        */
+
+        (data.keterangans || [])
+        .forEach(
           function(item){
 
 
@@ -1111,10 +1183,12 @@ function loadValidation(){
   script.onerror =
     function(){
 
+
       showStatus(
-        'Validation gagal dimuat dari Google Sheet.',
+        'Validation gagal dimuat.',
         'error'
       );
+
 
     };
 
@@ -1136,7 +1210,7 @@ function loadValidation(){
 
 
 /* =====================================================
-FOTO
+KAMERA FOTO
 ===================================================== */
 
 async function openPhotoCamera(){
@@ -1163,9 +1237,11 @@ async function openPhotoCamera(){
         .getUserMedia({
 
           video:{
+
             facingMode:{
               ideal:'environment'
             }
+
           },
 
           audio:false
@@ -1198,10 +1274,28 @@ async function openPhotoCamera(){
       'none';
 
 
-    showStatus(
-      'Kamera Driver aktif.',
-      'info'
-    );
+    if(
+      currentProcess ===
+      'RETURN'
+    ){
+
+
+      showStatus(
+        'Kamera Foto TV+Mobil aktif.',
+        'info'
+      );
+
+
+    }else{
+
+
+      showStatus(
+        'Kamera Foto Driver aktif.',
+        'info'
+      );
+
+
+    }
 
 
   }catch(error){
@@ -1211,7 +1305,7 @@ async function openPhotoCamera(){
 
 
     showStatus(
-      'Kamera tidak dapat dibuka. Izinkan kamera pada browser.',
+      'Kamera tidak dapat dibuka. Izinkan akses kamera.',
       'error'
     );
 
@@ -1238,10 +1332,12 @@ function capturePhoto(){
     !video.videoHeight
   ){
 
+
     showStatus(
       'Kamera belum siap.',
       'error'
     );
+
 
     return;
 
@@ -1262,7 +1358,10 @@ function capturePhoto(){
     video.videoHeight;
 
 
-  if(width > 1280){
+  if(
+    width > 1280
+  ){
+
 
     height =
       Math.round(
@@ -1275,6 +1374,7 @@ function capturePhoto(){
     width =
       1280;
 
+
   }
 
 
@@ -1286,19 +1386,15 @@ function capturePhoto(){
     height;
 
 
-  const context =
-    canvas.getContext(
-      '2d'
+  canvas
+    .getContext('2d')
+    .drawImage(
+      video,
+      0,
+      0,
+      width,
+      height
     );
-
-
-  context.drawImage(
-    video,
-    0,
-    0,
-    width,
-    height
-  );
 
 
   photoBase64 =
@@ -1323,21 +1419,40 @@ function capturePhoto(){
   closePhotoCamera();
 
 
-  showStatus(
-    'Foto Driver berhasil diambil.',
-    'success'
-  );
+  if(
+    currentProcess ===
+    'RETURN'
+  ){
+
+
+    showStatus(
+      'Foto TV+Mobil berhasil diambil.',
+      'success'
+    );
+
+
+  }else{
+
+
+    showStatus(
+      'Foto Driver berhasil diambil.',
+      'success'
+    );
+
+
+  }
 
 }
 
 
 /* =====================================================
-CLOSE FOTO
+TUTUP FOTO
 ===================================================== */
 
 function closePhotoCamera(){
 
   if(photoStream){
+
 
     photoStream
       .getTracks()
@@ -1393,16 +1508,40 @@ async function startScanner(){
   clearStatus();
 
 
+  /*
+  RETURN SUDAH PUNYA 1 AWB
+  JANGAN SCAN LAGI
+  */
+
+  if(
+    currentProcess === 'RETURN' &&
+    scannedAwbs.length >= 1
+  ){
+
+
+    showStatus(
+      'RETURN hanya dapat scan 1 AWB. Hapus AWB terlebih dahulu jika ingin scan ulang.',
+      'error'
+    );
+
+
+    return;
+
+  }
+
+
   try{
 
 
     if(!audioContext){
+
 
       audioContext =
         new(
           window.AudioContext ||
           window.webkitAudioContext
         )();
+
 
     }
 
@@ -1412,7 +1551,9 @@ async function startScanner(){
       'suspended'
     ){
 
+
       await audioContext.resume();
+
 
     }
 
@@ -1438,12 +1579,14 @@ async function startScanner(){
 
     if(
       !cameras ||
-      !cameras.length
+      cameras.length === 0
     ){
+
 
       throw new Error(
         'Kamera tidak ditemukan.'
       );
+
 
     }
 
@@ -1458,10 +1601,12 @@ async function startScanner(){
       cameras.find(
         function(camera){
 
+
           return /back|rear|environment/i
             .test(
               camera.label
             );
+
 
         }
       );
@@ -1492,6 +1637,7 @@ async function startScanner(){
         qrbox:
           function(width){
 
+
             let w =
               Math.floor(
                 width*.90
@@ -1507,6 +1653,7 @@ async function startScanner(){
               width:w,
               height:140
             };
+
 
           }
 
@@ -1531,10 +1678,28 @@ async function startScanner(){
       'block';
 
 
-    showStatus(
-      'Scanner aktif. Arahkan barcode AWB ke kamera.',
-      'info'
-    );
+    if(
+      currentProcess ===
+      'RETURN'
+    ){
+
+
+      showStatus(
+        'Scanner RETURN aktif. Scan 1 AWB.',
+        'info'
+      );
+
+
+    }else{
+
+
+      showStatus(
+        'Scanner aktif. Scan AWB berulang.',
+        'info'
+      );
+
+
+    }
 
 
   }catch(error){
@@ -1559,10 +1724,12 @@ async function startScanner(){
 
 
 /* =====================================================
-SCAN SUCCESS
+HASIL SCAN
 ===================================================== */
 
-function scanSuccess(decodedText){
+async function scanSuccess(
+  decodedText
+){
 
   if(scanLock){
     return;
@@ -1584,6 +1751,95 @@ function scanSuccess(decodedText){
     true;
 
 
+  /*
+  ===================================================
+  RETURN = HANYA 1 AWB
+  ===================================================
+  */
+
+  if(
+    currentProcess ===
+    'RETURN'
+  ){
+
+
+    if(
+      scannedAwbs.length >= 1
+    ){
+
+
+      duplicateBeep();
+
+
+      showStatus(
+        'RETURN hanya dapat scan 1 AWB.',
+        'error'
+      );
+
+
+      scanLock =
+        false;
+
+
+      return;
+
+    }
+
+
+    scannedAwbs.push(
+      awb
+    );
+
+
+    renderAwbs();
+
+
+    successBeep();
+
+
+    if(
+      navigator.vibrate
+    ){
+
+
+      navigator.vibrate(
+        120
+      );
+
+
+    }
+
+
+    showStatus(
+      'SCAN RETURN BERHASIL: '+
+      awb,
+      'success'
+    );
+
+
+    /*
+    SETELAH 1 AWB
+    SCANNER OTOMATIS BERHENTI
+    */
+
+    await stopScanner();
+
+
+    scanLock =
+      false;
+
+
+    return;
+
+  }
+
+
+  /*
+  ===================================================
+  OUTBOUND + BAST = SCAN BERULANG
+  ===================================================
+  */
+
   if(
     scannedAwbs.includes(
       awb
@@ -1598,17 +1854,20 @@ function scanSuccess(decodedText){
       navigator.vibrate
     ){
 
+
       navigator.vibrate([
         100,
         70,
         100
       ]);
 
+
     }
 
 
     showStatus(
-      'AWB sudah pernah discan: '+awb,
+      'AWB sudah pernah discan: '+
+      awb,
       'error'
     );
 
@@ -1631,17 +1890,21 @@ function scanSuccess(decodedText){
       navigator.vibrate
     ){
 
+
       navigator.vibrate(
         120
       );
+
 
     }
 
 
     showStatus(
-      'SCAN BERHASIL: '+awb,
+      'SCAN BERHASIL: '+
+      awb,
       'success'
     );
+
 
   }
 
@@ -1672,9 +1935,12 @@ async function stopScanner(){
 
   try{
 
+
     await scanner.stop();
 
+
     scanner.clear();
+
 
   }catch(error){}
 
@@ -1698,7 +1964,7 @@ async function stopScanner(){
 
 
 /* =====================================================
-BEEP
+SUARA
 ===================================================== */
 
 function successBeep(){
@@ -1743,7 +2009,7 @@ function successBeep(){
 
 
     oscillator.stop(
-      audioContext.currentTime +
+      audioContext.currentTime+
       .15
     );
 
@@ -1795,7 +2061,7 @@ function duplicateBeep(){
 
 
     oscillator.stop(
-      audioContext.currentTime +
+      audioContext.currentTime+
       .22
     );
 
@@ -1806,7 +2072,7 @@ function duplicateBeep(){
 
 
 /* =====================================================
-AWB LIST
+DAFTAR AWB
 ===================================================== */
 
 function renderAwbs(){
@@ -1820,7 +2086,7 @@ function renderAwbs(){
   document.getElementById(
     'awbCounter'
   ).textContent =
-    scannedAwbs.length +
+    scannedAwbs.length+
     ' AWB';
 
 
@@ -1931,7 +2197,7 @@ function renderAwbs(){
 
 
 /* =====================================================
-CLEAR AWB
+HAPUS AWB
 ===================================================== */
 
 function clearAwbs(){
@@ -1962,10 +2228,11 @@ function clearAwbs(){
 
 
 /* =====================================================
-RESET
+RESET SETELAH SIMPAN
 ===================================================== */
 
 function resetApplication(){
+
 
   document.getElementById(
     'namaDriver'
@@ -1991,9 +2258,6 @@ function resetApplication(){
     0;
 
 
-  /*
-  REASON IKUT DIKOSONGKAN
-  */
   document.getElementById(
     'reason'
   ).value =
@@ -2035,6 +2299,18 @@ function resetApplication(){
     'none';
 
 
+  document.getElementById(
+    'photoTitle'
+  ).textContent =
+    'FOTO DRIVER';
+
+
+  document.getElementById(
+    'btnOpenPhoto'
+  ).textContent =
+    '📷 BUKA KAMERA DRIVER';
+
+
   currentProcess =
     '';
 
@@ -2066,7 +2342,7 @@ function resetApplication(){
 
 
 /* =====================================================
-SAVE
+SIMPAN
 ===================================================== */
 
 async function saveData(){
@@ -2104,14 +2380,13 @@ async function saveData(){
     ).value;
 
 
-  /*
-  REASON MANUAL
-  */
   const reason =
     document.getElementById(
       'reason'
     ).value.trim();
 
+
+  /* VALIDASI */
 
   if(!tanggal){
 
@@ -2159,32 +2434,49 @@ async function saveData(){
     !keterangan
   ){
 
+
     return showStatus(
       'Keterangan Return wajib dipilih.',
       'error'
     );
 
+
   }
 
 
-  /*
-  REASON WAJIB KHUSUS RETURN
-  */
   if(
     currentProcess ===
     'RETURN' &&
     !reason
   ){
 
+
     return showStatus(
       'Reason wajib diisi.',
       'error'
     );
 
+
   }
 
 
   if(!photoBase64){
+
+
+    if(
+      currentProcess ===
+      'RETURN'
+    ){
+
+
+      return showStatus(
+        'Foto TV+Mobil wajib diambil.',
+        'error'
+      );
+
+
+    }
+
 
     return showStatus(
       'Foto Driver wajib diambil.',
@@ -2198,10 +2490,33 @@ async function saveData(){
     scannedAwbs.length === 0
   ){
 
+
     return showStatus(
       'Belum ada AWB.',
       'error'
     );
+
+
+  }
+
+
+  /*
+  KEAMANAN TAMBAHAN
+  RETURN HARUS TEPAT 1 AWB
+  */
+
+  if(
+    currentProcess ===
+    'RETURN' &&
+    scannedAwbs.length !== 1
+  ){
+
+
+    return showStatus(
+      'RETURN harus memiliki tepat 1 AWB.',
+      'error'
+    );
+
 
   }
 
@@ -2231,38 +2546,46 @@ async function saveData(){
 
     const payload = {
 
+
       action:
         'save',
+
 
       process:
         currentProcess,
 
+
       tanggal:
         tanggal,
+
 
       namaDriver:
         driver,
 
+
       platNo:
         plat,
+
 
       vendor:
         vendor,
 
+
       keterangan:
         keterangan,
 
-      /*
-      REASON DIKIRIM KE APPS SCRIPT
-      */
+
       reason:
         reason,
+
 
       awbs:
         scannedAwbs,
 
+
       fotoDriver:
         photoBase64
+
 
     };
 
@@ -2278,8 +2601,10 @@ async function saveData(){
             'POST',
 
           headers:{
+
             'Content-Type':
               'text/plain;charset=utf-8'
+
           },
 
           body:
@@ -2292,13 +2617,13 @@ async function saveData(){
       );
 
 
-    const responseText =
+    const text =
       await response.text();
 
 
     const result =
       JSON.parse(
-        responseText
+        text
       );
 
 
@@ -2306,25 +2631,28 @@ async function saveData(){
       !result.success
     ){
 
+
       throw new Error(
         result.message ||
         'Gagal menyimpan.'
       );
 
+
     }
 
 
     alert(
-      result.jumlah +
-      ' AWB berhasil disimpan ke ' +
+      result.jumlah+
+      ' AWB berhasil disimpan ke '+
       result.sheet
     );
 
 
     /*
-    SETELAH BERHASIL
-    KEMBALI KE MENU DEPAN
+    KEMBALI KE DEPAN
+    DAN KOSONGKAN SEMUA
     */
+
     resetApplication();
 
 
@@ -2402,4 +2730,5 @@ function clearStatus(){
 </script>
 
 </body>
+
 </html>
