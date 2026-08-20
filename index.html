@@ -11,6 +11,14 @@
 >
 
 <meta name="theme-color" content="#ff6a00">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="H JOEL Ops">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="H JOEL Ops">
+
 
 <title>H JOEL LOGISTICS</title>
 
@@ -382,6 +390,30 @@ button:disabled{
   font-size:11px;
 }
 
+
+/* PWA INSTALL */
+.install-app-btn{
+  width:100%;
+  min-height:48px;
+  margin-top:18px;
+  border:1px solid #ff6a00;
+  background:#fff;
+  color:#ff6a00;
+  font-size:14px;
+  font-weight:900;
+}
+.install-note{
+  display:none;
+  margin-top:9px;
+  padding:10px;
+  border-radius:9px;
+  background:#fff0df;
+  color:#7a4300;
+  font-size:12px;
+  line-height:1.45;
+  text-align:center;
+}
+
 </style>
 
 </head>
@@ -444,6 +476,9 @@ PILIH PROSES
 </button>
 
 </div>
+
+<button type="button" class="install-app-btn" id="installAppBtn" onclick="installApp()">📲 INSTALL APLIKASI</button>
+<div class="install-note" id="installNote"></div>
 
 </div>
 
@@ -2725,6 +2760,69 @@ function clearStatus(){
   status.textContent =
     '';
 
+}
+
+
+/* =====================================================
+PWA / INSTALL APLIKASI
+===================================================== */
+let deferredInstallPrompt = null;
+
+window.addEventListener('beforeinstallprompt', function(event){
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  const btn = document.getElementById('installAppBtn');
+  if(btn){ btn.style.display = 'block'; }
+});
+
+window.addEventListener('appinstalled', function(){
+  deferredInstallPrompt = null;
+  const btn = document.getElementById('installAppBtn');
+  const note = document.getElementById('installNote');
+  if(btn){ btn.style.display = 'none'; }
+  if(note){
+    note.style.display = 'block';
+    note.textContent = 'Aplikasi H JOEL LOGISTICS sudah terpasang.';
+  }
+});
+
+function isIosDevice(){
+  return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+}
+
+function isStandaloneMode(){
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+async function installApp(){
+  const note = document.getElementById('installNote');
+
+  if(isStandaloneMode()){
+    note.style.display = 'block';
+    note.textContent = 'Aplikasi sudah terpasang dan sedang dibuka dalam mode aplikasi.';
+    return;
+  }
+
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    return;
+  }
+
+  note.style.display = 'block';
+  if(isIosDevice()){
+    note.textContent = 'iPhone/iPad: buka halaman ini di Safari → tekan tombol Share → pilih Add to Home Screen / Tambahkan ke Layar Utama.';
+  }else{
+    note.textContent = 'Android: buka halaman ini di Chrome → menu ⋮ → Install app / Tambahkan ke layar utama. Jika pilihan belum muncul, refresh halaman sekali.';
+  }
+}
+
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('./service-worker.js')
+      .catch(function(error){ console.error('Service Worker gagal:', error); });
+  });
 }
 
 </script>
