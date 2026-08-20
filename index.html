@@ -573,24 +573,18 @@ Plat No
 
 
 <!-- KETERANGAN RETURN -->
+<div class="field" id="keteranganBox">
+  <label>Keterangan</label>
 
-<div
-  class="field"
-  id="keteranganBox"
->
+  <input
+    type="text"
+    id="keterangan"
+    list="keteranganList"
+    placeholder="Pilih atau ketik Keterangan"
+    autocomplete="off"
+  >
 
-<label>
-Keterangan
-</label>
-
-<select id="keterangan">
-
-<option value="">
--- Pilih Keterangan --
-</option>
-
-</select>
-
+  <datalist id="keteranganList"></datalist>
 </div>
 
 
@@ -789,7 +783,7 @@ Belum ada AWB.
 
 
 <div class="footer">
-H JOEL LOGISTICS
+H JOEL LOGISTICS · RETURN FIX 2
 </div>
 
 </div>
@@ -964,11 +958,7 @@ function selectProcess(process){
     process === 'RETURN'
   ){
 
-    /* Pastikan Keterangan RETURN dimuat */
-    const ketSelect = document.getElementById('keterangan');
-    if(ketSelect && ketSelect.options.length <= 1){
-      loadValidation();
-    }
+    loadValidation();
 
     title.textContent =
       'RETURN';
@@ -1101,32 +1091,55 @@ function loadValidation(){
       'script'
     );
 
+  let finished = false;
+
+  const cleanup =
+    function(){
+
+      if(finished){
+        return;
+      }
+
+      finished = true;
+
+      try{
+        delete window[callbackName];
+      }catch(error){}
+
+      try{
+        script.remove();
+      }catch(error){}
+
+    };
+
   window[callbackName] =
     function(data){
 
-      const keterangan =
+      const list =
         document.getElementById(
-          'keterangan'
+          'keteranganList'
         );
 
-      keterangan.innerHTML =
-        '<option value="">-- Pilih Keterangan --</option>';
+      if(list){
+        list.innerHTML = '';
+      }
 
       if(
         data &&
-        data.success
+        data.success &&
+        Array.isArray(data.keterangans)
       ){
 
-        if(!(data.keterangans || []).length){
-          showStatus(
-            'Data Keterangan kosong. Isi Validation!D4:D15.',
-            'error'
-          );
-        }
-
-        (data.keterangans || [])
+        data.keterangans
         .forEach(
           function(item){
+
+            const value =
+              String(item || '').trim();
+
+            if(!value || !list){
+              return;
+            }
 
             const option =
               document.createElement(
@@ -1134,42 +1147,28 @@ function loadValidation(){
               );
 
             option.value =
-              item;
+              value;
 
-            option.textContent =
-              item;
-
-            keterangan.appendChild(
+            list.appendChild(
               option
             );
 
           }
         );
 
-      }else{
-
-        showStatus(
-          'Keterangan Return gagal dimuat. Periksa deployment Apps Script / sheet Validation D4:D15.',
-          'error'
-        );
-
       }
 
-      delete window[
-        callbackName
-      ];
-
-      script.remove();
+      cleanup();
 
     };
 
   script.onerror =
     function(){
 
-      showStatus(
-        'Keterangan Return gagal dimuat. Periksa deployment Apps Script / sheet Validation D4:D15.',
-        'error'
-      );
+      /*
+      Jika API gagal, Keterangan tetap bisa diketik manual.
+      */
+      cleanup();
 
     };
 
@@ -1183,6 +1182,21 @@ function loadValidation(){
 
   document.body.appendChild(
     script
+  );
+
+  /*
+  Timeout agar script JSONP yang gagal tidak menggantung.
+  Keterangan tetap dapat diketik manual.
+  */
+  setTimeout(
+    function(){
+
+      if(!finished){
+        cleanup();
+      }
+
+    },
+    8000
   );
 
 }
@@ -2186,8 +2200,8 @@ function resetApplication(){
 
   document.getElementById(
     'keterangan'
-  ).selectedIndex =
-    0;
+  ).value =
+    '';
 
 
   document.getElementById(
@@ -2309,7 +2323,7 @@ async function saveData(){
   const keterangan =
     document.getElementById(
       'keterangan'
-    ).value;
+    ).value.trim();
 
 
   const reason =
