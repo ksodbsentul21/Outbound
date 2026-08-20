@@ -1,2306 +1,715 @@
-<!doctype html>
-<html lang="id">
+const SHEET_NAME = 'Outbound';
+const VALIDATION_SHEET = 'Validation';
 
-<head>
+/*
+==========================================================
+WAJIB DIISI
+==========================================================
 
-<meta charset="utf-8">
+Masukkan ID folder Google Drive untuk menyimpan Foto Driver.
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
->
+Contoh URL folder:
+https://drive.google.com/drive/folders/1ABCxxxxxxxxxxxx
 
-<meta
-  name="theme-color"
-  content="#111827"
->
+Yang dimasukkan hanya:
+1ABCxxxxxxxxxxxx
+*/
 
-<title>
-SCAN OUTBOUND - H JOEL LOGISTICS
-</title>
+const FOTO_FOLDER_ID = 'PASTE_ID_FOLDER_FOTO_DI_SINI';
 
-<script
-  src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-</script>
 
+function doGet(e) {
 
-<style>
+  try {
 
-*{
-  box-sizing:border-box;
-}
+    const action =
+      e && e.parameter
+        ? e.parameter.action
+        : '';
 
-body{
 
-  margin:0;
+    if (action === 'getVendors') {
 
-  background:#eef1f4;
-
-  font-family:
-    Arial,
-    sans-serif;
-
-  color:#111827;
-
-}
-
-
-.app{
-
-  max-width:520px;
-
-  margin:auto;
-
-  background:white;
-
-  min-height:100vh;
-
-}
-
-
-.header{
-
-  padding:
-    20px 18px 18px;
-
-  text-align:center;
-
-  border-bottom:
-    5px solid #ff7518;
-
-}
-
-
-.logo{
-
-  width:100%;
-
-  max-width:370px;
-
-  height:auto;
-
-  display:block;
-
-  margin:
-    0 auto 15px;
-
-}
-
-
-.title{
-
-  font-size:28px;
-
-  font-weight:900;
-
-  letter-spacing:1px;
-
-}
-
-
-.subtitle{
-
-  font-size:12px;
-
-  color:#6b7280;
-
-  margin-top:6px;
-
-  letter-spacing:1px;
-
-}
-
-
-.content{
-
-  padding:20px;
-
-}
-
-
-label{
-
-  display:block;
-
-  font-size:13px;
-
-  font-weight:900;
-
-  color:#4b5563;
-
-  margin:
-    18px 0 7px;
-
-}
-
-
-input,
-select{
-
-  width:100%;
-
-  height:54px;
-
-  border:
-    1px solid #d1d5db;
-
-  border-radius:13px;
-
-  padding:
-    0 14px;
-
-  font-size:17px;
-
-  background:white;
-
-}
-
-
-input:focus,
-select:focus{
-
-  outline:
-    2px solid #ff7518;
-
-  border-color:
-    #ff7518;
-
-}
-
-
-button{
-
-  width:100%;
-
-  border:0;
-
-  border-radius:13px;
-
-  padding:16px;
-
-  font-size:16px;
-
-  font-weight:900;
-
-  cursor:pointer;
-
-}
-
-
-.photoBtn{
-
-  background:#374151;
-
-  color:white;
-
-}
-
-
-.captureBtn{
-
-  margin-top:10px;
-
-  background:#ff7518;
-
-  color:white;
-
-}
-
-
-.cancelPhotoBtn{
-
-  margin-top:10px;
-
-  background:#fff1f2;
-
-  color:#b91c1c;
-
-}
-
-
-.scanBtn{
-
-  margin-top:20px;
-
-  background:#111827;
-
-  color:white;
-
-}
-
-
-.stopBtn{
-
-  margin-top:10px;
-
-  background:white;
-
-  border:
-    1px solid #d1d5db;
-
-}
-
-
-.saveBtn{
-
-  margin-top:15px;
-
-  background:#ff7518;
-
-  color:white;
-
-}
-
-
-.clearBtn{
-
-  margin-top:10px;
-
-  background:#fff1f2;
-
-  color:#b91c1c;
-
-}
-
-
-.status{
-
-  margin-top:15px;
-
-  padding:14px;
-
-  border-radius:12px;
-
-  text-align:center;
-
-  font-weight:800;
-
-  border:
-    1px solid #e5e7eb;
-
-}
-
-
-.ok{
-
-  background:#ecfdf5;
-
-  color:#065f46;
-
-}
-
-
-.error{
-
-  background:#fef2f2;
-
-  color:#991b1b;
-
-}
-
-
-.warn{
-
-  background:#fff7ed;
-
-  color:#9a3412;
-
-}
-
-
-.stats{
-
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:10px;
-
-  margin-top:14px;
-
-}
-
-
-.stat{
-
-  background:#f9fafb;
-
-  border:
-    1px solid #e5e7eb;
-
-  border-radius:13px;
-
-  padding:15px;
-
-  text-align:center;
-
-}
-
-
-.number{
-
-  font-size:31px;
-
-  font-weight:900;
-
-}
-
-
-.statLabel{
-
-  font-size:11px;
-
-  color:#6b7280;
-
-  margin-top:4px;
-
-}
-
-
-.list{
-
-  margin-top:14px;
-
-  max-height:300px;
-
-  overflow:auto;
-
-  border:
-    1px solid #e5e7eb;
-
-  border-radius:13px;
-
-}
-
-
-.row{
-
-  display:flex;
-
-  align-items:center;
-
-  padding:11px;
-
-  border-bottom:
-    1px solid #eee;
-
-}
-
-
-.awb{
-
-  flex:1;
-
-  font-family:
-    monospace;
-
-  font-size:14px;
-
-  word-break:
-    break-all;
-
-}
-
-
-.row button{
-
-  width:auto;
-
-  padding:
-    7px 10px;
-
-  background:#fff1f2;
-
-  color:#b91c1c;
-
-}
-
-
-.empty{
-
-  padding:25px;
-
-  text-align:center;
-
-  color:#9ca3af;
-
-}
-
-
-.hidden{
-
-  display:none !important;
-
-}
-
-
-#reader{
-
-  margin-top:15px;
-
-}
-
-
-#photoCameraBox{
-
-  margin-top:12px;
-
-  background:#000;
-
-  border-radius:13px;
-
-  overflow:hidden;
-
-}
-
-
-#photoVideo{
-
-  width:100%;
-
-  display:block;
-
-  max-height:360px;
-
-  object-fit:cover;
-
-}
-
-
-#photoPreview{
-
-  width:100%;
-
-  max-height:300px;
-
-  object-fit:cover;
-
-  border-radius:13px;
-
-  margin-top:10px;
-
-  display:none;
-
-  border:
-    1px solid #ddd;
-
-}
-
-
-.photoOK{
-
-  margin-top:9px;
-
-  font-size:13px;
-
-  font-weight:900;
-
-  color:#065f46;
-
-  display:none;
-
-  text-align:center;
-
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-<div class="app">
-
-
-<div class="header">
-
-
-<img
-  src="./logo.png"
-  alt="H JOEL LOGISTICS"
-  class="logo"
->
-
-
-<div class="title">
-SCAN OUTBOUND
-</div>
-
-
-<div class="subtitle">
-OUTBOUND SCANNING SYSTEM
-</div>
-
-
-</div>
-
-
-<div class="content">
-
-
-<label>
-TANGGAL PICK UP
-</label>
-
-<input
-  type="date"
-  id="tanggal"
->
-
-
-<label>
-NAMA DRIVER
-</label>
-
-<input
-  type="text"
-  id="driver"
-  placeholder="Ketik nama driver"
-  autocomplete="off"
->
-
-
-<label>
-PLAT NO
-</label>
-
-<input
-  type="text"
-  id="platNo"
-  placeholder="Contoh: F 1234 ABC"
-  autocomplete="off"
-  style="text-transform:uppercase"
->
-
-
-<label>
-VENDOR
-</label>
-
-<select id="vendor">
-
-<option value="">
-Memuat data vendor...
-</option>
-
-</select>
-
-
-<label>
-FOTO DRIVER
-</label>
-
-
-<button
-  type="button"
-  id="openPhotoBtn"
-  class="photoBtn"
-  onclick="openPhotoCamera()"
->
-📷 BUKA KAMERA FOTO DRIVER
-</button>
-
-
-<div
-  id="photoCameraArea"
-  class="hidden"
->
-
-
-<div id="photoCameraBox">
-
-<video
-  id="photoVideo"
-  autoplay
-  playsinline
-  muted
-></video>
-
-</div>
-
-
-<button
-  type="button"
-  class="captureBtn"
-  onclick="captureDriverPhoto()"
->
-📸 AMBIL FOTO
-</button>
-
-
-<button
-  type="button"
-  class="cancelPhotoBtn"
-  onclick="closePhotoCamera()"
->
-BATAL
-</button>
-
-
-</div>
-
-
-<canvas
-  id="photoCanvas"
-  class="hidden"
-></canvas>
-
-
-<img
-  id="photoPreview"
-  alt="Foto Driver"
->
-
-
-<div
-  id="photoOK"
-  class="photoOK"
->
-✓ FOTO DRIVER SUDAH DIAMBIL
-</div>
-
-
-<button
-  id="startBtn"
-  class="scanBtn"
-  onclick="startScanner()"
->
-📦 MULAI SCAN AWB
-</button>
-
-
-<button
-  id="stopBtn"
-  class="stopBtn hidden"
-  onclick="stopScanner()"
->
-■ HENTIKAN SCANNER
-</button>
-
-
-<div id="reader"></div>
-
-
-<div
-  id="status"
-  class="status"
->
-Menghubungkan ke sistem...
-</div>
-
-
-<div class="stats">
-
-
-<div class="stat">
-
-<div
-  id="count"
-  class="number"
->
-0
-</div>
-
-<div class="statLabel">
-AWB TER-SCAN
-</div>
-
-</div>
-
-
-<div class="stat">
-
-<div
-  id="duplicate"
-  class="number"
->
-0
-</div>
-
-<div class="statLabel">
-DUPLIKAT
-</div>
-
-</div>
-
-
-</div>
-
-
-<div
-  id="awbList"
-  class="list"
->
-
-<div class="empty">
-Belum ada AWB yang discan.
-</div>
-
-</div>
-
-
-<button
-  id="saveBtn"
-  class="saveBtn"
-  onclick="saveAll()"
->
-💾 SIMPAN SEMUA (0)
-</button>
-
-
-<button
-  class="clearBtn"
-  onclick="clearAll()"
->
-🗑 HAPUS SEMUA AWB
-</button>
-
-
-</div>
-
-</div>
-
-
-<!-- ================================= -->
-<!-- FORM BACKEND -->
-<!-- ================================= -->
-
-<iframe
-  name="saveFrame"
-  class="hidden"
-></iframe>
-
-
-<form
-  id="saveForm"
-  method="POST"
-  target="saveFrame"
-  class="hidden"
->
-
-<input
-  id="formRequestId"
-  name="requestId"
->
-
-<input
-  id="formPayload"
-  name="payload"
->
-
-</form>
-
-
-<script>
-
-
-// ==================================================
-// BACKEND
-// ==================================================
-
-const API_URL =
-'https://script.google.com/macros/s/AKfycbxJogfe_UYQD0ucBJb84tNixR97mv5dVVSt5tmjqDVYzfiH1HYPC4FqPZpTd_H6CTs7/exec';
-
-
-let scanner = null;
-
-let awbs = [];
-
-let duplicateCount = 0;
-
-let lastCode = '';
-
-let lastTime = 0;
-
-
-// FOTO DRIVER
-
-let photoStream = null;
-
-let photoBase64 = '';
-
-
-// ==================================================
-// LOAD
-// ==================================================
-
-window.addEventListener(
-  'load',
-  function(){
-
-    const now =
-      new Date();
-
-
-    const local =
-      new Date(
-        now.getTime() -
-        now.getTimezoneOffset() *
-        60000
+      return jsonResponse(
+        getVendors()
       );
 
-
-    document
-      .getElementById(
-        'tanggal'
-      )
-      .value =
-      local
-        .toISOString()
-        .split('T')[0];
+    }
 
 
-    document
-      .getElementById(
-        'saveForm'
-      )
-      .action =
-      API_URL;
+    return jsonResponse({
+      success: true,
+      message: 'H JOEL LOGISTICS API aktif.'
+    });
 
 
-    loadVendor();
+  } catch (error) {
+
+    return jsonResponse({
+      success: false,
+      message: error.message
+    });
 
   }
-);
-
-
-// ==================================================
-// JSONP
-// ==================================================
-
-function jsonp(params){
-
-  return new Promise(
-    function(resolve,reject){
-
-      const callback =
-        'cb_' +
-        Date.now() +
-        '_' +
-        Math.random()
-          .toString(36)
-          .slice(2);
-
-
-      const script =
-        document.createElement(
-          'script'
-        );
-
-
-      const timeout =
-        setTimeout(
-          function(){
-
-            cleanup();
-
-            reject(
-              new Error(
-                'Koneksi backend timeout'
-              )
-            );
-
-          },
-          15000
-        );
-
-
-      function cleanup(){
-
-        clearTimeout(timeout);
-
-        delete window[
-          callback
-        ];
-
-        script.remove();
-
-      }
-
-
-      window[
-        callback
-      ] =
-        function(data){
-
-          cleanup();
-
-          resolve(data);
-
-        };
-
-
-      const url =
-        new URL(
-          API_URL
-        );
-
-
-      Object
-        .entries(
-          params || {}
-        )
-        .forEach(
-          function(entry){
-
-            url
-              .searchParams
-              .set(
-                entry[0],
-                entry[1]
-              );
-
-          }
-        );
-
-
-      url
-        .searchParams
-        .set(
-          'prefix',
-          callback
-        );
-
-
-      url
-        .searchParams
-        .set(
-          '_',
-          Date.now()
-        );
-
-
-      script.src =
-        url.toString();
-
-
-      script.onerror =
-        function(){
-
-          cleanup();
-
-          reject(
-            new Error(
-              'Koneksi backend gagal'
-            )
-          );
-
-        };
-
-
-      document
-        .head
-        .appendChild(
-          script
-        );
-
-    }
-  );
 
 }
 
 
-// ==================================================
-// VENDOR
-// ==================================================
 
-async function loadVendor(){
+function doPost(e) {
 
-  const vendorSelect =
-    document.getElementById(
-      'vendor'
-    );
+  try {
 
+    if (
+      !e ||
+      !e.postData ||
+      !e.postData.contents
+    ) {
 
-  try{
+      throw new Error(
+        'Data POST tidak ditemukan.'
+      );
+
+    }
+
 
     const data =
-      await jsonp({
-        action:
-          'master'
-      });
+      JSON.parse(
+        e.postData.contents
+      );
 
 
-    if(
-      !data ||
-      !data.success
-    ){
+    if (
+      data.action === 'save'
+    ) {
 
-      throw new Error(
-        'Data Vendor gagal dibaca'
+      return jsonResponse(
+        saveOutbound(data)
       );
 
     }
 
 
-    vendorSelect.innerHTML =
-      '<option value="">-- Pilih Vendor --</option>';
-
-
-    (data.vendors || [])
-      .forEach(
-        function(v){
-
-          const option =
-            document.createElement(
-              'option'
-            );
-
-
-          option.value =
-            v;
-
-          option.textContent =
-            v;
-
-
-          vendorSelect
-            .appendChild(
-              option
-            );
-
-        }
-      );
-
-
-    if(
-      (data.vendors || [])
-        .length === 0
-    ){
-
-      setStatus(
-        'Data Vendor di Validation kosong.',
-        'warn'
-      );
-
-    }else{
-
-      setStatus(
-        '✓ Sistem siap digunakan.',
-        'ok'
-      );
-
-    }
-
-
-  }catch(err){
-
-    vendorSelect.innerHTML =
-      '<option value="">Vendor gagal dimuat</option>';
-
-
-    setStatus(
-      'Gagal memuat Vendor: ' +
-      err.message,
-      'error'
+    throw new Error(
+      'Action tidak dikenal.'
     );
+
+
+  } catch (error) {
+
+    return jsonResponse({
+      success: false,
+      message: error.message
+    });
 
   }
 
 }
 
 
-// ==================================================
-// FOTO DRIVER - BUKA KAMERA
-// ==================================================
 
-async function openPhotoCamera(){
+function jsonResponse(data) {
 
-  // scanner AWB harus berhenti dulu
-  if(scanner){
-
-    await stopScanner();
-
-  }
-
-
-  closePhotoCamera();
-
-
-  try{
-
-    photoStream =
-      await navigator
-        .mediaDevices
-        .getUserMedia({
-
-          video:{
-
-            facingMode:{
-              ideal:'environment'
-            },
-
-            width:{
-              ideal:1280
-            },
-
-            height:{
-              ideal:720
-            }
-
-          },
-
-          audio:false
-
-        });
-
-
-    const video =
-      document.getElementById(
-        'photoVideo'
-      );
-
-
-    video.srcObject =
-      photoStream;
-
-
-    document
-      .getElementById(
-        'photoCameraArea'
-      )
-      .classList
-      .remove(
-        'hidden'
-      );
-
-
-    document
-      .getElementById(
-        'openPhotoBtn'
-      )
-      .classList
-      .add(
-        'hidden'
-      );
-
-
-    setStatus(
-      'Kamera Foto Driver aktif.',
-      'ok'
-    );
-
-
-  }catch(err){
-
-    photoStream = null;
-
-
-    setStatus(
-      'Kamera Foto Driver gagal: ' +
-      (
-        err.message ||
-        err
-      ),
-      'error'
-    );
-
-  }
-
-}
-
-
-// ==================================================
-// AMBIL FOTO
-// ==================================================
-
-function captureDriverPhoto(){
-
-  const video =
-    document.getElementById(
-      'photoVideo'
-    );
-
-
-  if(
-    !video.videoWidth ||
-    !video.videoHeight
-  ){
-
-    return setStatus(
-      'Kamera belum siap.',
-      'warn'
-    );
-
-  }
-
-
-  const canvas =
-    document.getElementById(
-      'photoCanvas'
-    );
-
-
-  // perkecil untuk menghemat upload
-  const maxWidth =
-    900;
-
-
-  let width =
-    video.videoWidth;
-
-  let height =
-    video.videoHeight;
-
-
-  if(
-    width >
-    maxWidth
-  ){
-
-    height =
-      Math.round(
-        height *
-        maxWidth /
-        width
-      );
-
-    width =
-      maxWidth;
-
-  }
-
-
-  canvas.width =
-    width;
-
-  canvas.height =
-    height;
-
-
-  const ctx =
-    canvas.getContext(
-      '2d'
-    );
-
-
-  ctx.drawImage(
-    video,
-    0,
-    0,
-    width,
-    height
-  );
-
-
-  photoBase64 =
-    canvas.toDataURL(
-      'image/jpeg',
-      0.65
-    );
-
-
-  const preview =
-    document.getElementById(
-      'photoPreview'
-    );
-
-
-  preview.src =
-    photoBase64;
-
-
-  preview.style.display =
-    'block';
-
-
-  document
-    .getElementById(
-      'photoOK'
+  return ContentService
+    .createTextOutput(
+      JSON.stringify(data)
     )
-    .style.display =
-    'block';
-
-
-  closePhotoCamera();
-
-
-  setStatus(
-    '✓ Foto Driver berhasil diambil.',
-    'ok'
-  );
-
-}
-
-
-// ==================================================
-// TUTUP KAMERA FOTO
-// ==================================================
-
-function closePhotoCamera(){
-
-  if(photoStream){
-
-    photoStream
-      .getTracks()
-      .forEach(
-        function(track){
-
-          track.stop();
-
-        }
-      );
-
-  }
-
-
-  photoStream = null;
-
-
-  const video =
-    document.getElementById(
-      'photoVideo'
-    );
-
-
-  if(video){
-
-    video.srcObject =
-      null;
-
-  }
-
-
-  document
-    .getElementById(
-      'photoCameraArea'
-    )
-    .classList
-    .add(
-      'hidden'
-    );
-
-
-  document
-    .getElementById(
-      'openPhotoBtn'
-    )
-    .classList
-    .remove(
-      'hidden'
+    .setMimeType(
+      ContentService.MimeType.JSON
     );
 
 }
 
 
-// ==================================================
-// START SCANNER AWB
-// ==================================================
 
-async function startScanner(){
+function getVendors() {
 
-  const driver =
-    document
-      .getElementById(
-        'driver'
-      )
-      .value
-      .trim();
+  const ss =
+    SpreadsheetApp
+      .getActiveSpreadsheet();
 
 
-  const platNo =
-    document
-      .getElementById(
-        'platNo'
-      )
-      .value
-      .trim();
-
-
-  const vendor =
-    document
-      .getElementById(
-        'vendor'
-      )
-      .value;
-
-
-  if(!driver){
-
-    return setStatus(
-      'Nama Driver wajib diisi.',
-      'error'
+  const sheet =
+    ss.getSheetByName(
+      VALIDATION_SHEET
     );
+
+
+  if (!sheet) {
+
+    return {
+      success: false,
+      message:
+        'Sheet Validation tidak ditemukan.',
+      vendors: []
+    };
 
   }
 
 
-  if(!platNo){
-
-    return setStatus(
-      'Plat No wajib diisi.',
-      'error'
-    );
-
-  }
+  const lastRow =
+    sheet.getLastRow();
 
 
-  if(!vendor){
+  if (lastRow < 2) {
 
-    return setStatus(
-      'Vendor wajib dipilih.',
-      'error'
-    );
+    return {
+      success: true,
+      vendors: []
+    };
 
   }
 
 
-  if(!photoBase64){
+  /*
+  ==========================================================
+  DAFTAR VENDOR DIAMBIL DARI KOLOM A
+  MULAI BARIS 2
+  ==========================================================
+  */
 
-    return setStatus(
-      'Ambil Foto Driver terlebih dahulu.',
-      'error'
-    );
-
-  }
-
-
-  // pastikan kamera foto sudah mati
-  closePhotoCamera();
-
-
-  try{
-
-    scanner =
-      new Html5Qrcode(
-        'reader'
-      );
-
-
-    const cameras =
-      await Html5Qrcode
-        .getCameras();
-
-
-    if(
-      !cameras ||
-      !cameras.length
-    ){
-
-      throw new Error(
-        'Kamera tidak ditemukan'
-      );
-
-    }
-
-
-    let cameraId =
-      cameras[
-        cameras.length - 1
-      ].id;
-
-
-    const rear =
-      cameras.find(
-        function(c){
-
-          return /back|rear|environment/i
-            .test(
-              c.label || ''
-            );
-
-        }
-      );
-
-
-    if(rear){
-
-      cameraId =
-        rear.id;
-
-    }
-
-
-    await scanner.start(
-
-      cameraId,
-
-      {
-
-        fps:12,
-
-        qrbox:
-          function(w,h){
-
-            return{
-
-              width:
-                Math.floor(
-                  w * 0.90
-                ),
-
-              height:
-                Math.min(
-                  150,
-                  Math.floor(
-                    h * 0.40
-                  )
-                )
-
-            };
-
-          },
-
-        aspectRatio:
-          1.7
-
-      },
-
-      onScan,
-
-      function(){}
-
-    );
-
-
-    document
-      .getElementById(
-        'startBtn'
+  let vendors =
+    sheet
+      .getRange(
+        2,
+        1,
+        lastRow - 1,
+        1
       )
-      .classList
-      .add(
-        'hidden'
-      );
-
-
-    document
-      .getElementById(
-        'stopBtn'
+      .getDisplayValues()
+      .flat()
+      .map(
+        value =>
+          String(value).trim()
       )
-      .classList
-      .remove(
-        'hidden'
-      );
+      .filter(Boolean);
 
 
-    setStatus(
-      '📦 Scanner aktif. Scan AWB berulang kali.',
-      'ok'
-    );
+  /*
+  Hilangkan vendor duplikat.
+  */
+
+  vendors =
+    [...new Set(vendors)];
 
 
-  }catch(err){
-
-    scanner = null;
-
-
-    setStatus(
-      'Kamera scanner gagal: ' +
-      (
-        err.message ||
-        err
-      ),
-      'error'
-    );
-
-  }
+  return {
+    success: true,
+    vendors: vendors
+  };
 
 }
 
 
-// ==================================================
-// STOP SCANNER
-// ==================================================
 
-async function stopScanner(){
+function saveOutbound(data) {
 
-  if(scanner){
-
-    try{
-
-      await scanner.stop();
-
-      scanner.clear();
-
-    }catch(e){}
-
-  }
-
-
-  scanner = null;
-
-
-  document
-    .getElementById(
-      'startBtn'
-    )
-    .classList
-    .remove(
-      'hidden'
-    );
-
-
-  document
-    .getElementById(
-      'stopBtn'
-    )
-    .classList
-    .add(
-      'hidden'
-    );
-
-
-  setStatus(
-    'Scanner dihentikan.',
-    'warn'
-  );
-
-}
-
-
-// ==================================================
-// HASIL SCAN
-// ==================================================
-
-function onScan(text){
-
-  const awb =
+  const tanggalPickup =
     String(
-      text || ''
-    )
-      .trim()
-      .replace(
-        /\s+/g,
-        ''
-      );
+      data.tanggalPickup || ''
+    ).trim();
 
 
-  if(!awb){
-    return;
-  }
-
-
-  const now =
-    Date.now();
-
-
-  // kamera sering membaca barcode sama
-  // beberapa kali dengan sangat cepat
-  if(
-    awb === lastCode &&
-    now - lastTime <
-    1800
-  ){
-
-    return;
-
-  }
-
-
-  lastCode =
-    awb;
-
-  lastTime =
-    now;
-
-
-  // duplicate dalam batch lokal
-  if(
-    awbs.includes(
-      awb
-    )
-  ){
-
-    duplicateCount++;
-
-
-    document
-      .getElementById(
-        'duplicate'
-      )
-      .textContent =
-      duplicateCount;
-
-
-    setStatus(
-      '⚠ AWB DUPLIKAT: ' +
-      awb,
-      'warn'
-    );
-
-
-    if(
-      navigator.vibrate
-    ){
-
-      navigator.vibrate(
-        [100,50,100]
-      );
-
-    }
-
-
-    return;
-
-  }
-
-
-  awbs.push(
-    awb
-  );
-
-
-  render();
-
-
-  setStatus(
-    '✓ AWB ' +
-    awb +
-    ' ditambahkan.',
-    'ok'
-  );
-
-
-  if(
-    navigator.vibrate
-  ){
-
-    navigator.vibrate(
-      60
-    );
-
-  }
-
-}
-
-
-// ==================================================
-// RENDER AWB
-// ==================================================
-
-function render(){
-
-  const countEl =
-    document.getElementById(
-      'count'
-    );
-
-
-  const saveBtn =
-    document.getElementById(
-      'saveBtn'
-    );
-
-
-  const list =
-    document.getElementById(
-      'awbList'
-    );
-
-
-  countEl.textContent =
-    awbs.length;
-
-
-  saveBtn.textContent =
-    '💾 SIMPAN SEMUA (' +
-    awbs.length +
-    ')';
-
-
-  list.innerHTML =
-    '';
-
-
-  if(
-    awbs.length === 0
-  ){
-
-    list.innerHTML =
-      '<div class="empty">' +
-      'Belum ada AWB yang discan.' +
-      '</div>';
-
-    return;
-
-  }
-
-
-  awbs
-    .slice()
-    .reverse()
-    .forEach(
-      function(
-        awb,
-        reverseIndex
-      ){
-
-        const index =
-          awbs.length -
-          1 -
-          reverseIndex;
-
-
-        const row =
-          document.createElement(
-            'div'
-          );
-
-
-        row.className =
-          'row';
-
-
-        const text =
-          document.createElement(
-            'div'
-          );
-
-
-        text.className =
-          'awb';
-
-
-        text.textContent =
-          '✓ ' + awb;
-
-
-        const button =
-          document.createElement(
-            'button'
-          );
-
-
-        button.textContent =
-          'Hapus';
-
-
-        button.onclick =
-          function(){
-
-            awbs.splice(
-              index,
-              1
-            );
-
-            render();
-
-          };
-
-
-        row.append(
-          text,
-          button
-        );
-
-
-        list.appendChild(
-          row
-        );
-
-      }
-    );
-
-}
-
-
-// ==================================================
-// CLEAR
-// ==================================================
-
-function clearAll(){
-
-  if(
-    awbs.length === 0
-  ){
-
-    return;
-
-  }
-
-
-  if(
-    !confirm(
-      'Hapus semua AWB yang sudah discan?'
-    )
-  ){
-
-    return;
-
-  }
-
-
-  awbs = [];
-
-  duplicateCount = 0;
-
-
-  document
-    .getElementById(
-      'duplicate'
-    )
-    .textContent =
-    '0';
-
-
-  render();
-
-
-  setStatus(
-    'Daftar AWB dikosongkan.',
-    'warn'
-  );
-
-}
-
-
-// ==================================================
-// SIMPAN SEMUA
-// ==================================================
-
-async function saveAll(){
-
-  const tanggal =
-    document
-      .getElementById(
-        'tanggal'
-      )
-      .value;
-
-
-  const driver =
-    document
-      .getElementById(
-        'driver'
-      )
-      .value
-      .trim();
+  const namaDriver =
+    String(
+      data.namaDriver || ''
+    ).trim();
 
 
   const platNo =
-    document
-      .getElementById(
-        'platNo'
-      )
-      .value
+    String(
+      data.platNo || ''
+    )
       .trim()
       .toUpperCase();
 
 
   const vendor =
-    document
-      .getElementById(
-        'vendor'
+    String(
+      data.vendor || ''
+    ).trim();
+
+
+  let awbs =
+    Array.isArray(data.awbs)
+      ? data.awbs
+      : [];
+
+
+  awbs =
+    awbs
+      .map(
+        awb =>
+          String(awb).trim()
       )
-      .value;
+      .filter(Boolean);
 
 
-  if(!tanggal){
+  /*
+  Hilangkan AWB duplikat.
+  */
 
-    return setStatus(
-      'Tanggal Pick Up wajib diisi.',
-      'error'
+  awbs =
+    [...new Set(awbs)];
+
+
+
+  if (!tanggalPickup) {
+
+    throw new Error(
+      'Tanggal Pick Up wajib diisi.'
     );
 
   }
 
 
-  if(!driver){
+  if (!namaDriver) {
 
-    return setStatus(
-      'Nama Driver wajib diisi.',
-      'error'
+    throw new Error(
+      'Nama Driver wajib diisi.'
     );
 
   }
 
 
-  if(!platNo){
+  if (!platNo) {
 
-    return setStatus(
-      'Plat No wajib diisi.',
-      'error'
+    throw new Error(
+      'Plat No wajib diisi.'
     );
 
   }
 
 
-  if(!vendor){
+  if (!vendor) {
 
-    return setStatus(
-      'Vendor wajib dipilih.',
-      'error'
+    throw new Error(
+      'Vendor wajib dipilih.'
     );
 
   }
 
 
-  if(!photoBase64){
-
-    return setStatus(
-      'Foto Driver wajib diambil.',
-      'error'
-    );
-
-  }
-
-
-  if(
+  if (
     awbs.length === 0
-  ){
+  ) {
 
-    return setStatus(
-      'Belum ada AWB yang discan.',
-      'warn'
+    throw new Error(
+      'Belum ada AWB.'
     );
 
   }
 
 
-  const saveBtn =
-    document.getElementById(
-      'saveBtn'
+  if (
+    !data.fotoDriver
+  ) {
+
+    throw new Error(
+      'Foto Driver wajib diambil.'
+    );
+
+  }
+
+
+
+  /*
+  ==========================================================
+  AMBIL SHEET OUTBOUND
+  ==========================================================
+  */
+
+  const ss =
+    SpreadsheetApp
+      .getActiveSpreadsheet();
+
+
+  let sheet =
+    ss.getSheetByName(
+      SHEET_NAME
     );
 
 
-  const requestId =
-    'REQ_' +
-    Date.now() +
-    '_' +
-    Math.random()
-      .toString(36)
-      .slice(2);
+  /*
+  Kalau sheet Outbound belum ada,
+  otomatis dibuat.
+  */
+
+  if (!sheet) {
+
+    sheet =
+      ss.insertSheet(
+        SHEET_NAME
+      );
 
 
-  const payload = {
+    sheet.getRange(
+      1,
+      1,
+      1,
+      7
+    ).setValues([
+      [
+        'Tanggal Pick Up',
+        'Timestamp',
+        'AWB',
+        'Nama Driver',
+        'Plat No',
+        'Vendor',
+        'Foto Driver'
+      ]
+    ]);
 
-    tanggal:
-      tanggal,
+  }
 
-    driver:
-      driver,
 
-    platNo:
-      platNo,
 
-    vendor:
-      vendor,
+  /*
+  ==========================================================
+  UPLOAD FOTO DRIVER
+  ==========================================================
+  */
 
-    fotoDriver:
-      photoBase64,
+  const fotoUrl =
+    saveDriverPhoto(
+      data.fotoDriver,
+      namaDriver,
+      platNo
+    );
 
-    awbs:
-      awbs
+
+
+  /*
+  ==========================================================
+  TANGGAL PICK UP
+  ==========================================================
+  */
+
+  const pickupParts =
+    tanggalPickup.split('-');
+
+
+  const pickupDate =
+    new Date(
+      Number(pickupParts[0]),
+      Number(pickupParts[1]) - 1,
+      Number(pickupParts[2])
+    );
+
+
+
+  /*
+  ==========================================================
+  TIMESTAMP
+  ==========================================================
+  */
+
+  const timestamp =
+    new Date();
+
+
+
+  /*
+  ==========================================================
+  BUAT BARIS
+  ==========================================================
+  */
+
+  const rows =
+    awbs.map(
+      awb => [
+
+        pickupDate,
+
+        timestamp,
+
+        awb,
+
+        namaDriver,
+
+        platNo,
+
+        vendor,
+
+        fotoUrl
+
+      ]
+    );
+
+
+
+  const startRow =
+    sheet.getLastRow() + 1;
+
+
+
+  /*
+  Tulis semua AWB sekaligus.
+  */
+
+  sheet
+    .getRange(
+      startRow,
+      1,
+      rows.length,
+      7
+    )
+    .setValues(rows);
+
+
+
+  /*
+  ==========================================================
+  FORMAT
+  ==========================================================
+  */
+
+  sheet
+    .getRange(
+      startRow,
+      1,
+      rows.length,
+      1
+    )
+    .setNumberFormat(
+      'dd/MM/yyyy'
+    );
+
+
+  sheet
+    .getRange(
+      startRow,
+      2,
+      rows.length,
+      1
+    )
+    .setNumberFormat(
+      'dd/MM/yyyy HH:mm:ss'
+    );
+
+
+  /*
+  AWB dibuat TEXT agar angka panjang
+  tidak berubah menjadi notasi ilmiah.
+  */
+
+  sheet
+    .getRange(
+      startRow,
+      3,
+      rows.length,
+      1
+    )
+    .setNumberFormat('@');
+
+
+  /*
+  Plat nomor dibuat TEXT.
+  */
+
+  sheet
+    .getRange(
+      startRow,
+      5,
+      rows.length,
+      1
+    )
+    .setNumberFormat('@');
+
+
+
+  return {
+
+    success: true,
+
+    jumlah:
+      rows.length,
+
+    message:
+      rows.length +
+      ' AWB berhasil disimpan.',
+
+    fotoUrl:
+      fotoUrl
 
   };
 
-
-  document
-    .getElementById(
-      'formRequestId'
-    )
-    .value =
-    requestId;
+}
 
 
-  document
-    .getElementById(
-      'formPayload'
-    )
-    .value =
-    JSON.stringify(
-      payload
-    );
 
+function saveDriverPhoto(
+  dataUrl,
+  namaDriver,
+  platNo
+) {
 
-  saveBtn.disabled =
-    true;
+  if (
+    !FOTO_FOLDER_ID ||
+    FOTO_FOLDER_ID ===
+      'PASTE_ID_FOLDER_FOTO_DI_SINI'
+  ) {
 
-
-  saveBtn.textContent =
-    '⏳ MENYIMPAN...';
-
-
-  setStatus(
-    'Sedang menyimpan ' +
-    awbs.length +
-    ' AWB...',
-    'warn'
-  );
-
-
-  document
-    .getElementById(
-      'saveForm'
-    )
-    .submit();
-
-
-  try{
-
-    let result =
-      null;
-
-
-    // tunggu hasil Apps Script
-    for(
-      let i = 0;
-      i < 35;
-      i++
-    ){
-
-      await new Promise(
-        function(resolve){
-
-          setTimeout(
-            resolve,
-            700
-          );
-
-        }
-      );
-
-
-      const data =
-        await jsonp({
-
-          action:
-            'result',
-
-          requestId:
-            requestId
-
-        });
-
-
-      if(
-        !data.pending
-      ){
-
-        result =
-          data;
-
-        break;
-
-      }
-
-    }
-
-
-    if(!result){
-
-      throw new Error(
-        'Server tidak memberikan respons.'
-      );
-
-    }
-
-
-    if(
-      result.success
-    ){
-
-      const saved =
-        result.saved || 0;
-
-
-      const duplicates =
-        result.duplicateCount || 0;
-
-
-      setStatus(
-
-        '✓ BERHASIL — ' +
-        saved +
-        ' AWB tersimpan' +
-        (
-          duplicates
-            ? ' • ' +
-              duplicates +
-              ' duplikat'
-            : ''
-        ),
-
-        'ok'
-
-      );
-
-
-      // setelah save, AWB dikosongkan.
-      // driver/plat/vendor/foto tetap.
-      awbs = [];
-
-      duplicateCount = 0;
-
-
-      document
-        .getElementById(
-          'duplicate'
-        )
-        .textContent =
-        '0';
-
-
-      render();
-
-
-    }else{
-
-      setStatus(
-
-        result.message ||
-        'Gagal menyimpan data.',
-
-        result.duplicateOnly
-          ? 'warn'
-          : 'error'
-
-      );
-
-    }
-
-
-  }catch(err){
-
-    setStatus(
-      'Gagal menyimpan: ' +
-      err.message,
-      'error'
+    throw new Error(
+      'ID Folder Foto Driver belum dimasukkan di Kode.gs.'
     );
 
   }
 
 
-  saveBtn.disabled =
-    false;
 
+  /*
+  Ambil folder Drive berdasarkan ID.
+  */
 
-  render();
-
-}
-
-
-// ==================================================
-// STATUS
-// ==================================================
-
-function setStatus(
-  text,
-  type
-){
-
-  const el =
-    document.getElementById(
-      'status'
+  const folder =
+    DriveApp.getFolderById(
+      FOTO_FOLDER_ID
     );
 
 
-  el.className =
-    'status ' +
-    (
-      type || ''
+
+  /*
+  Pisahkan header Base64.
+  */
+
+  const parts =
+    String(dataUrl)
+      .split(',');
+
+
+  if (
+    parts.length < 2
+  ) {
+
+    throw new Error(
+      'Format Foto Driver tidak valid.'
+    );
+
+  }
+
+
+
+  const header =
+    parts[0];
+
+
+  const base64 =
+    parts[1];
+
+
+
+  const mimeMatch =
+    header.match(
+      /data:(.*?);base64/
     );
 
 
-  el.textContent =
-    text;
+  const mimeType =
+    mimeMatch
+      ? mimeMatch[1]
+      : 'image/jpeg';
+
+
+
+  const bytes =
+    Utilities
+      .base64Decode(
+        base64
+      );
+
+
+
+  /*
+  Bersihkan nama driver untuk
+  dijadikan nama file.
+  */
+
+  const safeDriver =
+    namaDriver
+      .replace(
+        /[^a-zA-Z0-9\s_-]/g,
+        ''
+      )
+      .replace(
+        /\s+/g,
+        '_'
+      );
+
+
+  const safePlat =
+    platNo
+      .replace(
+        /[^a-zA-Z0-9]/g,
+        '_'
+      );
+
+
+
+  const timestamp =
+    Utilities.formatDate(
+      new Date(),
+      Session.getScriptTimeZone(),
+      'yyyyMMdd_HHmmss'
+    );
+
+
+
+  const fileName =
+    'DRIVER_' +
+    safeDriver +
+    '_' +
+    safePlat +
+    '_' +
+    timestamp +
+    '.jpg';
+
+
+
+  const blob =
+    Utilities.newBlob(
+      bytes,
+      mimeType,
+      fileName
+    );
+
+
+
+  const file =
+    folder.createFile(
+      blob
+    );
+
+
+
+  /*
+  Mencoba membuat link foto
+  dapat dilihat melalui link.
+  */
+
+  try {
+
+    file.setSharing(
+      DriveApp.Access.ANYONE_WITH_LINK,
+      DriveApp.Permission.VIEW
+    );
+
+  } catch (error) {
+
+    /*
+    Jika Google Workspace melarang
+    public sharing, file tetap tersimpan.
+    */
+
+    console.log(
+      'Sharing foto tidak dapat diubah: ' +
+      error.message
+    );
+
+  }
+
+
+
+  return file.getUrl();
 
 }
-
-</script>
-
-</body>
-
-</html>
