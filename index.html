@@ -2,7 +2,6 @@
 <html lang="id">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta
@@ -11,14 +10,6 @@
 >
 
 <meta name="theme-color" content="#ff6a00">
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="./apple-touch-icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="H JOEL Ops">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="application-name" content="H JOEL Ops">
-
 
 <title>H JOEL LOGISTICS</title>
 
@@ -233,7 +224,7 @@ button:disabled{
   font-size:11px;
 }
 
-/* FOTO */
+/* PHOTO */
 
 #photoCameraBox{
   display:none;
@@ -243,9 +234,9 @@ button:disabled{
 #photoVideo{
   width:100%;
   max-height:420px;
-  object-fit:cover;
   background:#111;
   border-radius:12px;
+  object-fit:cover;
 }
 
 .photo-actions{
@@ -265,8 +256,8 @@ button:disabled{
   width:100%;
   max-height:380px;
   object-fit:contain;
-  border-radius:10px;
   background:#f5f5f5;
+  border-radius:10px;
 }
 
 /* SCANNER */
@@ -390,30 +381,6 @@ button:disabled{
   font-size:11px;
 }
 
-
-/* PWA INSTALL */
-.install-app-btn{
-  width:100%;
-  min-height:48px;
-  margin-top:18px;
-  border:1px solid #ff6a00;
-  background:#fff;
-  color:#ff6a00;
-  font-size:14px;
-  font-weight:900;
-}
-.install-note{
-  display:none;
-  margin-top:9px;
-  padding:10px;
-  border-radius:9px;
-  background:#fff0df;
-  color:#7a4300;
-  font-size:12px;
-  line-height:1.45;
-  text-align:center;
-}
-
 </style>
 
 </head>
@@ -421,8 +388,6 @@ button:disabled{
 <body>
 
 <div class="app">
-
-<!-- HEADER -->
 
 <div class="header">
 
@@ -441,7 +406,7 @@ OPERASIONAL DISTRIBUSI
 
 <div class="content">
 
-<!-- MENU DEPAN -->
+<!-- MENU -->
 
 <div id="menuPage">
 
@@ -476,9 +441,6 @@ PILIH PROSES
 </button>
 
 </div>
-
-<button type="button" class="install-app-btn" id="installAppBtn" onclick="installApp()">📲 INSTALL APLIKASI</button>
-<div class="install-note" id="installNote"></div>
 
 </div>
 
@@ -558,7 +520,7 @@ Plat No
 </div>
 
 
-<!-- VENDOR -->
+<!-- VENDOR MANUAL -->
 
 <div class="field">
 
@@ -566,13 +528,12 @@ Plat No
 Vendor
 </label>
 
-<select id="vendor">
-
-<option value="">
-Memuat Vendor...
-</option>
-
-</select>
+<input
+  type="text"
+  id="vendor"
+  placeholder="Masukkan Vendor"
+  autocomplete="off"
+>
 
 </div>
 
@@ -702,7 +663,7 @@ TUTUP
 <div class="divider"></div>
 
 
-<!-- SCAN AWB -->
+<!-- AWB -->
 
 <div class="section-title">
 SCAN AWB
@@ -745,7 +706,6 @@ SCAN AWB
 >
 0 AWB
 </div>
-
 
 <button
   type="button"
@@ -802,10 +762,6 @@ H JOEL LOGISTICS
 
 <script>
 
-/* =====================================================
-CONFIG
-===================================================== */
-
 const API_URL =
 'https://script.google.com/macros/s/AKfycbwvSTmZkm9CGrEW3kJG8Du_THFSNX0fE49y97wElfXzANkfewhp-LuMtyPqZD8P4DWwCg/exec';
 
@@ -825,9 +781,9 @@ let photoBase64 = '';
 let audioContext = null;
 
 
-/* =====================================================
+/* ============================================
 START
-===================================================== */
+============================================ */
 
 document.addEventListener(
 'DOMContentLoaded',
@@ -841,9 +797,9 @@ function(){
 );
 
 
-/* =====================================================
-PILIH PROSES
-===================================================== */
+/* ============================================
+MENU
+============================================ */
 
 function selectProcess(process){
 
@@ -985,9 +941,6 @@ function selectProcess(process){
       'block';
 
 
-    /*
-    KHUSUS RETURN
-    */
     photoTitle.textContent =
       'FOTO TV+MOBIL';
 
@@ -1011,9 +964,9 @@ function selectProcess(process){
 }
 
 
-/* =====================================================
-KEMBALI
-===================================================== */
+/* ============================================
+BACK
+============================================ */
 
 async function backMenu(){
 
@@ -1045,9 +998,9 @@ async function backMenu(){
 }
 
 
-/* =====================================================
+/* ============================================
 TANGGAL
-===================================================== */
+============================================ */
 
 function setToday(){
 
@@ -1085,9 +1038,9 @@ function setToday(){
 }
 
 
-/* =====================================================
-VALIDATION
-===================================================== */
+/* ============================================
+KETERANGAN RETURN
+============================================ */
 
 function loadValidation(){
 
@@ -1106,20 +1059,10 @@ function loadValidation(){
     function(data){
 
 
-      const vendor =
-        document.getElementById(
-          'vendor'
-        );
-
-
       const keterangan =
         document.getElementById(
           'keterangan'
         );
-
-
-      vendor.innerHTML =
-        '<option value="">-- Pilih Vendor --</option>';
 
 
       keterangan.innerHTML =
@@ -1131,39 +1074,6 @@ function loadValidation(){
         data.success
       ){
 
-
-        (data.vendors || [])
-        .forEach(
-          function(item){
-
-
-            const option =
-              document.createElement(
-                'option'
-              );
-
-
-            option.value =
-              item;
-
-
-            option.textContent =
-              item;
-
-
-            vendor.appendChild(
-              option
-            );
-
-
-          }
-        );
-
-
-        /*
-        Keterangan dari Validation D4:D15
-        disediakan oleh Kode.gs
-        */
 
         (data.keterangans || [])
         .forEach(
@@ -1197,7 +1107,7 @@ function loadValidation(){
 
 
         showStatus(
-          'Validation gagal dimuat.',
+          'Keterangan Return gagal dimuat.',
           'error'
         );
 
@@ -1220,7 +1130,7 @@ function loadValidation(){
 
 
       showStatus(
-        'Validation gagal dimuat.',
+        'Keterangan Return gagal dimuat.',
         'error'
       );
 
@@ -1244,9 +1154,9 @@ function loadValidation(){
 }
 
 
-/* =====================================================
-KAMERA FOTO
-===================================================== */
+/* ============================================
+FOTO
+============================================ */
 
 async function openPhotoCamera(){
 
@@ -1340,7 +1250,7 @@ async function openPhotoCamera(){
 
 
     showStatus(
-      'Kamera tidak dapat dibuka. Izinkan akses kamera.',
+      'Kamera tidak dapat dibuka. Izinkan kamera pada browser.',
       'error'
     );
 
@@ -1350,9 +1260,9 @@ async function openPhotoCamera(){
 }
 
 
-/* =====================================================
-AMBIL FOTO
-===================================================== */
+/* ============================================
+CAPTURE FOTO
+============================================ */
 
 function capturePhoto(){
 
@@ -1480,9 +1390,9 @@ function capturePhoto(){
 }
 
 
-/* =====================================================
-TUTUP FOTO
-===================================================== */
+/* ============================================
+CLOSE FOTO
+============================================ */
 
 function closePhotoCamera(){
 
@@ -1534,9 +1444,9 @@ function closePhotoCamera(){
 }
 
 
-/* =====================================================
-START SCANNER
-===================================================== */
+/* ============================================
+SCANNER
+============================================ */
 
 async function startScanner(){
 
@@ -1544,8 +1454,7 @@ async function startScanner(){
 
 
   /*
-  RETURN SUDAH PUNYA 1 AWB
-  JANGAN SCAN LAGI
+  RETURN hanya boleh punya 1 AWB.
   */
 
   if(
@@ -1604,93 +1513,69 @@ async function startScanner(){
   }
 
 
+  scanner =
+    new Html5Qrcode(
+      'reader'
+    );
+
+
   try{
 
 
-    const cameras =
-      await Html5Qrcode
-        .getCameras();
-
-
-    if(
-      !cameras ||
-      cameras.length === 0
-    ){
-
-
-      throw new Error(
-        'Kamera tidak ditemukan.'
-      );
-
-
-    }
-
-
-    let cameraId =
-      cameras[
-        cameras.length-1
-      ].id;
-
-
-    const rear =
-      cameras.find(
-        function(camera){
-
-
-          return /back|rear|environment/i
-            .test(
-              camera.label
-            );
-
-
-        }
-      );
-
-
-    if(rear){
-
-      cameraId =
-        rear.id;
-
-    }
-
-
-    scanner =
-      new Html5Qrcode(
-        'reader'
-      );
-
+    /*
+    KAMERA BELAKANG.
+    Lebih stabil untuk HP daripada cameraId.
+    */
 
     await scanner.start(
 
-      cameraId,
+      {
+        facingMode:
+          'environment'
+      },
 
       {
 
-        fps:12,
+        fps:10,
 
         qrbox:
-          function(width){
+          function(
+            width,
+            height
+          ){
 
 
-            let w =
+            let boxWidth =
               Math.floor(
-                width*.90
+                width*.88
               );
 
 
-            if(w>380){
-              w=380;
+            if(
+              boxWidth > 360
+            ){
+
+              boxWidth =
+                360;
+
             }
 
 
             return{
-              width:w,
-              height:140
+
+              width:
+                boxWidth,
+
+              height:
+                130
+
             };
 
 
-          }
+          },
+
+        aspectRatio:
+          1.777778
 
       },
 
@@ -1729,7 +1614,7 @@ async function startScanner(){
 
 
       showStatus(
-        'Scanner aktif. Scan AWB berulang.',
+        'Scanner aktif. Silakan scan AWB.',
         'info'
       );
 
@@ -1740,15 +1625,71 @@ async function startScanner(){
   }catch(error){
 
 
-    console.error(error);
+    console.error(
+      'Scanner error:',
+      error
+    );
+
+
+    try{
+
+      scanner.clear();
+
+    }catch(e){}
 
 
     scanner =
       null;
 
 
+    let pesan =
+      'Kamera scanner gagal dibuka.';
+
+
+    if(
+      error &&
+      error.name ===
+      'NotAllowedError'
+    ){
+
+
+      pesan =
+        'Izin kamera ditolak. Izinkan kamera pada browser.';
+
+
+    }
+
+
+    else if(
+      error &&
+      error.name ===
+      'NotFoundError'
+    ){
+
+
+      pesan =
+        'Kamera belakang tidak ditemukan.';
+
+
+    }
+
+
+    else if(
+      error &&
+      error.name ===
+      'NotReadableError'
+    ){
+
+
+      pesan =
+        'Kamera sedang digunakan aplikasi lain.';
+
+
+    }
+
+
     showStatus(
-      'Kamera scanner gagal dibuka.',
+      pesan,
       'error'
     );
 
@@ -1758,9 +1699,9 @@ async function startScanner(){
 }
 
 
-/* =====================================================
-HASIL SCAN
-===================================================== */
+/* ============================================
+SCAN SUCCESS
+============================================ */
 
 async function scanSuccess(
   decodedText
@@ -1787,9 +1728,7 @@ async function scanSuccess(
 
 
   /*
-  ===================================================
-  RETURN = HANYA 1 AWB
-  ===================================================
+  RETURN = 1 AWB
   */
 
   if(
@@ -1853,8 +1792,7 @@ async function scanSuccess(
 
 
     /*
-    SETELAH 1 AWB
-    SCANNER OTOMATIS BERHENTI
+    Berhenti otomatis.
     */
 
     await stopScanner();
@@ -1870,9 +1808,7 @@ async function scanSuccess(
 
 
   /*
-  ===================================================
-  OUTBOUND + BAST = SCAN BERULANG
-  ===================================================
+  OUTBOUND & BAST MULTIPLE
   */
 
   if(
@@ -1957,9 +1893,9 @@ async function scanSuccess(
 }
 
 
-/* =====================================================
+/* ============================================
 STOP SCANNER
-===================================================== */
+============================================ */
 
 async function stopScanner(){
 
@@ -1971,13 +1907,36 @@ async function stopScanner(){
   try{
 
 
-    await scanner.stop();
+    const state =
+      scanner.getState();
+
+
+    if(
+      state ===
+        Html5QrcodeScannerState.SCANNING ||
+      state ===
+        Html5QrcodeScannerState.PAUSED
+    ){
+
+
+      await scanner.stop();
+
+
+    }
 
 
     scanner.clear();
 
 
-  }catch(error){}
+  }catch(error){
+
+
+    console.log(
+      error
+    );
+
+
+  }
 
 
   scanner =
@@ -1998,9 +1957,9 @@ async function stopScanner(){
 }
 
 
-/* =====================================================
-SUARA
-===================================================== */
+/* ============================================
+SOUND
+============================================ */
 
 function successBeep(){
 
@@ -2106,9 +2065,9 @@ function duplicateBeep(){
 }
 
 
-/* =====================================================
-DAFTAR AWB
-===================================================== */
+/* ============================================
+AWB LIST
+============================================ */
 
 function renderAwbs(){
 
@@ -2231,9 +2190,9 @@ function renderAwbs(){
 }
 
 
-/* =====================================================
-HAPUS AWB
-===================================================== */
+/* ============================================
+CLEAR AWB
+============================================ */
 
 function clearAwbs(){
 
@@ -2262,12 +2221,11 @@ function clearAwbs(){
 }
 
 
-/* =====================================================
-RESET SETELAH SIMPAN
-===================================================== */
+/* ============================================
+RESET
+============================================ */
 
 function resetApplication(){
-
 
   document.getElementById(
     'namaDriver'
@@ -2281,10 +2239,13 @@ function resetApplication(){
     '';
 
 
+  /*
+  Vendor manual dikosongkan.
+  */
   document.getElementById(
     'vendor'
-  ).selectedIndex =
-    0;
+  ).value =
+    '';
 
 
   document.getElementById(
@@ -2376,9 +2337,9 @@ function resetApplication(){
 }
 
 
-/* =====================================================
+/* ============================================
 SIMPAN
-===================================================== */
+============================================ */
 
 async function saveData(){
 
@@ -2403,10 +2364,13 @@ async function saveData(){
     ).value.trim();
 
 
+  /*
+  Vendor manual
+  */
   const vendor =
     document.getElementById(
       'vendor'
-    ).value;
+    ).value.trim();
 
 
   const keterangan =
@@ -2420,8 +2384,6 @@ async function saveData(){
       'reason'
     ).value.trim();
 
-
-  /* VALIDASI */
 
   if(!tanggal){
 
@@ -2456,7 +2418,7 @@ async function saveData(){
   if(!vendor){
 
     return showStatus(
-      'Vendor wajib dipilih.',
+      'Vendor wajib diisi.',
       'error'
     );
 
@@ -2465,7 +2427,7 @@ async function saveData(){
 
   if(
     currentProcess ===
-    'RETURN' &&
+      'RETURN' &&
     !keterangan
   ){
 
@@ -2481,7 +2443,7 @@ async function saveData(){
 
   if(
     currentProcess ===
-    'RETURN' &&
+      'RETURN' &&
     !reason
   ){
 
@@ -2522,7 +2484,8 @@ async function saveData(){
 
 
   if(
-    scannedAwbs.length === 0
+    scannedAwbs.length ===
+      0
   ){
 
 
@@ -2535,15 +2498,11 @@ async function saveData(){
   }
 
 
-  /*
-  KEAMANAN TAMBAHAN
-  RETURN HARUS TEPAT 1 AWB
-  */
-
   if(
     currentProcess ===
-    'RETURN' &&
-    scannedAwbs.length !== 1
+      'RETURN' &&
+    scannedAwbs.length !==
+      1
   ){
 
 
@@ -2581,46 +2540,35 @@ async function saveData(){
 
     const payload = {
 
-
       action:
         'save',
-
 
       process:
         currentProcess,
 
-
       tanggal:
         tanggal,
-
 
       namaDriver:
         driver,
 
-
       platNo:
         plat,
-
 
       vendor:
         vendor,
 
-
       keterangan:
         keterangan,
-
 
       reason:
         reason,
 
-
       awbs:
         scannedAwbs,
 
-
       fotoDriver:
         photoBase64
-
 
     };
 
@@ -2684,8 +2632,8 @@ async function saveData(){
 
 
     /*
-    KEMBALI KE DEPAN
-    DAN KOSONGKAN SEMUA
+    Setelah sukses:
+    kosongkan dan kembali ke menu depan.
     */
 
     resetApplication();
@@ -2694,7 +2642,9 @@ async function saveData(){
   }catch(error){
 
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     showStatus(
@@ -2720,9 +2670,9 @@ async function saveData(){
 }
 
 
-/* =====================================================
+/* ============================================
 STATUS
-===================================================== */
+============================================ */
 
 function showStatus(
   message,
@@ -2760,69 +2710,6 @@ function clearStatus(){
   status.textContent =
     '';
 
-}
-
-
-/* =====================================================
-PWA / INSTALL APLIKASI
-===================================================== */
-let deferredInstallPrompt = null;
-
-window.addEventListener('beforeinstallprompt', function(event){
-  event.preventDefault();
-  deferredInstallPrompt = event;
-  const btn = document.getElementById('installAppBtn');
-  if(btn){ btn.style.display = 'block'; }
-});
-
-window.addEventListener('appinstalled', function(){
-  deferredInstallPrompt = null;
-  const btn = document.getElementById('installAppBtn');
-  const note = document.getElementById('installNote');
-  if(btn){ btn.style.display = 'none'; }
-  if(note){
-    note.style.display = 'block';
-    note.textContent = 'Aplikasi H JOEL LOGISTICS sudah terpasang.';
-  }
-});
-
-function isIosDevice(){
-  return /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-}
-
-function isStandaloneMode(){
-  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-}
-
-async function installApp(){
-  const note = document.getElementById('installNote');
-
-  if(isStandaloneMode()){
-    note.style.display = 'block';
-    note.textContent = 'Aplikasi sudah terpasang dan sedang dibuka dalam mode aplikasi.';
-    return;
-  }
-
-  if(deferredInstallPrompt){
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = null;
-    return;
-  }
-
-  note.style.display = 'block';
-  if(isIosDevice()){
-    note.textContent = 'iPhone/iPad: buka halaman ini di Safari → tekan tombol Share → pilih Add to Home Screen / Tambahkan ke Layar Utama.';
-  }else{
-    note.textContent = 'Android: buka halaman ini di Chrome → menu ⋮ → Install app / Tambahkan ke layar utama. Jika pilihan belum muncul, refresh halaman sekali.';
-  }
-}
-
-if('serviceWorker' in navigator){
-  window.addEventListener('load', function(){
-    navigator.serviceWorker.register('./service-worker.js')
-      .catch(function(error){ console.error('Service Worker gagal:', error); });
-  });
 }
 
 </script>
