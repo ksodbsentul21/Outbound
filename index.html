@@ -1,26 +1,19 @@
 <!doctype html>
 <html lang="id">
-
 <head>
-
 <meta charset="utf-8">
 
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
->
+<meta name="viewport"
+content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 
 <meta name="theme-color" content="#111827">
 
-<title>SCAN OUTBOUND - H JOEL</title>
+<title>SCAN OUTBOUND - H JOEL LOGISTICS</title>
 
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 <style>
-
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -32,14 +25,14 @@ body{
 .app{
   max-width:520px;
   margin:auto;
-  background:#fff;
+  background:white;
   min-height:100vh;
 }
 
 .header{
   padding:20px 18px 18px;
   text-align:center;
-  border-bottom:4px solid #ff7518;
+  border-bottom:5px solid #ff7518;
 }
 
 .logo{
@@ -47,20 +40,19 @@ body{
   max-width:370px;
   height:auto;
   display:block;
-  margin:0 auto 12px;
+  margin:0 auto 15px;
 }
 
 .title{
   font-size:28px;
   font-weight:900;
-  margin-top:8px;
   letter-spacing:1px;
 }
 
 .subtitle{
   font-size:12px;
   color:#6b7280;
-  margin-top:5px;
+  margin-top:6px;
   letter-spacing:1px;
 }
 
@@ -73,18 +65,17 @@ label{
   font-size:13px;
   font-weight:900;
   color:#4b5563;
-  margin:17px 0 7px;
+  margin:18px 0 7px;
 }
 
-input,
-select{
+input,select{
   width:100%;
   height:54px;
   border:1px solid #d1d5db;
   border-radius:13px;
   padding:0 14px;
   font-size:17px;
-  background:#fff;
+  background:white;
 }
 
 input:focus,
@@ -103,6 +94,11 @@ button{
   cursor:pointer;
 }
 
+.photoBtn{
+  background:#374151;
+  color:white;
+}
+
 .scanBtn{
   margin-top:20px;
   background:#111827;
@@ -111,14 +107,14 @@ button{
 
 .stopBtn{
   margin-top:10px;
-  background:#fff;
+  background:white;
   border:1px solid #d1d5db;
 }
 
 .saveBtn{
   margin-top:15px;
   background:#ff7518;
-  color:#fff;
+  color:white;
 }
 
 .clearBtn{
@@ -196,6 +192,7 @@ button{
   flex:1;
   font-family:monospace;
   font-size:14px;
+  word-break:break-all;
 }
 
 .row button{
@@ -221,16 +218,25 @@ button{
 
 .photoPreview{
   width:100%;
-  max-height:260px;
+  max-height:300px;
   object-fit:cover;
   border-radius:13px;
   margin-top:10px;
   display:none;
+  border:1px solid #ddd;
+}
+
+.photoOK{
+  margin-top:8px;
+  font-size:13px;
+  font-weight:bold;
+  color:#065f46;
+  display:none;
 }
 
 </style>
-
 </head>
+
 
 <body>
 
@@ -238,102 +244,104 @@ button{
 
 <div class="header">
 
-  <img
-    src="logo.png"
-    alt="H JOEL LOGISTICS"
-    class="logo"
-  >
+<img
+src="logo.png"
+alt="H JOEL LOGISTICS"
+class="logo">
 
-  <div class="title">
-    SCAN OUTBOUND
-  </div>
+<div class="title">
+SCAN OUTBOUND
+</div>
 
-  <div class="subtitle">
-    OUTBOUND SCANNING SYSTEM
-  </div>
+<div class="subtitle">
+OUTBOUND SCANNING SYSTEM
+</div>
 
 </div>
 
+
 <div class="content">
 
-<label>
-TANGGAL PICK UP
-</label>
+
+<label>TANGGAL PICK UP</label>
 
 <input
-  type="date"
-  id="tanggal"
->
+type="date"
+id="tanggal">
 
 
-<label>
-NAMA DRIVER
-</label>
+<label>NAMA DRIVER</label>
 
 <input
-  type="text"
-  id="driver"
-  placeholder="Ketik nama driver"
->
+type="text"
+id="driver"
+placeholder="Ketik nama driver"
+autocomplete="off">
 
 
-<label>
-PLAT NO
-</label>
+<label>PLAT NO</label>
 
 <input
-  type="text"
-  id="platNo"
-  placeholder="Contoh: B 1234 XYZ"
-  style="text-transform:uppercase"
->
+type="text"
+id="platNo"
+placeholder="Contoh: F 1234 ABC"
+autocomplete="off"
+style="text-transform:uppercase">
 
 
-<label>
-VENDOR
-</label>
+<label>VENDOR</label>
 
 <select id="vendor">
 
-  <option value="">
-    Memuat data vendor...
-  </option>
+<option value="">
+Memuat data vendor...
+</option>
 
 </select>
 
 
-<label>
-FOTO DRIVER
-</label>
+<label>FOTO DRIVER</label>
 
+<button
+type="button"
+class="photoBtn"
+onclick="openDriverCamera()">
+📷 AMBIL FOTO DRIVER
+</button>
+
+<!-- INPUT DISEMBUNYIKAN.
+     Pada HP akan meminta kamera belakang -->
 <input
-  type="file"
-  id="fotoDriver"
-  accept="image/*"
-  capture="environment"
->
+type="file"
+id="cameraDriver"
+accept="image/*"
+capture="environment"
+class="hidden">
 
 <img
-  id="photoPreview"
-  class="photoPreview"
->
+id="photoPreview"
+class="photoPreview">
+
+<div
+id="photoOK"
+class="photoOK">
+✓ Foto Driver sudah diambil
+</div>
 
 
 <button
-  id="startBtn"
-  class="scanBtn"
-  onclick="startScanner()"
->
-📷 MULAI SCAN AWB
+id="startBtn"
+class="scanBtn"
+onclick="startScanner()">
+📦 MULAI SCAN AWB
 </button>
 
 
 <button
-  id="stopBtn"
-  class="stopBtn hidden"
-  onclick="stopScanner()"
->
-■ HENTIKAN KAMERA
+id="stopBtn"
+class="stopBtn hidden"
+onclick="stopScanner()">
+■ HENTIKAN SCANNER
 </button>
 
 
@@ -341,935 +349,1206 @@ FOTO DRIVER
 
 
 <div
-  id="status"
-  class="status"
->
+id="status"
+class="status">
 Menghubungkan ke sistem...
 </div>
 
 
 <div class="stats">
 
-  <div class="stat">
+<div class="stat">
 
-    <div
-      id="count"
-      class="number"
-    >
-      0
-    </div>
+<div
+id="count"
+class="number">
+0
+</div>
 
-    <div class="statLabel">
-      AWB TER-SCAN
-    </div>
+<div class="statLabel">
+AWB TER-SCAN
+</div>
 
-  </div>
+</div>
 
 
-  <div class="stat">
+<div class="stat">
 
-    <div
-      id="duplicate"
-      class="number"
-    >
-      0
-    </div>
+<div
+id="duplicate"
+class="number">
+0
+</div>
 
-    <div class="statLabel">
-      DUPLIKAT
-    </div>
+<div class="statLabel">
+DUPLIKAT
+</div>
 
-  </div>
+</div>
 
 </div>
 
 
 <div
-  id="awbList"
-  class="list"
->
+id="awbList"
+class="list">
 
-  <div class="empty">
-    Belum ada AWB yang discan.
-  </div>
+<div class="empty">
+Belum ada AWB yang discan.
+</div>
 
 </div>
 
 
 <button
-  id="saveBtn"
-  class="saveBtn"
-  onclick="saveAll()"
->
+id="saveBtn"
+class="saveBtn"
+onclick="saveAll()">
 💾 SIMPAN SEMUA (0)
 </button>
 
 
 <button
-  class="clearBtn"
-  onclick="clearAll()"
->
-HAPUS SEMUA AWB
+class="clearBtn"
+onclick="clearAll()">
+🗑 HAPUS SEMUA AWB
 </button>
 
+
 </div>
 </div>
 
+
+<!-- FORM BACKEND -->
 
 <iframe
-  name="saveFrame"
-  class="hidden">
+name="saveFrame"
+class="hidden">
 </iframe>
 
-
 <form
-  id="saveForm"
-  method="POST"
-  target="saveFrame"
-  class="hidden"
->
+id="saveForm"
+method="POST"
+target="saveFrame"
+class="hidden">
 
 <input
-  id="formRequestId"
-  name="requestId"
->
+id="formRequestId"
+name="requestId">
 
 <input
-  id="formPayload"
-  name="payload"
->
+id="formPayload"
+name="payload">
 
 </form>
 
 
 <script>
 
-/* ========================================
-   BACKEND APPS SCRIPT
-======================================== */
+/* ===========================
+   BACKEND GOOGLE APPS SCRIPT
+=========================== */
 
 const API_URL =
-'https://script.google.com/macros/s/AKfycbxJogfe_UYQD0ucBJb84tNixR97mv5dVVSt5tmjqDVYzfiH1HYPC4FqPZpTd_H6CTs7/exec';
+"https://script.google.com/macros/s/AKfycbxJogfe_UYQD0ucBJb84tNixR97mv5dVVSt5tmjqDVYzfiH1HYPC4FqPZpTd_H6CTs7/exec";
 
 
 let scanner=null;
+
 let awbs=[];
+
 let duplicateCount=0;
-let lastCode='';
+
+let lastCode="";
+
 let lastTime=0;
-let photoBase64='';
+
+let photoBase64="";
 
 
-/* ========================================
-   SAAT APLIKASI DIBUKA
-======================================== */
+/* ===========================
+   START APP
+=========================== */
 
-window.addEventListener('load',function(){
+window.addEventListener("load",function(){
 
-  const now=new Date();
+const now=new Date();
 
-  const local=new Date(
-    now.getTime()-
-    now.getTimezoneOffset()*60000
-  );
+const local=new Date(
+now.getTime()-
+now.getTimezoneOffset()*60000
+);
 
-  document.getElementById('tanggal').value=
-    local.toISOString().split('T')[0];
+document.getElementById("tanggal").value=
+local.toISOString().split("T")[0];
 
-  document.getElementById('saveForm').action=
-    API_URL;
+document.getElementById("saveForm").action=
+API_URL;
 
-  loadVendor();
+loadVendor();
 
 });
 
 
-/* ========================================
-   JSONP
-======================================== */
+/* ===========================
+   JSONP BACKEND
+=========================== */
 
 function jsonp(params){
 
-  return new Promise(function(resolve,reject){
+return new Promise(function(resolve,reject){
 
-    const callback=
-      'cb_'+Date.now()+
-      Math.random().toString(36).slice(2);
+const callback=
+"cb_"+Date.now()+
+Math.random().toString(36).slice(2);
 
-    const script=
-      document.createElement('script');
+const script=
+document.createElement("script");
 
-    window[callback]=function(data){
+window[callback]=function(data){
 
-      delete window[callback];
-      script.remove();
-      resolve(data);
+delete window[callback];
 
-    };
+script.remove();
 
-    const url=new URL(API_URL);
+resolve(data);
 
-    Object.entries(params).forEach(function(x){
-      url.searchParams.set(x[0],x[1]);
-    });
+};
 
-    url.searchParams.set('prefix',callback);
+const url=new URL(API_URL);
 
-    script.src=url.toString();
+Object.entries(params).forEach(function(x){
 
-    script.onerror=function(){
+url.searchParams.set(
+x[0],
+x[1]
+);
 
-      delete window[callback];
-      script.remove();
+});
 
-      reject(
-        new Error('Koneksi backend gagal')
-      );
+url.searchParams.set(
+"prefix",
+callback
+);
 
-    };
+script.src=
+url.toString();
 
-    document.head.appendChild(script);
+script.onerror=function(){
 
-  });
+delete window[callback];
+
+script.remove();
+
+reject(
+new Error("Koneksi backend gagal")
+);
+
+};
+
+document.head.appendChild(script);
+
+});
 
 }
 
 
-/* ========================================
+/* ===========================
    LOAD VENDOR
-======================================== */
+=========================== */
 
 async function loadVendor(){
 
-  const vendor=
-    document.getElementById('vendor');
+const vendor=
+document.getElementById("vendor");
 
-  try{
+try{
 
-    const data=
-      await jsonp({
-        action:'master'
-      });
+const data=
+await jsonp({
+action:"master"
+});
 
-    if(!data.success){
-      throw new Error('Data Vendor gagal dibaca');
-    }
+if(!data.success){
 
-    vendor.innerHTML=
-      '<option value="">-- Pilih Vendor --</option>';
+throw new Error(
+"Data Vendor gagal dibaca"
+);
 
-    (data.vendors||[]).forEach(function(v){
+}
 
-      const option=
-        document.createElement('option');
+vendor.innerHTML=
+'<option value="">-- Pilih Vendor --</option>';
 
-      option.value=v;
-      option.textContent=v;
+(data.vendors||[]).forEach(function(v){
 
-      vendor.appendChild(option);
+const option=
+document.createElement("option");
 
-    });
+option.value=v;
 
-    if((data.vendors||[]).length===0){
+option.textContent=v;
 
-      setStatus(
-        'Data Vendor pada sheet Validation kosong.',
-        'warn'
-      );
+vendor.appendChild(option);
 
-    }else{
+});
 
-      setStatus(
-        'Siap digunakan.',
-        'ok'
-      );
+if((data.vendors||[]).length===0){
 
-    }
+setStatus(
+"Data Vendor pada Validation masih kosong.",
+"warn"
+);
 
-  }catch(err){
+}else{
 
-    vendor.innerHTML=
-      '<option value="">Vendor gagal dimuat</option>';
+setStatus(
+"✓ Sistem siap digunakan.",
+"ok"
+);
 
-    setStatus(
-      'Gagal memuat Vendor: '+err.message,
-      'error'
-    );
+}
 
-  }
+}catch(err){
+
+vendor.innerHTML=
+'<option value="">Vendor gagal dimuat</option>';
+
+setStatus(
+"Gagal memuat Vendor: "+
+err.message,
+"error"
+);
+
+}
 
 }
 
 
-/* ========================================
-   FOTO DRIVER
-======================================== */
+/* ===========================
+   BUKA KAMERA FOTO DRIVER
+=========================== */
+
+function openDriverCamera(){
 
 document
-.getElementById('fotoDriver')
-.addEventListener('change',async function(e){
+.getElementById("cameraDriver")
+.click();
 
-  const file=e.target.files[0];
+}
 
-  if(!file)return;
 
-  setStatus(
-    'Memproses foto driver...',
-    'warn'
-  );
+/* ===========================
+   HASIL FOTO DRIVER
+=========================== */
 
-  photoBase64=
-    await compressImage(file);
+document
+.getElementById("cameraDriver")
+.addEventListener(
+"change",
+async function(e){
 
-  const preview=
-    document.getElementById('photoPreview');
+const file=
+e.target.files[0];
 
-  preview.src=photoBase64;
-  preview.style.display='block';
+if(!file)return;
 
-  setStatus(
-    'Foto Driver siap.',
-    'ok'
-  );
+setStatus(
+"Memproses Foto Driver...",
+"warn"
+);
+
+try{
+
+photoBase64=
+await compressImage(file);
+
+const preview=
+document.getElementById(
+"photoPreview"
+);
+
+preview.src=
+photoBase64;
+
+preview.style.display=
+"block";
+
+document
+.getElementById("photoOK")
+.style.display=
+"block";
+
+setStatus(
+"✓ Foto Driver berhasil diambil.",
+"ok"
+);
+
+}catch(err){
+
+setStatus(
+"Gagal memproses Foto Driver.",
+"error"
+);
+
+}
 
 });
 
 
+/* ===========================
+   COMPRESS FOTO
+=========================== */
+
 function compressImage(file){
 
-  return new Promise(function(resolve,reject){
+return new Promise(
+function(resolve,reject){
 
-    const reader=
-      new FileReader();
+const reader=
+new FileReader();
 
-    reader.onerror=reject;
+reader.onerror=
+reject;
 
-    reader.onload=function(event){
+reader.onload=
+function(event){
 
-      const img=new Image();
+const img=
+new Image();
 
-      img.onload=function(){
+img.onload=
+function(){
 
-        const maxWidth=1000;
+const maxWidth=
+900;
 
-        let width=img.width;
-        let height=img.height;
+let width=
+img.width;
 
-        if(width>maxWidth){
+let height=
+img.height;
 
-          height=
-            height*maxWidth/width;
+if(width>maxWidth){
 
-          width=maxWidth;
+height=
+height*
+maxWidth/
+width;
 
-        }
+width=
+maxWidth;
 
-        const canvas=
-          document.createElement('canvas');
+}
 
-        canvas.width=width;
-        canvas.height=height;
+const canvas=
+document.createElement(
+"canvas"
+);
 
-        const ctx=
-          canvas.getContext('2d');
+canvas.width=
+width;
 
-        ctx.drawImage(
-          img,
-          0,0,
-          width,height
-        );
+canvas.height=
+height;
 
-        resolve(
-          canvas.toDataURL(
-            'image/jpeg',
-            0.65
-          )
-        );
+const ctx=
+canvas.getContext("2d");
 
-      };
+ctx.drawImage(
+img,
+0,
+0,
+width,
+height
+);
 
-      img.onerror=reject;
+resolve(
+canvas.toDataURL(
+"image/jpeg",
+0.65
+)
+);
 
-      img.src=event.target.result;
+};
 
-    };
+img.onerror=
+reject;
 
-    reader.readAsDataURL(file);
+img.src=
+event.target.result;
 
-  });
+};
+
+reader.readAsDataURL(file);
+
+});
 
 }
 
 
-/* ========================================
-   MULAI SCANNER
-======================================== */
+/* ===========================
+   START SCAN AWB
+=========================== */
 
 async function startScanner(){
 
-  const driver=
-    document.getElementById('driver').value.trim();
+const driver=
+document
+.getElementById("driver")
+.value.trim();
 
-  const platNo=
-    document.getElementById('platNo').value.trim();
+const platNo=
+document
+.getElementById("platNo")
+.value.trim();
 
-  const vendor=
-    document.getElementById('vendor').value;
-
-
-  if(!driver){
-
-    return setStatus(
-      'Nama Driver wajib diisi.',
-      'error'
-    );
-
-  }
-
-  if(!platNo){
-
-    return setStatus(
-      'Plat No wajib diisi.',
-      'error'
-    );
-
-  }
-
-  if(!vendor){
-
-    return setStatus(
-      'Vendor wajib dipilih.',
-      'error'
-    );
-
-  }
-
-  if(!photoBase64){
-
-    return setStatus(
-      'Foto Driver wajib diambil terlebih dahulu.',
-      'error'
-    );
-
-  }
+const vendor=
+document
+.getElementById("vendor")
+.value;
 
 
-  try{
+if(!driver){
 
-    scanner=
-      new Html5Qrcode('reader');
+return setStatus(
+"Nama Driver wajib diisi.",
+"error"
+);
 
-    const cameras=
-      await Html5Qrcode.getCameras();
+}
 
-    if(!cameras.length){
-      throw new Error('Kamera tidak ditemukan');
-    }
+if(!platNo){
 
-    let cameraId=
-      cameras[cameras.length-1].id;
+return setStatus(
+"Plat No wajib diisi.",
+"error"
+);
 
-    const rear=
-      cameras.find(function(c){
+}
 
-        return /back|rear|environment/i
-          .test(c.label||'');
+if(!vendor){
 
-      });
+return setStatus(
+"Vendor wajib dipilih.",
+"error"
+);
 
-    if(rear){
-      cameraId=rear.id;
-    }
+}
 
+if(!photoBase64){
 
-    await scanner.start(
-
-      cameraId,
-
-      {
-        fps:12,
-        qrbox:function(w,h){
-
-          return{
-            width:Math.floor(w*0.9),
-            height:140
-          };
-
-        }
-      },
-
-      onScan,
-
-      function(){}
-
-    );
-
-
-    document
-      .getElementById('startBtn')
-      .classList.add('hidden');
-
-    document
-      .getElementById('stopBtn')
-      .classList.remove('hidden');
-
-    setStatus(
-      'Scanner aktif. Silakan scan AWB berulang kali.',
-      'ok'
-    );
-
-  }catch(err){
-
-    scanner=null;
-
-    setStatus(
-      'Kamera gagal: '+(err.message||err),
-      'error'
-    );
-
-  }
+return setStatus(
+"Ambil Foto Driver terlebih dahulu.",
+"error"
+);
 
 }
 
 
-/* ========================================
+try{
+
+scanner=
+new Html5Qrcode(
+"reader"
+);
+
+const cameras=
+await Html5Qrcode.getCameras();
+
+if(!cameras.length){
+
+throw new Error(
+"Kamera tidak ditemukan"
+);
+
+}
+
+
+/* cari kamera belakang */
+
+let cameraId=
+cameras[
+cameras.length-1
+].id;
+
+const rear=
+cameras.find(function(c){
+
+return /back|rear|environment/i
+.test(
+c.label||""
+);
+
+});
+
+if(rear){
+
+cameraId=
+rear.id;
+
+}
+
+
+await scanner.start(
+
+cameraId,
+
+{
+fps:12,
+
+qrbox:function(w,h){
+
+return{
+
+width:
+Math.floor(w*0.9),
+
+height:140
+
+};
+
+}
+},
+
+onScan,
+
+function(){}
+
+);
+
+
+document
+.getElementById("startBtn")
+.classList.add("hidden");
+
+document
+.getElementById("stopBtn")
+.classList.remove("hidden");
+
+setStatus(
+"📷 Scanner aktif. Scan AWB satu per satu.",
+"ok"
+);
+
+}catch(err){
+
+scanner=null;
+
+setStatus(
+"Kamera scanner gagal: "+
+(err.message||err),
+"error"
+);
+
+}
+
+}
+
+
+/* ===========================
    STOP SCANNER
-======================================== */
+=========================== */
 
 async function stopScanner(){
 
-  if(scanner){
+if(scanner){
 
-    try{
-      await scanner.stop();
-      await scanner.clear();
-    }catch(e){}
+try{
 
-  }
+await scanner.stop();
 
-  scanner=null;
+await scanner.clear();
 
-  document
-    .getElementById('startBtn')
-    .classList.remove('hidden');
+}catch(e){}
 
-  document
-    .getElementById('stopBtn')
-    .classList.add('hidden');
+}
+
+scanner=null;
+
+document
+.getElementById("startBtn")
+.classList.remove("hidden");
+
+document
+.getElementById("stopBtn")
+.classList.add("hidden");
+
+setStatus(
+"Scanner dihentikan.",
+"warn"
+);
 
 }
 
 
-/* ========================================
-   HASIL SCAN
-======================================== */
+/* ===========================
+   HASIL SCAN AWB
+=========================== */
 
 function onScan(text){
 
-  const awb=
-    String(text||'')
-    .trim()
-    .replace(/\s+/g,'');
+const awb=
+String(text||"")
+.trim()
+.replace(/\s+/g,"");
 
-  if(!awb)return;
+if(!awb)return;
 
-
-  const now=Date.now();
-
-
-  if(
-    awb===lastCode &&
-    now-lastTime<1800
-  ){
-    return;
-  }
+const now=
+Date.now();
 
 
-  lastCode=awb;
-  lastTime=now;
+/* mencegah kamera membaca barcode
+   sama berkali-kali dalam waktu cepat */
+
+if(
+awb===lastCode &&
+now-lastTime<1800
+){
+
+return;
+
+}
+
+lastCode=
+awb;
+
+lastTime=
+now;
 
 
-  if(awbs.includes(awb)){
+/* cek duplikat */
 
-    duplicateCount++;
+if(
+awbs.includes(awb)
+){
 
-    document
-      .getElementById('duplicate')
-      .textContent=duplicateCount;
+duplicateCount++;
 
-    setStatus(
-      'AWB DUPLIKAT: '+awb,
-      'warn'
-    );
+document
+.getElementById("duplicate")
+.textContent=
+duplicateCount;
 
-    if(navigator.vibrate){
-      navigator.vibrate([100,50,100]);
-    }
+setStatus(
+"⚠ AWB DUPLIKAT: "+
+awb,
+"warn"
+);
 
-    return;
+if(
+navigator.vibrate
+){
 
-  }
+navigator.vibrate(
+[100,50,100]
+);
 
+}
 
-  awbs.push(awb);
-
-  render();
-
-  setStatus(
-    '✓ AWB '+awb+' berhasil ditambahkan.',
-    'ok'
-  );
-
-  if(navigator.vibrate){
-    navigator.vibrate(60);
-  }
+return;
 
 }
 
 
-/* ========================================
-   DAFTAR AWB
-======================================== */
+/* TAMBAH KE DAFTAR */
+
+awbs.push(awb);
+
+render();
+
+setStatus(
+"✓ AWB "+
+awb+
+" berhasil ditambahkan.",
+"ok"
+);
+
+if(
+navigator.vibrate
+){
+
+navigator.vibrate(60);
+
+}
+
+}
+
+
+/* ===========================
+   TAMPILKAN AWB
+=========================== */
 
 function render(){
 
-  const count=
-    document.getElementById('count');
+const count=
+document.getElementById(
+"count"
+);
 
-  const saveBtn=
-    document.getElementById('saveBtn');
+const saveBtn=
+document.getElementById(
+"saveBtn"
+);
 
-  const list=
-    document.getElementById('awbList');
+const list=
+document.getElementById(
+"awbList"
+);
 
+count.textContent=
+awbs.length;
 
-  count.textContent=
-    awbs.length;
+saveBtn.textContent=
+"💾 SIMPAN SEMUA ("+
+awbs.length+
+")";
 
-  saveBtn.textContent=
-    '💾 SIMPAN SEMUA ('+
-    awbs.length+
-    ')';
-
-
-  list.innerHTML='';
-
-
-  if(awbs.length===0){
-
-    list.innerHTML=
-      '<div class="empty">'+
-      'Belum ada AWB yang discan.'+
-      '</div>';
-
-    return;
-
-  }
+list.innerHTML=
+"";
 
 
-  awbs
-  .slice()
-  .reverse()
-  .forEach(function(awb,ri){
+if(
+awbs.length===0
+){
 
-    const index=
-      awbs.length-1-ri;
+list.innerHTML=
+'<div class="empty">'+
+'Belum ada AWB yang discan.'+
+'</div>';
 
-    const row=
-      document.createElement('div');
-
-    row.className='row';
-
-
-    const text=
-      document.createElement('div');
-
-    text.className='awb';
-
-    text.textContent=
-      '✓ '+awb;
-
-
-    const btn=
-      document.createElement('button');
-
-    btn.textContent='Hapus';
-
-    btn.onclick=function(){
-
-      awbs.splice(index,1);
-
-      render();
-
-    };
-
-
-    row.append(text,btn);
-
-    list.appendChild(row);
-
-  });
+return;
 
 }
 
 
-/* ========================================
-   HAPUS SEMUA
-======================================== */
+awbs
+.slice()
+.reverse()
+.forEach(
+function(awb,ri){
+
+const index=
+awbs.length-
+1-
+ri;
+
+const row=
+document.createElement(
+"div"
+);
+
+row.className=
+"row";
+
+
+const text=
+document.createElement(
+"div"
+);
+
+text.className=
+"awb";
+
+text.textContent=
+"✓ "+awb;
+
+
+const btn=
+document.createElement(
+"button"
+);
+
+btn.textContent=
+"Hapus";
+
+btn.onclick=
+function(){
+
+awbs.splice(
+index,
+1
+);
+
+render();
+
+};
+
+
+row.append(
+text,
+btn
+);
+
+list.appendChild(
+row
+);
+
+});
+
+}
+
+
+/* ===========================
+   HAPUS SEMUA AWB
+=========================== */
 
 function clearAll(){
 
-  if(awbs.length===0)return;
+if(
+awbs.length===0
+){
 
-  if(
-    !confirm(
-      'Hapus semua AWB yang sudah discan?'
-    )
-  ){
-    return;
-  }
+return;
 
-  awbs=[];
-  duplicateCount=0;
+}
 
-  document
-    .getElementById('duplicate')
-    .textContent='0';
+if(
+!confirm(
+"Hapus semua AWB yang sudah discan?"
+)
+){
 
-  render();
+return;
 
-  setStatus(
-    'Daftar AWB dikosongkan.',
-    'warn'
-  );
+}
+
+awbs=[];
+
+duplicateCount=0;
+
+document
+.getElementById("duplicate")
+.textContent=
+"0";
+
+render();
+
+setStatus(
+"Daftar AWB dikosongkan.",
+"warn"
+);
 
 }
 
 
-/* ========================================
+/* ===========================
    SIMPAN SEMUA
-======================================== */
+=========================== */
 
 async function saveAll(){
 
-  const tanggal=
-    document.getElementById('tanggal').value;
+const tanggal=
+document
+.getElementById("tanggal")
+.value;
 
-  const driver=
-    document.getElementById('driver').value.trim();
+const driver=
+document
+.getElementById("driver")
+.value.trim();
 
-  const platNo=
-    document.getElementById('platNo').value
-      .trim()
-      .toUpperCase();
+const platNo=
+document
+.getElementById("platNo")
+.value
+.trim()
+.toUpperCase();
 
-  const vendor=
-    document.getElementById('vendor').value;
+const vendor=
+document
+.getElementById("vendor")
+.value;
 
 
-  if(!tanggal)
-    return setStatus(
-      'Tanggal Pick Up wajib diisi.',
-      'error'
-    );
+if(!tanggal){
 
-  if(!driver)
-    return setStatus(
-      'Nama Driver wajib diisi.',
-      'error'
-    );
+return setStatus(
+"Tanggal Pick Up wajib diisi.",
+"error"
+);
 
-  if(!platNo)
-    return setStatus(
-      'Plat No wajib diisi.',
-      'error'
-    );
+}
 
-  if(!vendor)
-    return setStatus(
-      'Vendor wajib dipilih.',
-      'error'
-    );
+if(!driver){
 
-  if(!photoBase64)
-    return setStatus(
-      'Foto Driver wajib diambil.',
-      'error'
-    );
+return setStatus(
+"Nama Driver wajib diisi.",
+"error"
+);
 
-  if(awbs.length===0)
-    return setStatus(
-      'Belum ada AWB yang discan.',
-      'warn'
-    );
+}
 
+if(!platNo){
 
-  const saveBtn=
-    document.getElementById('saveBtn');
+return setStatus(
+"Plat No wajib diisi.",
+"error"
+);
 
-  const requestId=
-    'REQ_'+Date.now();
+}
 
+if(!vendor){
 
-  document
-    .getElementById('formRequestId')
-    .value=requestId;
+return setStatus(
+"Vendor wajib dipilih.",
+"error"
+);
 
+}
 
-  document
-    .getElementById('formPayload')
-    .value=
-      JSON.stringify({
+if(!photoBase64){
 
-        tanggal:tanggal,
+return setStatus(
+"Foto Driver wajib diambil.",
+"error"
+);
 
-        driver:driver,
+}
 
-        platNo:platNo,
+if(
+awbs.length===0
+){
 
-        vendor:vendor,
-
-        fotoDriver:photoBase64,
-
-        awbs:awbs
-
-      });
-
-
-  saveBtn.disabled=true;
-
-  saveBtn.textContent=
-    '⏳ MENYIMPAN...';
-
-  setStatus(
-    'Sedang menyimpan '+awbs.length+' AWB...',
-    'warn'
-  );
-
-
-  document
-    .getElementById('saveForm')
-    .submit();
-
-
-  try{
-
-    let result=null;
-
-
-    for(let i=0;i<35;i++){
-
-      await new Promise(function(r){
-        setTimeout(r,700);
-      });
-
-
-      const data=
-        await jsonp({
-
-          action:'result',
-
-          requestId:requestId
-
-        });
-
-
-      if(!data.pending){
-
-        result=data;
-
-        break;
-
-      }
-
-    }
-
-
-    if(!result){
-
-      throw new Error(
-        'Server tidak memberikan respons.'
-      );
-
-    }
-
-
-    if(result.success){
-
-      const saved=result.saved||0;
-
-      const duplicates=
-        result.duplicateCount||0;
-
-
-      setStatus(
-        '✓ BERHASIL: '+
-        saved+
-        ' AWB tersimpan'+
-        (
-          duplicates
-          ? ' • '+duplicates+
-            ' AWB sudah pernah ada'
-          : ''
-        ),
-        'ok'
-      );
-
-
-      awbs=[];
-      duplicateCount=0;
-
-      document
-        .getElementById('duplicate')
-        .textContent='0';
-
-      render();
-
-
-    }else{
-
-      setStatus(
-        result.message||
-        'Gagal menyimpan data.',
-        result.duplicateOnly
-          ? 'warn'
-          : 'error'
-      );
-
-    }
-
-
-  }catch(err){
-
-    setStatus(
-      'Gagal menyimpan: '+
-      err.message,
-      'error'
-    );
-
-  }
-
-
-  saveBtn.disabled=false;
-
-  render();
+return setStatus(
+"Belum ada AWB yang discan.",
+"warn"
+);
 
 }
 
 
-/* ========================================
+const saveBtn=
+document.getElementById(
+"saveBtn"
+);
+
+const requestId=
+"REQ_"+Date.now();
+
+
+const payload={
+
+tanggal:
+tanggal,
+
+driver:
+driver,
+
+platNo:
+platNo,
+
+vendor:
+vendor,
+
+fotoDriver:
+photoBase64,
+
+awbs:
+awbs
+
+};
+
+
+document
+.getElementById(
+"formRequestId"
+)
+.value=
+requestId;
+
+
+document
+.getElementById(
+"formPayload"
+)
+.value=
+JSON.stringify(
+payload
+);
+
+
+saveBtn.disabled=
+true;
+
+saveBtn.textContent=
+"⏳ MENYIMPAN...";
+
+setStatus(
+"Sedang menyimpan "+
+awbs.length+
+" AWB...",
+"warn"
+);
+
+
+document
+.getElementById(
+"saveForm"
+)
+.submit();
+
+
+try{
+
+let result=
+null;
+
+
+for(
+let i=0;
+i<35;
+i++
+){
+
+await new Promise(
+function(r){
+
+setTimeout(
+r,
+700
+);
+
+});
+
+const data=
+await jsonp({
+
+action:
+"result",
+
+requestId:
+requestId
+
+});
+
+
+if(
+!data.pending
+){
+
+result=
+data;
+
+break;
+
+}
+
+}
+
+
+if(
+!result
+){
+
+throw new Error(
+"Server tidak memberikan respons."
+);
+
+}
+
+
+if(
+result.success
+){
+
+const saved=
+result.saved||0;
+
+const duplicates=
+result.duplicateCount||0;
+
+
+setStatus(
+"✓ BERHASIL — "+
+saved+
+" AWB tersimpan"+
+(
+duplicates
+?
+" • "+
+duplicates+
+" duplikat"
+:
+""
+),
+"ok"
+);
+
+
+/* setelah sukses:
+   kosongkan AWB saja
+   data driver tetap */
+
+awbs=[];
+
+duplicateCount=0;
+
+document
+.getElementById(
+"duplicate"
+)
+.textContent=
+"0";
+
+render();
+
+
+}else{
+
+setStatus(
+result.message||
+"Gagal menyimpan data.",
+result.duplicateOnly
+?
+"warn"
+:
+"error"
+);
+
+}
+
+
+}catch(err){
+
+setStatus(
+"Gagal menyimpan: "+
+err.message,
+"error"
+);
+
+}
+
+
+saveBtn.disabled=
+false;
+
+render();
+
+}
+
+
+/* ===========================
    STATUS
-======================================== */
+=========================== */
 
-function setStatus(text,type){
+function setStatus(
+text,
+type
+){
 
-  const el=
-    document.getElementById('status');
+const el=
+document.getElementById(
+"status"
+);
 
-  el.className=
-    'status '+(type||'');
+el.className=
+"status "+
+(type||"");
 
-  el.textContent=text;
+el.textContent=
+text;
 
 }
 
