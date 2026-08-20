@@ -23,27 +23,24 @@
 
     .app {
       max-width: 520px;
-      min-height: 100vh;
       margin: auto;
+      min-height: 100vh;
       background: #ffffff;
     }
 
     .header {
-      background: #ffffff;
-      padding: 18px 18px 14px;
+      background: white;
+      padding: 16px 18px 14px;
       text-align: center;
       border-bottom: 4px solid #ff6a00;
     }
 
-    .logo-wrap {
+    .logo {
       width: 100%;
-      max-width: 370px;
-      margin: auto;
-    }
-
-    .brand-logo {
-      width: 100%;
+      max-width: 360px;
+      height: auto;
       display: block;
+      margin: 0 auto;
     }
 
     .title {
@@ -56,7 +53,7 @@
     .subtitle {
       margin-top: 4px;
       font-size: 12px;
-      color: #747474;
+      color: #777;
     }
 
     .content {
@@ -179,7 +176,7 @@
       display: block;
     }
 
-    /* SCANNER AWB */
+    /* SCANNER */
 
     #reader {
       width: 100%;
@@ -308,109 +305,11 @@
 
   <div class="header">
 
-    <div class="logo-wrap">
-
-      <!-- LOGO LANGSUNG TERTANAM DI HTML -->
-      <svg
-        class="brand-logo"
-        viewBox="0 0 760 210"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-
-        <!-- SIMBOL -->
-        <g transform="translate(20,20)">
-
-          <polygon
-            points="20,25 75,0 75,80 20,108"
-            fill="#ff7900"
-          />
-
-          <polygon
-            points="105,0 160,27 160,78 105,52"
-            fill="#ff7900"
-          />
-
-          <polygon
-            points="80,55 135,83 80,112 25,84"
-            fill="#ff7900"
-          />
-
-          <polygon
-            points="25,91 75,117 75,175 25,147"
-            fill="#20252b"
-          />
-
-          <polygon
-            points="105,92 160,63 160,145 105,175"
-            fill="#20252b"
-          />
-
-          <polygon
-            points="80,112 105,99 105,175 80,160"
-            fill="#34383d"
-          />
-
-        </g>
-
-        <!-- H JOEL -->
-        <text
-          x="235"
-          y="88"
-          font-family="Arial, Helvetica, sans-serif"
-          font-size="78"
-          font-weight="700"
-          letter-spacing="6"
-          fill="#20252b"
-        >
-          H JOEL
-        </text>
-
-        <!-- LOGISTICS -->
-        <line
-          x1="245"
-          y1="132"
-          x2="300"
-          y2="132"
-          stroke="#ff7900"
-          stroke-width="4"
-        />
-
-        <text
-          x="320"
-          y="145"
-          font-family="Arial, Helvetica, sans-serif"
-          font-size="34"
-          font-weight="500"
-          letter-spacing="10"
-          fill="#ff7900"
-        >
-          LOGISTICS
-        </text>
-
-        <line
-          x1="655"
-          y1="132"
-          x2="715"
-          y2="132"
-          stroke="#ff7900"
-          stroke-width="4"
-        />
-
-        <!-- TAGLINE -->
-        <text
-          x="245"
-          y="184"
-          font-family="Arial, Helvetica, sans-serif"
-          font-size="19"
-          letter-spacing="3"
-          fill="#60656b"
-        >
-          SOLUSI DISTRIBUSI TERPERCAYA
-        </text>
-
-      </svg>
-
-    </div>
+    <img
+      src="./H_JOEL_LOGISTICS_logo.png"
+      alt="H JOEL LOGISTICS"
+      class="logo"
+    >
 
     <div class="title">
       SCAN OUTBOUND
@@ -428,7 +327,6 @@
     <div class="section-title">
       INFORMASI PICK UP
     </div>
-
 
     <div class="field">
 
@@ -496,8 +394,6 @@
 
     <div class="divider"></div>
 
-
-    <!-- FOTO DRIVER -->
 
     <div class="section-title">
       FOTO DRIVER
@@ -568,8 +464,6 @@
 
     <div class="divider"></div>
 
-
-    <!-- SCAN AWB -->
 
     <div class="section-title">
       SCAN AWB
@@ -680,9 +574,9 @@ let photoBase64 = '';
 let audioContext = null;
 
 
-/* ============================================
+/* ========================
 START
-============================================ */
+======================== */
 
 document.addEventListener(
   'DOMContentLoaded',
@@ -703,14 +597,12 @@ function setToday() {
     now.getFullYear();
 
   const m =
-    String(
-      now.getMonth() + 1
-    ).padStart(2,'0');
+    String(now.getMonth() + 1)
+      .padStart(2, '0');
 
   const d =
-    String(
-      now.getDate()
-    ).padStart(2,'0');
+    String(now.getDate())
+      .padStart(2, '0');
 
   document.getElementById(
     'tanggalPickup'
@@ -719,21 +611,17 @@ function setToday() {
 }
 
 
-/* ============================================
+/* ========================
 VENDOR
-============================================ */
+======================== */
 
 function loadVendors() {
 
   const callbackName =
-    'vendorCallback_' +
-    Date.now();
-
+    'vendorCallback_' + Date.now();
 
   const script =
-    document.createElement(
-      'script'
-    );
+    document.createElement('script');
 
 
   window[callbackName] =
@@ -751,9 +639,7 @@ function loadVendors() {
       if (
         result &&
         result.success &&
-        Array.isArray(
-          result.vendors
-        )
+        Array.isArray(result.vendors)
       ) {
 
         result.vendors.forEach(
@@ -792,7 +678,6 @@ function loadVendors() {
         callbackName
       ];
 
-
       script.remove();
 
     };
@@ -801,12 +686,9 @@ function loadVendors() {
   script.onerror =
     function() {
 
-      const select =
-        document.getElementById(
-          'vendor'
-        );
-
-      select.innerHTML =
+      document.getElementById(
+        'vendor'
+      ).innerHTML =
         '<option value="">Vendor gagal dimuat</option>';
 
       showStatus(
@@ -833,27 +715,20 @@ function loadVendors() {
 }
 
 
-/* ============================================
-KAMERA FOTO DRIVER
-============================================ */
+/* ========================
+FOTO DRIVER
+======================== */
 
 async function openPhotoCamera() {
 
   clearStatus();
 
-  /*
-  Scanner harus dimatikan dulu
-  karena HP biasanya tidak bisa memakai
-  kamera untuk dua proses sekaligus.
-  */
+
   if (scanner) {
     await stopScanner();
   }
 
 
-  /*
-  Tutup stream foto lama.
-  */
   closePhotoCamera();
 
 
@@ -923,7 +798,6 @@ async function openPhotoCamera() {
 
     console.error(error);
 
-
     showStatus(
       'Kamera tidak dapat dibuka. Izinkan akses kamera pada Chrome.',
       'error'
@@ -973,7 +847,9 @@ function captureDriverPhoto() {
     1280;
 
 
-  if (width > maxWidth) {
+  if (
+    width > maxWidth
+  ) {
 
     height =
       Math.round(
@@ -1082,19 +958,15 @@ function closePhotoCamera() {
 }
 
 
-/* ============================================
+/* ========================
 SCANNER AWB
-============================================ */
+======================== */
 
 async function startScanner() {
 
   clearStatus();
 
 
-  /*
-  Aktifkan audio melalui klik pengguna.
-  Ini penting agar Chrome mengizinkan beep.
-  */
   try {
 
     if (!audioContext) {
@@ -1163,10 +1035,8 @@ async function startScanner() {
 
 
     if (rearCamera) {
-
       cameraId =
         rearCamera.id;
-
     }
 
 
@@ -1184,10 +1054,7 @@ async function startScanner() {
         fps: 12,
 
         qrbox:
-          function(
-            width,
-            height
-          ) {
+          function(width) {
 
             let boxWidth =
               Math.floor(
@@ -1199,6 +1066,7 @@ async function startScanner() {
             ) {
               boxWidth = 380;
             }
+
 
             return {
               width: boxWidth,
@@ -1228,7 +1096,7 @@ async function startScanner() {
 
 
     showStatus(
-      'Scanner aktif. Arahkan barcode AWB ke kotak kamera.',
+      'Scanner aktif. Arahkan barcode AWB ke kamera.',
       'info'
     );
 
@@ -1237,10 +1105,8 @@ async function startScanner() {
 
     console.error(error);
 
-
     scanner =
       null;
-
 
     showStatus(
       'Scanner gagal dibuka. Pastikan izin kamera Chrome aktif.',
@@ -1286,7 +1152,6 @@ function onScanSuccess(
 
     vibrateDuplicate();
 
-
     showStatus(
       '⚠ AWB sudah pernah discan: ' +
       awb,
@@ -1302,7 +1167,6 @@ function onScanSuccess(
 
 
     renderAwbs();
-
 
     scanSound();
 
@@ -1329,10 +1193,8 @@ function onScanSuccess(
 
   setTimeout(
     function() {
-
       scanLock =
         false;
-
     },
     1000
   );
@@ -1350,7 +1212,6 @@ async function stopScanner() {
   try {
 
     await scanner.stop();
-
     scanner.clear();
 
   } catch(error) {
@@ -1376,9 +1237,9 @@ async function stopScanner() {
 }
 
 
-/* ============================================
+/* ========================
 SUARA
-============================================ */
+======================== */
 
 function scanSound() {
 
@@ -1525,9 +1386,9 @@ function vibrateDuplicate() {
 }
 
 
-/* ============================================
+/* ========================
 DAFTAR AWB
-============================================ */
+======================== */
 
 function renderAwbs() {
 
@@ -1673,9 +1534,9 @@ function clearAwbs() {
 }
 
 
-/* ============================================
+/* ========================
 SIMPAN
-============================================ */
+======================== */
 
 async function saveData() {
 
@@ -1922,9 +1783,9 @@ async function saveData() {
 }
 
 
-/* ============================================
+/* ========================
 STATUS
-============================================ */
+======================== */
 
 function showStatus(
   message,
