@@ -573,18 +573,24 @@ Plat No
 
 
 <!-- KETERANGAN RETURN -->
-<div class="field" id="keteranganBox">
-  <label>Keterangan</label>
 
-  <input
-    type="text"
-    id="keterangan"
-    list="keteranganList"
-    placeholder="Pilih atau ketik Keterangan"
-    autocomplete="off"
-  >
+<div
+  class="field"
+  id="keteranganBox"
+>
 
-  <datalist id="keteranganList"></datalist>
+<label>
+Keterangan
+</label>
+
+<select id="keterangan">
+
+<option value="">
+-- Pilih Keterangan --
+</option>
+
+</select>
+
 </div>
 
 
@@ -783,7 +789,7 @@ Belum ada AWB.
 
 
 <div class="footer">
-H JOEL LOGISTICS · RETURN FIX 2
+H JOEL LOGISTICS · VALIDATION D4:D15
 </div>
 
 </div>
@@ -1082,6 +1088,18 @@ VALIDATION
 
 function loadValidation(){
 
+  const keterangan =
+    document.getElementById(
+      'keterangan'
+    );
+
+  if(!keterangan){
+    return;
+  }
+
+  keterangan.innerHTML =
+    '<option value="">Memuat Keterangan...</option>';
+
   const callbackName =
     'validationCallback_' +
     Date.now();
@@ -1091,38 +1109,31 @@ function loadValidation(){
       'script'
     );
 
-  let finished = false;
+  let selesai = false;
 
-  const cleanup =
-    function(){
+  function cleanup(){
 
-      if(finished){
-        return;
-      }
+    if(selesai){
+      return;
+    }
 
-      finished = true;
+    selesai = true;
 
-      try{
-        delete window[callbackName];
-      }catch(error){}
+    try{
+      delete window[callbackName];
+    }catch(error){}
 
-      try{
-        script.remove();
-      }catch(error){}
+    try{
+      script.remove();
+    }catch(error){}
 
-    };
+  }
 
   window[callbackName] =
     function(data){
 
-      const list =
-        document.getElementById(
-          'keteranganList'
-        );
-
-      if(list){
-        list.innerHTML = '';
-      }
+      keterangan.innerHTML =
+        '<option value="">-- Pilih Keterangan --</option>';
 
       if(
         data &&
@@ -1130,16 +1141,18 @@ function loadValidation(){
         Array.isArray(data.keterangans)
       ){
 
-        data.keterangans
-        .forEach(
+        const items =
+          data.keterangans
+          .map(function(item){
+            return String(item || '').trim();
+          })
+          .filter(Boolean);
+
+        const unik =
+          [...new Set(items)];
+
+        unik.forEach(
           function(item){
-
-            const value =
-              String(item || '').trim();
-
-            if(!value || !list){
-              return;
-            }
 
             const option =
               document.createElement(
@@ -1147,13 +1160,38 @@ function loadValidation(){
               );
 
             option.value =
-              value;
+              item;
 
-            list.appendChild(
+            option.textContent =
+              item;
+
+            keterangan.appendChild(
               option
             );
 
           }
+        );
+
+        if(unik.length === 0){
+
+          keterangan.innerHTML =
+            '<option value="">Data Validation D4:D15 kosong</option>';
+
+          showStatus(
+            'Keterangan Return kosong. Isi sheet Validation pada D4:D15.',
+            'error'
+          );
+
+        }
+
+      }else{
+
+        keterangan.innerHTML =
+          '<option value="">Gagal memuat Keterangan</option>';
+
+        showStatus(
+          'Keterangan Return gagal dimuat dari sheet Validation.',
+          'error'
         );
 
       }
@@ -1165,9 +1203,14 @@ function loadValidation(){
   script.onerror =
     function(){
 
-      /*
-      Jika API gagal, Keterangan tetap bisa diketik manual.
-      */
+      keterangan.innerHTML =
+        '<option value="">Gagal memuat Keterangan</option>';
+
+      showStatus(
+        'Keterangan Return gagal dimuat dari Apps Script.',
+        'error'
+      );
+
       cleanup();
 
     };
@@ -1176,7 +1219,7 @@ function loadValidation(){
     API_URL +
     '?action=getValidation' +
     '&callback=' +
-    callbackName +
+    encodeURIComponent(callbackName) +
     '&t=' +
     Date.now();
 
@@ -1184,19 +1227,25 @@ function loadValidation(){
     script
   );
 
-  /*
-  Timeout agar script JSONP yang gagal tidak menggantung.
-  Keterangan tetap dapat diketik manual.
-  */
   setTimeout(
     function(){
 
-      if(!finished){
+      if(!selesai){
+
+        keterangan.innerHTML =
+          '<option value="">Timeout memuat Keterangan</option>';
+
+        showStatus(
+          'Timeout mengambil Keterangan dari Validation.',
+          'error'
+        );
+
         cleanup();
+
       }
 
     },
-    8000
+    10000
   );
 
 }
@@ -2200,8 +2249,8 @@ function resetApplication(){
 
   document.getElementById(
     'keterangan'
-  ).value =
-    '';
+  ).selectedIndex =
+    0;
 
 
   document.getElementById(
@@ -2323,7 +2372,7 @@ async function saveData(){
   const keterangan =
     document.getElementById(
       'keterangan'
-    ).value.trim();
+    ).value;
 
 
   const reason =
