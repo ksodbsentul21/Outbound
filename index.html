@@ -50,6 +50,8 @@ body {
   width: 100%;
   max-width: 340px;
   height: auto;
+  display: block;
+  margin: auto;
 }
 
 .header-title {
@@ -262,7 +264,7 @@ select:focus {
 }
 
 
-/* AWB LIST */
+/* AWB */
 
 .counter-row {
   margin: 13px 0 8px;
@@ -394,9 +396,9 @@ OPERASIONAL DISTRIBUSI
 <div class="content">
 
 
-<!-- ==============================================
-MENU UTAMA
-============================================== -->
+<!-- =================================================
+MENU
+================================================= -->
 
 <div id="menuPage">
 
@@ -437,9 +439,9 @@ PILIH PROSES
 
 
 
-<!-- ==============================================
+<!-- =================================================
 FORM
-============================================== -->
+================================================= -->
 
 <div id="formPage">
 
@@ -448,6 +450,7 @@ FORM
 
 <button
   class="back-btn"
+  type="button"
   onclick="backMenu()"
 >
 ←
@@ -487,7 +490,7 @@ Nama Driver
 <input
   type="text"
   id="namaDriver"
-  placeholder="Masukkan nama driver"
+  placeholder="Masukkan Nama Driver"
   autocomplete="off"
 >
 
@@ -531,6 +534,8 @@ Memuat Vendor...
 
 
 
+<!-- KETERANGAN RETURN -->
+
 <div
   class="field"
   id="keteranganBox"
@@ -553,11 +558,34 @@ Keterangan
 
 
 
+<!-- REASON RETURN -->
+
+<div
+  class="field"
+  id="reasonBox"
+  style="display:none;"
+>
+
+<label>
+Reason
+</label>
+
+<input
+  type="text"
+  id="reason"
+  placeholder="Masukkan Reason"
+  autocomplete="off"
+>
+
+</div>
+
+
+
 <div class="divider"></div>
 
 
 
-<!-- FOTO DRIVER -->
+<!-- FOTO -->
 
 <div class="section-title">
 FOTO DRIVER
@@ -565,6 +593,7 @@ FOTO DRIVER
 
 
 <button
+  type="button"
   class="btn-orange"
   id="btnOpenPhoto"
   onclick="openPhotoCamera()"
@@ -586,6 +615,7 @@ FOTO DRIVER
 <div class="photo-actions">
 
 <button
+  type="button"
   class="btn-green"
   onclick="capturePhoto()"
 >
@@ -593,6 +623,7 @@ FOTO DRIVER
 </button>
 
 <button
+  type="button"
   class="btn-red"
   onclick="closePhotoCamera()"
 >
@@ -609,9 +640,11 @@ TUTUP
 
 <img
   id="photoPreview"
+  alt="Foto Driver"
 >
 
 <button
+  type="button"
   class="btn-orange"
   style="margin-top:8px;"
   onclick="openPhotoCamera()"
@@ -627,7 +660,7 @@ TUTUP
 
 
 
-<!-- SCAN -->
+<!-- AWB -->
 
 <div class="section-title">
 SCAN AWB
@@ -638,6 +671,7 @@ SCAN AWB
 
 
 <button
+  type="button"
   class="btn-dark"
   id="btnStartScanner"
   onclick="startScanner()"
@@ -647,6 +681,7 @@ SCAN AWB
 
 
 <button
+  type="button"
   class="btn-red"
   id="btnStopScanner"
   onclick="stopScanner()"
@@ -674,6 +709,7 @@ SCAN AWB
 
 
 <button
+  type="button"
   class="clear-btn"
   onclick="clearAwbs()"
 >
@@ -702,6 +738,7 @@ Belum ada AWB.
 
 
 <button
+  type="button"
   class="btn-green"
   id="btnSave"
   onclick="saveData()"
@@ -755,942 +792,1021 @@ let audioContext = null;
 
 
 
+/* =================================================
+START
+================================================= */
+
 document.addEventListener(
 'DOMContentLoaded',
 function() {
 
-setToday();
+  setToday();
 
-loadValidation();
+  loadValidation();
 
 }
 );
 
 
 
-/* ============================================
+/* =================================================
 MENU
-============================================ */
+================================================= */
 
 function selectProcess(
-process
+  process
 ) {
 
-currentProcess =
-process;
+  currentProcess =
+    process;
 
 
-document.getElementById(
-'menuPage'
-).style.display =
-'none';
+  document.getElementById(
+    'menuPage'
+  ).style.display =
+    'none';
 
 
-document.getElementById(
-'formPage'
-).style.display =
-'block';
+  document.getElementById(
+    'formPage'
+  ).style.display =
+    'block';
 
 
-const title =
-document.getElementById(
-'processTitle'
-);
+  const title =
+    document.getElementById(
+      'processTitle'
+    );
 
 
-const tanggalLabel =
-document.getElementById(
-'tanggalLabel'
-);
+  const tanggalLabel =
+    document.getElementById(
+      'tanggalLabel'
+    );
 
 
-const ket =
-document.getElementById(
-'keteranganBox'
-);
+  const ketBox =
+    document.getElementById(
+      'keteranganBox'
+    );
 
 
-if (
-process === 'OUTBOUND'
-) {
+  const reasonBox =
+    document.getElementById(
+      'reasonBox'
+    );
 
-title.textContent =
-'OUTBOUND';
 
-tanggalLabel.textContent =
-'Tanggal Pick Up';
+  if (
+    process === 'OUTBOUND'
+  ) {
 
-ket.style.display =
-'none';
+    title.textContent =
+      'OUTBOUND';
+
+
+    tanggalLabel.textContent =
+      'Tanggal Pick Up';
+
+
+    ketBox.style.display =
+      'none';
+
+
+    reasonBox.style.display =
+      'none';
+
+  }
+
+
+  else if (
+    process === 'BAST'
+  ) {
+
+    title.textContent =
+      'BAST BACK TO WH';
+
+
+    tanggalLabel.textContent =
+      'Tanggal Back to WH';
+
+
+    ketBox.style.display =
+      'none';
+
+
+    reasonBox.style.display =
+      'none';
+
+  }
+
+
+  else if (
+    process === 'RETURN'
+  ) {
+
+    title.textContent =
+      'RETURN';
+
+
+    tanggalLabel.textContent =
+      'Tanggal Return';
+
+
+    ketBox.style.display =
+      'block';
+
+
+    reasonBox.style.display =
+      'block';
+
+  }
+
+
+  setToday();
+
+  clearStatus();
 
 }
 
 
-else if (
-process === 'BAST'
-) {
 
-title.textContent =
-'BAST BACK TO WH';
-
-tanggalLabel.textContent =
-'Tanggal Back to WH';
-
-ket.style.display =
-'none';
-
-}
-
-
-else {
-
-title.textContent =
-'RETURN';
-
-tanggalLabel.textContent =
-'Tanggal Return';
-
-ket.style.display =
-'block';
-
-}
-
-
-setToday();
-
-clearStatus();
-
-}
-
-
+/* =================================================
+BACK
+================================================= */
 
 async function backMenu() {
 
-await stopScanner();
+  await stopScanner();
 
-closePhotoCamera();
-
-
-document.getElementById(
-'formPage'
-).style.display =
-'none';
+  closePhotoCamera();
 
 
-document.getElementById(
-'menuPage'
-).style.display =
-'block';
+  document.getElementById(
+    'formPage'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'menuPage'
+  ).style.display =
+    'block';
+
+
+  window.scrollTo(
+    0,
+    0
+  );
 
 }
 
 
 
-/* ============================================
+/* =================================================
 TODAY
-============================================ */
+================================================= */
 
 function setToday() {
 
-const now =
-new Date();
+  const now =
+    new Date();
 
 
-const y =
-now.getFullYear();
+  const y =
+    now.getFullYear();
 
 
-const m =
-String(
-now.getMonth() + 1
-).padStart(
-2,
-'0'
-);
+  const m =
+    String(
+      now.getMonth() + 1
+    ).padStart(
+      2,
+      '0'
+    );
 
 
-const d =
-String(
-now.getDate()
-).padStart(
-2,
-'0'
-);
+  const d =
+    String(
+      now.getDate()
+    ).padStart(
+      2,
+      '0'
+    );
 
 
-document.getElementById(
-'tanggal'
-).value =
-y +
-'-' +
-m +
-'-' +
-d;
+  document.getElementById(
+    'tanggal'
+  ).value =
+    y +
+    '-' +
+    m +
+    '-' +
+    d;
 
 }
 
 
 
-/* ============================================
+/* =================================================
 VALIDATION
-============================================ */
+================================================= */
 
 function loadValidation() {
 
-const callback =
-'validation_' +
-Date.now();
+  const callback =
+    'validation_' +
+    Date.now();
 
 
-const script =
-document.createElement(
-'script'
-);
+  const script =
+    document.createElement(
+      'script'
+    );
 
 
-window[callback] =
-function(data) {
+  window[callback] =
+    function(data) {
 
 
-const vendor =
-document.getElementById(
-'vendor'
-);
+      const vendor =
+        document.getElementById(
+          'vendor'
+        );
 
 
-const ket =
-document.getElementById(
-'keterangan'
-);
+      const ket =
+        document.getElementById(
+          'keterangan'
+        );
 
 
-vendor.innerHTML =
-'<option value="">-- Pilih Vendor --</option>';
+      vendor.innerHTML =
+        '<option value="">-- Pilih Vendor --</option>';
 
 
-ket.innerHTML =
-'<option value="">-- Pilih Keterangan --</option>';
+      ket.innerHTML =
+        '<option value="">-- Pilih Keterangan --</option>';
 
 
-if (
-data &&
-data.success
-) {
+      if (
+        data &&
+        data.success
+      ) {
 
 
-(data.vendors || [])
-.forEach(
-function(v) {
+        (data.vendors || [])
+          .forEach(
+            function(v) {
 
 
-const option =
-document.createElement(
-'option'
-);
+              const option =
+                document.createElement(
+                  'option'
+                );
 
 
-option.value =
-v;
+              option.value =
+                v;
 
 
-option.textContent =
-v;
+              option.textContent =
+                v;
 
 
-vendor.appendChild(
-option
-);
+              vendor.appendChild(
+                option
+              );
 
+
+            }
+          );
+
+
+        (data.keterangans || [])
+          .forEach(
+            function(v) {
+
+
+              const option =
+                document.createElement(
+                  'option'
+                );
+
+
+              option.value =
+                v;
+
+
+              option.textContent =
+                v;
+
+
+              ket.appendChild(
+                option
+              );
+
+
+            }
+          );
+
+
+      } else {
+
+        showStatus(
+          data?.message ||
+          'Validation gagal dimuat.',
+          'error'
+        );
+
+      }
+
+
+      delete window[
+        callback
+      ];
+
+
+      script.remove();
+
+    };
+
+
+  script.onerror =
+    function() {
+
+      showStatus(
+        'Validation gagal dimuat.',
+        'error'
+      );
+
+    };
+
+
+  script.src =
+    API_URL +
+    '?action=getValidation' +
+    '&callback=' +
+    callback +
+    '&t=' +
+    Date.now();
+
+
+  document.body.appendChild(
+    script
+  );
 
 }
-);
 
 
 
-(data.keterangans || [])
-.forEach(
-function(v) {
-
-
-const option =
-document.createElement(
-'option'
-);
-
-
-option.value =
-v;
-
-
-option.textContent =
-v;
-
-
-ket.appendChild(
-option
-);
-
-
-}
-);
-
-
-}
-
-
-delete window[
-callback
-];
-
-
-script.remove();
-
-};
-
-
-script.onerror =
-function() {
-
-showStatus(
-'Validation gagal dimuat.',
-'error'
-);
-
-};
-
-
-script.src =
-API_URL +
-'?action=getValidation' +
-'&callback=' +
-callback +
-'&t=' +
-Date.now();
-
-
-document.body.appendChild(
-script
-);
-
-}
-
-
-
-/* ============================================
+/* =================================================
 PHOTO
-============================================ */
+================================================= */
 
 async function openPhotoCamera() {
 
-clearStatus();
+  clearStatus();
 
 
-if (scanner) {
+  if (scanner) {
 
-await stopScanner();
+    await stopScanner();
+
+  }
+
+
+  closePhotoCamera();
+
+
+  try {
+
+
+    photoStream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+
+
+          video: {
+
+            facingMode: {
+              ideal:
+                'environment'
+            }
+
+          },
+
+
+          audio:
+            false
+
+
+        });
+
+
+    const video =
+      document.getElementById(
+        'photoVideo'
+      );
+
+
+    video.srcObject =
+      photoStream;
+
+
+    await video.play();
+
+
+    document.getElementById(
+      'photoCameraBox'
+    ).style.display =
+      'block';
+
+
+    document.getElementById(
+      'btnOpenPhoto'
+    ).style.display =
+      'none';
+
+
+    showStatus(
+      'Kamera Driver aktif.',
+      'info'
+    );
+
+
+  } catch(error) {
+
+
+    showStatus(
+      'Kamera tidak dapat dibuka. Izinkan kamera browser.',
+      'error'
+    );
+
+
+  }
 
 }
 
 
-closePhotoCamera();
 
-
-try {
-
-
-photoStream =
-await navigator
-.mediaDevices
-.getUserMedia({
-
-video: {
-
-facingMode: {
-ideal:
-'environment'
-}
-
-},
-
-audio:
-false
-
-});
-
-
-const video =
-document.getElementById(
-'photoVideo'
-);
-
-
-video.srcObject =
-photoStream;
-
-
-await video.play();
-
-
-document.getElementById(
-'photoCameraBox'
-).style.display =
-'block';
-
-
-document.getElementById(
-'btnOpenPhoto'
-).style.display =
-'none';
-
-
-} catch(error) {
-
-
-showStatus(
-'Kamera tidak dapat dibuka. Izinkan kamera browser.',
-'error'
-);
-
-
-}
-
-}
-
-
+/* =================================================
+CAPTURE PHOTO
+================================================= */
 
 function capturePhoto() {
 
-const video =
-document.getElementById(
-'photoVideo'
-);
+  const video =
+    document.getElementById(
+      'photoVideo'
+    );
 
 
-if (
-!video.videoWidth
-) {
+  if (
+    !video.videoWidth
+  ) {
 
-return;
+    showStatus(
+      'Kamera belum siap.',
+      'error'
+    );
+
+    return;
+
+  }
+
+
+  const canvas =
+    document.createElement(
+      'canvas'
+    );
+
+
+  let width =
+    video.videoWidth;
+
+
+  let height =
+    video.videoHeight;
+
+
+  if (
+    width > 1280
+  ) {
+
+
+    height =
+      Math.round(
+        height *
+        1280 /
+        width
+      );
+
+
+    width =
+      1280;
+
+
+  }
+
+
+  canvas.width =
+    width;
+
+
+  canvas.height =
+    height;
+
+
+  canvas
+    .getContext('2d')
+    .drawImage(
+      video,
+      0,
+      0,
+      width,
+      height
+    );
+
+
+  photoBase64 =
+    canvas.toDataURL(
+      'image/jpeg',
+      .72
+    );
+
+
+  document.getElementById(
+    'photoPreview'
+  ).src =
+    photoBase64;
+
+
+  document.getElementById(
+    'photoPreviewBox'
+  ).style.display =
+    'block';
+
+
+  closePhotoCamera();
+
+
+  showStatus(
+    'Foto Driver berhasil.',
+    'success'
+  );
 
 }
 
 
-const canvas =
-document.createElement(
-'canvas'
-);
 
-
-let width =
-video.videoWidth;
-
-
-let height =
-video.videoHeight;
-
-
-if (
-width > 1280
-) {
-
-
-height =
-Math.round(
-height *
-1280 /
-width
-);
-
-
-width =
-1280;
-
-
-}
-
-
-canvas.width =
-width;
-
-
-canvas.height =
-height;
-
-
-canvas
-.getContext('2d')
-.drawImage(
-video,
-0,
-0,
-width,
-height
-);
-
-
-photoBase64 =
-canvas.toDataURL(
-'image/jpeg',
-.72
-);
-
-
-document.getElementById(
-'photoPreview'
-).src =
-photoBase64;
-
-
-document.getElementById(
-'photoPreviewBox'
-).style.display =
-'block';
-
-
-closePhotoCamera();
-
-
-showStatus(
-'Foto Driver berhasil.',
-'success'
-);
-
-}
-
-
+/* =================================================
+CLOSE PHOTO
+================================================= */
 
 function closePhotoCamera() {
 
-if (
-photoStream
-) {
+  if (
+    photoStream
+  ) {
 
 
-photoStream
-.getTracks()
-.forEach(
-track =>
-track.stop()
-);
+    photoStream
+      .getTracks()
+      .forEach(
+        track =>
+          track.stop()
+      );
 
 
-photoStream =
-null;
+    photoStream =
+      null;
 
+
+  }
+
+
+  const video =
+    document.getElementById(
+      'photoVideo'
+    );
+
+
+  if (video) {
+
+    video.srcObject =
+      null;
+
+  }
+
+
+  document.getElementById(
+    'photoCameraBox'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'btnOpenPhoto'
+  ).style.display =
+    'block';
 
 }
 
 
-const video =
-document.getElementById(
-'photoVideo'
-);
 
-
-if (video) {
-
-video.srcObject =
-null;
-
-}
-
-
-document.getElementById(
-'photoCameraBox'
-).style.display =
-'none';
-
-
-document.getElementById(
-'btnOpenPhoto'
-).style.display =
-'block';
-
-}
-
-
-
-/* ============================================
+/* =================================================
 SCANNER
-============================================ */
+================================================= */
 
 async function startScanner() {
 
-clearStatus();
+  clearStatus();
 
 
-try {
+  try {
 
 
-if (
-!audioContext
-) {
+    if (
+      !audioContext
+    ) {
 
 
-audioContext =
-new (
-window.AudioContext ||
-window.webkitAudioContext
-)();
+      audioContext =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
 
+
+    }
+
+
+    if (
+      audioContext.state ===
+      'suspended'
+    ) {
+
+
+      await audioContext.resume();
+
+
+    }
+
+
+  } catch(error) {}
+
+
+  closePhotoCamera();
+
+
+  if (scanner) {
+
+    return;
+
+  }
+
+
+  try {
+
+
+    const cameras =
+      await Html5Qrcode
+        .getCameras();
+
+
+    if (
+      !cameras.length
+    ) {
+
+      throw new Error(
+        'Kamera tidak ditemukan.'
+      );
+
+    }
+
+
+    let cameraId =
+      cameras[
+        cameras.length - 1
+      ].id;
+
+
+    const rear =
+      cameras.find(
+        c =>
+          /back|rear|environment/i
+            .test(c.label)
+      );
+
+
+    if (rear) {
+
+      cameraId =
+        rear.id;
+
+    }
+
+
+    scanner =
+      new Html5Qrcode(
+        'reader'
+      );
+
+
+    await scanner.start(
+
+      cameraId,
+
+      {
+
+        fps:
+          12,
+
+        qrbox:
+          function(width) {
+
+
+            let w =
+              Math.floor(
+                width *
+                .9
+              );
+
+
+            if (
+              w > 380
+            ) {
+
+              w =
+                380;
+
+            }
+
+
+            return {
+
+              width:
+                w,
+
+              height:
+                140
+
+            };
+
+          }
+
+      },
+
+      scanSuccess,
+
+      function(){}
+
+    );
+
+
+    document.getElementById(
+      'btnStartScanner'
+    ).style.display =
+      'none';
+
+
+    document.getElementById(
+      'btnStopScanner'
+    ).style.display =
+      'block';
+
+
+    showStatus(
+      'Scanner aktif. Arahkan barcode AWB ke kamera.',
+      'info'
+    );
+
+
+  } catch(error) {
+
+
+    scanner =
+      null;
+
+
+    showStatus(
+      'Kamera scanner gagal dibuka.',
+      'error'
+    );
+
+
+  }
 
 }
 
 
-if (
-audioContext.state ===
-'suspended'
-) {
 
-
-await audioContext.resume();
-
-
-}
-
-
-} catch(error) {}
-
-
-closePhotoCamera();
-
-
-if (scanner) {
-
-return;
-
-}
-
-
-try {
-
-
-const cameras =
-await Html5Qrcode
-.getCameras();
-
-
-if (
-!cameras.length
-) {
-
-throw new Error();
-
-}
-
-
-let cameraId =
-cameras[
-cameras.length - 1
-].id;
-
-
-const rear =
-cameras.find(
-c =>
-/back|rear|environment/i
-.test(c.label)
-);
-
-
-if (rear) {
-
-cameraId =
-rear.id;
-
-}
-
-
-scanner =
-new Html5Qrcode(
-'reader'
-);
-
-
-await scanner.start(
-
-cameraId,
-
-{
-
-fps:
-12,
-
-qrbox:
-function(width) {
-
-
-let w =
-Math.floor(
-width *
-.9
-);
-
-
-if (
-w >
-380
-) {
-
-w =
-380;
-
-}
-
-
-return {
-
-width:
-w,
-
-height:
-140
-
-};
-
-}
-
-},
-
-scanSuccess,
-
-function(){}
-
-);
-
-
-document.getElementById(
-'btnStartScanner'
-).style.display =
-'none';
-
-
-document.getElementById(
-'btnStopScanner'
-).style.display =
-'block';
-
-
-showStatus(
-'Scanner aktif.',
-'info'
-);
-
-
-} catch(error) {
-
-
-scanner =
-null;
-
-
-showStatus(
-'Kamera scanner gagal dibuka.',
-'error'
-);
-
-
-}
-
-}
-
-
+/* =================================================
+SCAN SUCCESS
+================================================= */
 
 function scanSuccess(
-decoded
+  decoded
 ) {
 
-if (
-scanLock
-) {
+  if (
+    scanLock
+  ) {
 
-return;
+    return;
+
+  }
+
+
+  const awb =
+    String(
+      decoded
+    ).trim();
+
+
+  if (!awb) {
+
+    return;
+
+  }
+
+
+  scanLock =
+    true;
+
+
+  if (
+    scannedAwbs.includes(
+      awb
+    )
+  ) {
+
+
+    duplicateBeep();
+
+
+    if (
+      navigator.vibrate
+    ) {
+
+      navigator.vibrate([
+        100,
+        70,
+        100
+      ]);
+
+    }
+
+
+    showStatus(
+      'AWB sudah pernah discan: ' +
+      awb,
+      'error'
+    );
+
+
+  } else {
+
+
+    scannedAwbs.push(
+      awb
+    );
+
+
+    renderAwbs();
+
+
+    successBeep();
+
+
+    if (
+      navigator.vibrate
+    ) {
+
+      navigator.vibrate(
+        120
+      );
+
+    }
+
+
+    showStatus(
+      'SCAN BERHASIL: ' +
+      awb,
+      'success'
+    );
+
+
+  }
+
+
+  setTimeout(
+    function() {
+
+      scanLock =
+        false;
+
+    },
+    1000
+  );
 
 }
 
 
-const awb =
-String(decoded)
-.trim();
 
-
-if (!awb) {
-
-return;
-
-}
-
-
-scanLock =
-true;
-
-
-if (
-scannedAwbs.includes(
-awb
-)
-) {
-
-
-duplicateBeep();
-
-
-if (
-navigator.vibrate
-) {
-
-navigator.vibrate([
-100,
-70,
-100
-]);
-
-}
-
-
-showStatus(
-'AWB sudah pernah discan: ' +
-awb,
-'error'
-);
-
-
-} else {
-
-
-scannedAwbs.push(
-awb
-);
-
-
-renderAwbs();
-
-
-successBeep();
-
-
-if (
-navigator.vibrate
-) {
-
-navigator.vibrate(
-120
-);
-
-}
-
-
-showStatus(
-'SCAN BERHASIL: ' +
-awb,
-'success'
-);
-
-
-}
-
-
-setTimeout(
-function() {
-
-scanLock =
-false;
-
-},
-1000
-);
-
-}
-
-
+/* =================================================
+STOP SCANNER
+================================================= */
 
 async function stopScanner() {
 
-if (!scanner) {
+  if (!scanner) {
 
-return;
+    return;
+
+  }
+
+
+  try {
+
+
+    await scanner.stop();
+
+
+    scanner.clear();
+
+
+  } catch(error) {}
+
+
+  scanner =
+    null;
+
+
+  document.getElementById(
+    'btnStartScanner'
+  ).style.display =
+    'block';
+
+
+  document.getElementById(
+    'btnStopScanner'
+  ).style.display =
+    'none';
 
 }
 
 
-try {
 
-
-await scanner.stop();
-
-
-scanner.clear();
-
-
-} catch(error) {}
-
-
-scanner =
-null;
-
-
-document.getElementById(
-'btnStartScanner'
-).style.display =
-'block';
-
-
-document.getElementById(
-'btnStopScanner'
-).style.display =
-'none';
-
-}
-
-
-
-/* ============================================
+/* =================================================
 SOUND
-============================================ */
+================================================= */
 
 function successBeep() {
 
-try {
+  try {
 
 
-const oscillator =
-audioContext
-.createOscillator();
+    const oscillator =
+      audioContext
+        .createOscillator();
 
 
-const gain =
-audioContext
-.createGain();
+    const gain =
+      audioContext
+        .createGain();
 
 
-oscillator.connect(
-gain
-);
+    oscillator.connect(
+      gain
+    );
 
 
-gain.connect(
-audioContext.destination
-);
+    gain.connect(
+      audioContext.destination
+    );
 
 
-oscillator.frequency.value =
-1100;
+    oscillator.frequency.value =
+      1100;
 
 
-gain.gain.value =
-.28;
+    gain.gain.value =
+      .28;
 
 
-oscillator.start();
+    oscillator.start();
 
 
-oscillator.stop(
-audioContext.currentTime +
-.15
-);
+    oscillator.stop(
+      audioContext.currentTime +
+      .15
+    );
 
 
-} catch(error) {}
+  } catch(error) {}
 
 }
 
@@ -1698,234 +1814,350 @@ audioContext.currentTime +
 
 function duplicateBeep() {
 
-try {
+  try {
 
 
-const oscillator =
-audioContext
-.createOscillator();
+    const oscillator =
+      audioContext
+        .createOscillator();
 
 
-const gain =
-audioContext
-.createGain();
+    const gain =
+      audioContext
+        .createGain();
 
 
-oscillator.connect(
-gain
-);
+    oscillator.connect(
+      gain
+    );
 
 
-gain.connect(
-audioContext.destination
-);
+    gain.connect(
+      audioContext.destination
+    );
 
 
-oscillator.frequency.value =
-350;
+    oscillator.frequency.value =
+      350;
 
 
-gain.gain.value =
-.20;
+    gain.gain.value =
+      .20;
 
 
-oscillator.start();
+    oscillator.start();
 
 
-oscillator.stop(
-audioContext.currentTime +
-.22
-);
+    oscillator.stop(
+      audioContext.currentTime +
+      .22
+    );
 
 
-} catch(error) {}
+  } catch(error) {}
 
 }
 
 
 
-/* ============================================
-AWB LIST
-============================================ */
+/* =================================================
+AWB
+================================================= */
 
 function renderAwbs() {
 
-const list =
-document.getElementById(
-'awbList'
-);
+  const list =
+    document.getElementById(
+      'awbList'
+    );
 
 
-document.getElementById(
-'awbCounter'
-).textContent =
-scannedAwbs.length +
-' AWB';
+  document.getElementById(
+    'awbCounter'
+  ).textContent =
+    scannedAwbs.length +
+    ' AWB';
 
 
-if (
-scannedAwbs.length === 0
-) {
+  if (
+    scannedAwbs.length === 0
+  ) {
 
 
-list.innerHTML =
-'<div class="awb-empty">Belum ada AWB.</div>';
+    list.innerHTML =
+      '<div class="awb-empty">Belum ada AWB.</div>';
 
 
-return;
+    return;
 
+
+  }
+
+
+  list.innerHTML =
+    '';
+
+
+  scannedAwbs.forEach(
+    function(
+      awb,
+      index
+    ) {
+
+
+      const row =
+        document.createElement(
+          'div'
+        );
+
+
+      row.className =
+        'awb-item';
+
+
+      const text =
+        document.createElement(
+          'div'
+        );
+
+
+      text.className =
+        'awb-text';
+
+
+      text.textContent =
+        (index + 1) +
+        '. ' +
+        awb;
+
+
+      const del =
+        document.createElement(
+          'button'
+        );
+
+
+      del.type =
+        'button';
+
+
+      del.className =
+        'delete-btn';
+
+
+      del.textContent =
+        'Hapus';
+
+
+      del.onclick =
+        function() {
+
+
+          scannedAwbs.splice(
+            index,
+            1
+          );
+
+
+          renderAwbs();
+
+
+        };
+
+
+      row.appendChild(
+        text
+      );
+
+
+      row.appendChild(
+        del
+      );
+
+
+      list.appendChild(
+        row
+      );
+
+
+    }
+  );
 
 }
 
 
-list.innerHTML =
-'';
 
-
-scannedAwbs.forEach(
-function(
-awb,
-index
-) {
-
-
-const row =
-document.createElement(
-'div'
-);
-
-
-row.className =
-'awb-item';
-
-
-const text =
-document.createElement(
-'div'
-);
-
-
-text.className =
-'awb-text';
-
-
-text.textContent =
-(index + 1) +
-'. ' +
-awb;
-
-
-const del =
-document.createElement(
-'button'
-);
-
-
-del.className =
-'delete-btn';
-
-
-del.textContent =
-'Hapus';
-
-
-del.onclick =
-function() {
-
-
-scannedAwbs.splice(
-index,
-1
-);
-
-
-renderAwbs();
-
-
-};
-
-
-row.appendChild(
-text
-);
-
-
-row.appendChild(
-del
-);
-
-
-list.appendChild(
-row
-);
-
-
-}
-);
-
-}
-
-
+/* =================================================
+CLEAR AWB
+================================================= */
 
 function clearAwbs() {
 
-if (
-!scannedAwbs.length
-) {
+  if (
+    !scannedAwbs.length
+  ) {
 
-return;
+    return;
+
+  }
+
+
+  if (
+    !confirm(
+      'Hapus semua AWB?'
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  scannedAwbs =
+    [];
+
+
+  renderAwbs();
 
 }
 
 
-if (
-!confirm(
-'Hapus semua AWB?'
-)
-) {
 
-return;
+/* =================================================
+RESET SEMUA
+================================================= */
+
+function resetApplication() {
+
+
+  document.getElementById(
+    'namaDriver'
+  ).value =
+    '';
+
+
+  document.getElementById(
+    'platNo'
+  ).value =
+    '';
+
+
+  document.getElementById(
+    'vendor'
+  ).selectedIndex =
+    0;
+
+
+  document.getElementById(
+    'keterangan'
+  ).selectedIndex =
+    0;
+
+
+  document.getElementById(
+    'reason'
+  ).value =
+    '';
+
+
+  scannedAwbs =
+    [];
+
+
+  renderAwbs();
+
+
+  photoBase64 =
+    '';
+
+
+  document.getElementById(
+    'photoPreview'
+  ).src =
+    '';
+
+
+  document.getElementById(
+    'photoPreviewBox'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'keteranganBox'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'reasonBox'
+  ).style.display =
+    'none';
+
+
+  currentProcess =
+    '';
+
+
+  setToday();
+
+
+  document.getElementById(
+    'formPage'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'menuPage'
+  ).style.display =
+    'block';
+
+
+  clearStatus();
+
+
+  window.scrollTo(
+    0,
+    0
+  );
 
 }
 
 
-scannedAwbs =
-[];
 
-
-renderAwbs();
-
-}
-
-
-
-/* ============================================
+/* =================================================
 SAVE
-============================================ */
+================================================= */
 
 async function saveData() {
 
   clearStatus();
+
 
   const tanggal =
     document.getElementById(
       'tanggal'
     ).value;
 
+
   const driver =
     document.getElementById(
       'namaDriver'
     ).value.trim();
+
 
   const plat =
     document.getElementById(
       'platNo'
     ).value.trim();
 
+
   const vendor =
     document.getElementById(
       'vendor'
     ).value;
+
 
   const keterangan =
     document.getElementById(
@@ -1933,59 +2165,104 @@ async function saveData() {
     ).value;
 
 
+  const reason =
+    document.getElementById(
+      'reason'
+    ).value.trim();
+
+
+
   if (!tanggal) {
+
     return showStatus(
       'Tanggal wajib diisi.',
       'error'
     );
+
   }
 
+
   if (!driver) {
+
     return showStatus(
       'Nama Driver wajib diisi.',
       'error'
     );
+
   }
 
+
   if (!plat) {
+
     return showStatus(
       'Plat No wajib diisi.',
       'error'
     );
+
   }
 
+
   if (!vendor) {
+
     return showStatus(
       'Vendor wajib dipilih.',
       'error'
     );
+
   }
 
+
   if (
-    currentProcess === 'RETURN' &&
+    currentProcess ===
+    'RETURN' &&
     !keterangan
   ) {
+
     return showStatus(
       'Keterangan Return wajib dipilih.',
       'error'
     );
+
   }
 
-  if (!photoBase64) {
+
+  if (
+    currentProcess ===
+    'RETURN' &&
+    !reason
+  ) {
+
+    return showStatus(
+      'Reason wajib diisi.',
+      'error'
+    );
+
+  }
+
+
+  if (
+    !photoBase64
+  ) {
+
     return showStatus(
       'Foto Driver wajib diambil.',
       'error'
     );
+
   }
+
 
   if (
     scannedAwbs.length === 0
   ) {
+
     return showStatus(
       'Belum ada AWB.',
       'error'
     );
+
   }
+
 
 
   const btn =
@@ -1993,67 +2270,95 @@ async function saveData() {
       'btnSave'
     );
 
+
   btn.disabled =
     true;
+
 
   btn.textContent =
     'MENYIMPAN...';
 
 
+
   try {
 
+
     await stopScanner();
+
 
     closePhotoCamera();
 
 
     const payload = {
 
-      action: 'save',
+
+      action:
+        'save',
+
 
       process:
         currentProcess,
 
+
       tanggal:
         tanggal,
+
 
       namaDriver:
         driver,
 
+
       platNo:
         plat,
+
 
       vendor:
         vendor,
 
+
       keterangan:
         keterangan,
+
+
+      reason:
+        reason,
+
 
       awbs:
         scannedAwbs,
 
+
       fotoDriver:
         photoBase64
+
 
     };
 
 
     const response =
       await fetch(
+
         API_URL,
+
         {
-          method: 'POST',
+
+          method:
+            'POST',
 
           headers: {
+
             'Content-Type':
               'text/plain;charset=utf-8'
+
           },
 
           body:
             JSON.stringify(
               payload
             )
+
         }
+
       );
 
 
@@ -2063,135 +2368,49 @@ async function saveData() {
       );
 
 
-    if (!result.success) {
+    if (
+      !result.success
+    ) {
+
       throw new Error(
         result.message ||
         'Gagal menyimpan.'
       );
+
     }
 
 
     /*
-    =========================================
-    DATA BERHASIL DISIMPAN
-    =========================================
+    INFORMASI BERHASIL
     */
-
     alert(
+
       result.jumlah +
       ' AWB berhasil disimpan ke ' +
       result.sheet
+
     );
 
 
     /*
-    Kosongkan semua data.
+    SEMUA DIKOSONGKAN
+    DAN KEMBALI KE MENU DEPAN
     */
-
-    document.getElementById(
-      'namaDriver'
-    ).value = '';
-
-    document.getElementById(
-      'platNo'
-    ).value = '';
-
-    document.getElementById(
-      'vendor'
-    ).selectedIndex = 0;
-
-    document.getElementById(
-      'keterangan'
-    ).selectedIndex = 0;
-
-
-    scannedAwbs = [];
-
-    renderAwbs();
-
-
-    photoBase64 = '';
-
-
-    document.getElementById(
-      'photoPreview'
-    ).src = '';
-
-
-    document.getElementById(
-      'photoPreviewBox'
-    ).style.display =
-      'none';
-
-
-    /*
-    Reset tanggal hari ini.
-    */
-
-    setToday();
-
-
-    /*
-    Reset proses.
-    */
-
-    currentProcess = '';
-
-
-    /*
-    Tutup form.
-    */
-
-    document.getElementById(
-      'formPage'
-    ).style.display =
-      'none';
-
-
-    /*
-    Tampilkan menu depan.
-    */
-
-    document.getElementById(
-      'menuPage'
-    ).style.display =
-      'block';
-
-
-    /*
-    Sembunyikan Keterangan.
-    */
-
-    document.getElementById(
-      'keteranganBox'
-    ).style.display =
-      'none';
-
-
-    /*
-    Bersihkan status.
-    */
-
-    clearStatus();
-
-
-    /*
-    Kembali ke atas.
-    */
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    resetApplication();
 
 
   } catch(error) {
 
+
     showStatus(
+
       'Gagal menyimpan: ' +
       error.message,
+
       'error'
+
     );
+
 
   }
 
@@ -2199,35 +2418,37 @@ async function saveData() {
   btn.disabled =
     false;
 
+
   btn.textContent =
     '💾 SIMPAN DATA';
 
 }
 
 
-/* ============================================
+
+/* =================================================
 STATUS
-============================================ */
+================================================= */
 
 function showStatus(
-message,
-type
+  message,
+  type
 ) {
 
 
-const status =
-document.getElementById(
-'status'
-);
+  const status =
+    document.getElementById(
+      'status'
+    );
 
 
-status.className =
-'status ' +
-type;
+  status.className =
+    'status ' +
+    type;
 
 
-status.textContent =
-message;
+  status.textContent =
+    message;
 
 
 }
@@ -2237,18 +2458,18 @@ message;
 function clearStatus() {
 
 
-const status =
-document.getElementById(
-'status'
-);
+  const status =
+    document.getElementById(
+      'status'
+    );
 
 
-status.className =
-'status';
+  status.className =
+    'status';
 
 
-status.textContent =
-'';
+  status.textContent =
+    '';
 
 
 }
