@@ -1,8 +1,15 @@
 <!doctype html>
 <html lang="id">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+>
+
 <meta name="theme-color" content="#111827">
 
 <title>SCAN OUTBOUND - H JOEL</title>
@@ -10,42 +17,56 @@
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   background:#eef1f4;
   font-family:Arial,sans-serif;
   color:#111827;
 }
+
 .app{
   max-width:520px;
   margin:auto;
   background:#fff;
   min-height:100vh;
 }
+
 .header{
-  padding:22px 20px 20px;
+  padding:20px 18px 18px;
   text-align:center;
   border-bottom:4px solid #ff7518;
 }
-.logoText{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:2px;
+
+.logo{
+  width:100%;
+  max-width:370px;
+  height:auto;
+  display:block;
+  margin:0 auto 12px;
 }
-.logoText span{color:#ff7518}
+
 .title{
   font-size:28px;
   font-weight:900;
-  margin-top:15px;
+  margin-top:8px;
+  letter-spacing:1px;
 }
+
 .subtitle{
   font-size:12px;
   color:#6b7280;
   margin-top:5px;
   letter-spacing:1px;
 }
-.content{padding:20px}
+
+.content{
+  padding:20px;
+}
 
 label{
   display:block;
@@ -55,7 +76,8 @@ label{
   margin:17px 0 7px;
 }
 
-input,select{
+input,
+select{
   width:100%;
   height:54px;
   border:1px solid #d1d5db;
@@ -65,7 +87,8 @@ input,select{
   background:#fff;
 }
 
-input:focus,select:focus{
+input:focus,
+select:focus{
   outline:2px solid #ff7518;
   border-color:#ff7518;
 }
@@ -85,21 +108,25 @@ button{
   background:#111827;
   color:white;
 }
+
 .stopBtn{
   margin-top:10px;
   background:#fff;
   border:1px solid #d1d5db;
 }
+
 .saveBtn{
   margin-top:15px;
   background:#ff7518;
   color:#fff;
 }
+
 .clearBtn{
   margin-top:10px;
   background:#fff1f2;
   color:#b91c1c;
 }
+
 .status{
   margin-top:15px;
   padding:14px;
@@ -108,24 +135,29 @@ button{
   font-weight:800;
   border:1px solid #e5e7eb;
 }
+
 .ok{
   background:#ecfdf5;
   color:#065f46;
 }
+
 .error{
   background:#fef2f2;
   color:#991b1b;
 }
+
 .warn{
   background:#fff7ed;
   color:#9a3412;
 }
+
 .stats{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
   margin-top:14px;
 }
+
 .stat{
   background:#f9fafb;
   border:1px solid #e5e7eb;
@@ -133,15 +165,18 @@ button{
   padding:15px;
   text-align:center;
 }
+
 .number{
   font-size:31px;
   font-weight:900;
 }
+
 .statLabel{
   font-size:11px;
   color:#6b7280;
   margin-top:4px;
 }
+
 .list{
   margin-top:14px;
   max-height:300px;
@@ -149,30 +184,41 @@ button{
   border:1px solid #e5e7eb;
   border-radius:13px;
 }
+
 .row{
   display:flex;
   align-items:center;
   padding:11px;
   border-bottom:1px solid #eee;
 }
+
 .awb{
   flex:1;
   font-family:monospace;
   font-size:14px;
 }
+
 .row button{
   width:auto;
   padding:7px 10px;
   background:#fff1f2;
   color:#b91c1c;
 }
+
 .empty{
   padding:25px;
   text-align:center;
   color:#9ca3af;
 }
-.hidden{display:none!important}
-#reader{margin-top:15px}
+
+.hidden{
+  display:none!important;
+}
+
+#reader{
+  margin-top:15px;
+}
+
 .photoPreview{
   width:100%;
   max-height:260px;
@@ -181,7 +227,9 @@ button{
   margin-top:10px;
   display:none;
 }
+
 </style>
+
 </head>
 
 <body>
@@ -189,24 +237,50 @@ button{
 <div class="app">
 
 <div class="header">
-  <div class="logoText">H <span>JOEL</span> LOGISTICS</div>
-  <div class="title">SCAN OUTBOUND</div>
-  <div class="subtitle">OUTBOUND SCANNING SYSTEM</div>
+
+  <img
+    src="logo.png"
+    alt="H JOEL LOGISTICS"
+    class="logo"
+  >
+
+  <div class="title">
+    SCAN OUTBOUND
+  </div>
+
+  <div class="subtitle">
+    OUTBOUND SCANNING SYSTEM
+  </div>
+
 </div>
 
 <div class="content">
 
-<label>TANGGAL PICK UP</label>
-<input type="date" id="tanggal">
+<label>
+TANGGAL PICK UP
+</label>
 
-<label>NAMA DRIVER</label>
+<input
+  type="date"
+  id="tanggal"
+>
+
+
+<label>
+NAMA DRIVER
+</label>
+
 <input
   type="text"
   id="driver"
   placeholder="Ketik nama driver"
 >
 
-<label>PLAT NO</label>
+
+<label>
+PLAT NO
+</label>
+
 <input
   type="text"
   id="platNo"
@@ -214,12 +288,24 @@ button{
   style="text-transform:uppercase"
 >
 
-<label>VENDOR</label>
+
+<label>
+VENDOR
+</label>
+
 <select id="vendor">
-  <option value="">Memuat data vendor...</option>
+
+  <option value="">
+    Memuat data vendor...
+  </option>
+
 </select>
 
-<label>FOTO DRIVER</label>
+
+<label>
+FOTO DRIVER
+</label>
+
 <input
   type="file"
   id="fotoDriver"
@@ -227,80 +313,131 @@ button{
   capture="environment"
 >
 
-<img id="photoPreview" class="photoPreview">
+<img
+  id="photoPreview"
+  class="photoPreview"
+>
+
 
 <button
   id="startBtn"
   class="scanBtn"
-  onclick="startScanner()">
-  📷 MULAI SCAN AWB
+  onclick="startScanner()"
+>
+📷 MULAI SCAN AWB
 </button>
+
 
 <button
   id="stopBtn"
   class="stopBtn hidden"
-  onclick="stopScanner()">
-  ■ HENTIKAN KAMERA
+  onclick="stopScanner()"
+>
+■ HENTIKAN KAMERA
 </button>
+
 
 <div id="reader"></div>
 
-<div id="status" class="status">
-  Menghubungkan ke sistem...
+
+<div
+  id="status"
+  class="status"
+>
+Menghubungkan ke sistem...
 </div>
+
 
 <div class="stats">
 
   <div class="stat">
-    <div id="count" class="number">0</div>
-    <div class="statLabel">AWB TER-SCAN</div>
+
+    <div
+      id="count"
+      class="number"
+    >
+      0
+    </div>
+
+    <div class="statLabel">
+      AWB TER-SCAN
+    </div>
+
   </div>
 
+
   <div class="stat">
-    <div id="duplicate" class="number">0</div>
-    <div class="statLabel">DUPLIKAT</div>
+
+    <div
+      id="duplicate"
+      class="number"
+    >
+      0
+    </div>
+
+    <div class="statLabel">
+      DUPLIKAT
+    </div>
+
   </div>
 
 </div>
 
-<div id="awbList" class="list">
+
+<div
+  id="awbList"
+  class="list"
+>
+
   <div class="empty">
     Belum ada AWB yang discan.
   </div>
+
 </div>
+
 
 <button
   id="saveBtn"
   class="saveBtn"
-  onclick="saveAll()">
-  💾 SIMPAN SEMUA (0)
+  onclick="saveAll()"
+>
+💾 SIMPAN SEMUA (0)
 </button>
+
 
 <button
   class="clearBtn"
-  onclick="clearAll()">
-  HAPUS SEMUA AWB
+  onclick="clearAll()"
+>
+HAPUS SEMUA AWB
 </button>
 
 </div>
 </div>
 
 
-<iframe name="saveFrame" class="hidden"></iframe>
+<iframe
+  name="saveFrame"
+  class="hidden">
+</iframe>
+
 
 <form
   id="saveForm"
   method="POST"
   target="saveFrame"
-  class="hidden">
+  class="hidden"
+>
 
 <input
   id="formRequestId"
-  name="requestId">
+  name="requestId"
+>
 
 <input
   id="formPayload"
-  name="payload">
+  name="payload"
+>
 
 </form>
 
@@ -399,7 +536,7 @@ function jsonp(params){
 
 
 /* ========================================
-   LOAD VENDOR DARI VALIDATION
+   LOAD VENDOR
 ======================================== */
 
 async function loadVendor(){
