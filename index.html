@@ -964,6 +964,12 @@ function selectProcess(process){
     process === 'RETURN'
   ){
 
+    /* Pastikan Keterangan RETURN dimuat */
+    const ketSelect = document.getElementById('keterangan');
+    if(ketSelect && ketSelect.options.length <= 1){
+      loadValidation();
+    }
+
     title.textContent =
       'RETURN';
 
@@ -1111,6 +1117,13 @@ function loadValidation(){
         data.success
       ){
 
+        if(!(data.keterangans || []).length){
+          showStatus(
+            'Data Keterangan kosong. Isi Validation!D4:D15.',
+            'error'
+          );
+        }
+
         (data.keterangans || [])
         .forEach(
           function(item){
@@ -1136,7 +1149,7 @@ function loadValidation(){
       }else{
 
         showStatus(
-          'Keterangan Return gagal dimuat.',
+          'Keterangan Return gagal dimuat. Periksa deployment Apps Script / sheet Validation D4:D15.',
           'error'
         );
 
@@ -1154,7 +1167,7 @@ function loadValidation(){
     function(){
 
       showStatus(
-        'Keterangan Return gagal dimuat.',
+        'Keterangan Return gagal dimuat. Periksa deployment Apps Script / sheet Validation D4:D15.',
         'error'
       );
 
