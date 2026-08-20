@@ -1905,263 +1905,304 @@ SAVE
 
 async function saveData() {
 
-clearStatus();
+  clearStatus();
+
+  const tanggal =
+    document.getElementById(
+      'tanggal'
+    ).value;
+
+  const driver =
+    document.getElementById(
+      'namaDriver'
+    ).value.trim();
+
+  const plat =
+    document.getElementById(
+      'platNo'
+    ).value.trim();
+
+  const vendor =
+    document.getElementById(
+      'vendor'
+    ).value;
+
+  const keterangan =
+    document.getElementById(
+      'keterangan'
+    ).value;
 
 
-const tanggal =
-document.getElementById(
-'tanggal'
-).value;
+  if (!tanggal) {
+    return showStatus(
+      'Tanggal wajib diisi.',
+      'error'
+    );
+  }
+
+  if (!driver) {
+    return showStatus(
+      'Nama Driver wajib diisi.',
+      'error'
+    );
+  }
+
+  if (!plat) {
+    return showStatus(
+      'Plat No wajib diisi.',
+      'error'
+    );
+  }
+
+  if (!vendor) {
+    return showStatus(
+      'Vendor wajib dipilih.',
+      'error'
+    );
+  }
+
+  if (
+    currentProcess === 'RETURN' &&
+    !keterangan
+  ) {
+    return showStatus(
+      'Keterangan Return wajib dipilih.',
+      'error'
+    );
+  }
+
+  if (!photoBase64) {
+    return showStatus(
+      'Foto Driver wajib diambil.',
+      'error'
+    );
+  }
+
+  if (
+    scannedAwbs.length === 0
+  ) {
+    return showStatus(
+      'Belum ada AWB.',
+      'error'
+    );
+  }
 
 
-const driver =
-document.getElementById(
-'namaDriver'
-).value.trim();
+  const btn =
+    document.getElementById(
+      'btnSave'
+    );
+
+  btn.disabled =
+    true;
+
+  btn.textContent =
+    'MENYIMPAN...';
 
 
-const plat =
-document.getElementById(
-'platNo'
-).value.trim();
+  try {
+
+    await stopScanner();
+
+    closePhotoCamera();
 
 
-const vendor =
-document.getElementById(
-'vendor'
-).value;
+    const payload = {
+
+      action: 'save',
+
+      process:
+        currentProcess,
+
+      tanggal:
+        tanggal,
+
+      namaDriver:
+        driver,
+
+      platNo:
+        plat,
+
+      vendor:
+        vendor,
+
+      keterangan:
+        keterangan,
+
+      awbs:
+        scannedAwbs,
+
+      fotoDriver:
+        photoBase64
+
+    };
 
 
-const keterangan =
-document.getElementById(
-'keterangan'
-).value;
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'text/plain;charset=utf-8'
+          },
+
+          body:
+            JSON.stringify(
+              payload
+            )
+        }
+      );
 
 
+    const result =
+      JSON.parse(
+        await response.text()
+      );
 
-if (!tanggal) {
 
-return showStatus(
-'Tanggal wajib diisi.',
-'error'
-);
+    if (!result.success) {
+      throw new Error(
+        result.message ||
+        'Gagal menyimpan.'
+      );
+    }
+
+
+    /*
+    =========================================
+    DATA BERHASIL DISIMPAN
+    =========================================
+    */
+
+    alert(
+      result.jumlah +
+      ' AWB berhasil disimpan ke ' +
+      result.sheet
+    );
+
+
+    /*
+    Kosongkan semua data.
+    */
+
+    document.getElementById(
+      'namaDriver'
+    ).value = '';
+
+    document.getElementById(
+      'platNo'
+    ).value = '';
+
+    document.getElementById(
+      'vendor'
+    ).selectedIndex = 0;
+
+    document.getElementById(
+      'keterangan'
+    ).selectedIndex = 0;
+
+
+    scannedAwbs = [];
+
+    renderAwbs();
+
+
+    photoBase64 = '';
+
+
+    document.getElementById(
+      'photoPreview'
+    ).src = '';
+
+
+    document.getElementById(
+      'photoPreviewBox'
+    ).style.display =
+      'none';
+
+
+    /*
+    Reset tanggal hari ini.
+    */
+
+    setToday();
+
+
+    /*
+    Reset proses.
+    */
+
+    currentProcess = '';
+
+
+    /*
+    Tutup form.
+    */
+
+    document.getElementById(
+      'formPage'
+    ).style.display =
+      'none';
+
+
+    /*
+    Tampilkan menu depan.
+    */
+
+    document.getElementById(
+      'menuPage'
+    ).style.display =
+      'block';
+
+
+    /*
+    Sembunyikan Keterangan.
+    */
+
+    document.getElementById(
+      'keteranganBox'
+    ).style.display =
+      'none';
+
+
+    /*
+    Bersihkan status.
+    */
+
+    clearStatus();
+
+
+    /*
+    Kembali ke atas.
+    */
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+
+
+  } catch(error) {
+
+    showStatus(
+      'Gagal menyimpan: ' +
+      error.message,
+      'error'
+    );
+
+  }
+
+
+  btn.disabled =
+    false;
+
+  btn.textContent =
+    '💾 SIMPAN DATA';
 
 }
-
-
-if (!driver) {
-
-return showStatus(
-'Nama Driver wajib diisi.',
-'error'
-);
-
-}
-
-
-if (!plat) {
-
-return showStatus(
-'Plat No wajib diisi.',
-'error'
-);
-
-}
-
-
-if (!vendor) {
-
-return showStatus(
-'Vendor wajib dipilih.',
-'error'
-);
-
-}
-
-
-if (
-currentProcess ===
-'RETURN' &&
-!keterangan
-) {
-
-return showStatus(
-'Keterangan wajib dipilih.',
-'error'
-);
-
-}
-
-
-if (
-!photoBase64
-) {
-
-return showStatus(
-'Foto Driver wajib diambil.',
-'error'
-);
-
-}
-
-
-if (
-scannedAwbs.length === 0
-) {
-
-return showStatus(
-'Belum ada AWB.',
-'error'
-);
-
-}
-
-
-
-const btn =
-document.getElementById(
-'btnSave'
-);
-
-
-btn.disabled =
-true;
-
-
-btn.textContent =
-'MENYIMPAN...';
-
-
-
-try {
-
-
-await stopScanner();
-
-
-const payload = {
-
-action:
-'save',
-
-process:
-currentProcess,
-
-tanggal:
-tanggal,
-
-namaDriver:
-driver,
-
-platNo:
-plat,
-
-vendor:
-vendor,
-
-keterangan:
-keterangan,
-
-awbs:
-scannedAwbs,
-
-fotoDriver:
-photoBase64
-
-};
-
-
-const response =
-await fetch(
-
-API_URL,
-
-{
-
-method:
-'POST',
-
-headers: {
-
-'Content-Type':
-'text/plain;charset=utf-8'
-
-},
-
-body:
-JSON.stringify(
-payload
-)
-
-}
-
-);
-
-
-const result =
-JSON.parse(
-await response.text()
-);
-
-
-if (
-!result.success
-) {
-
-throw new Error(
-result.message
-);
-
-}
-
-
-showStatus(
-result.jumlah +
-' AWB berhasil disimpan ke ' +
-result.sheet,
-'success'
-);
-
-
-scannedAwbs =
-[];
-
-
-renderAwbs();
-
-
-photoBase64 =
-'';
-
-
-document.getElementById(
-'photoPreviewBox'
-).style.display =
-'none';
-
-
-} catch(error) {
-
-
-showStatus(
-'Gagal menyimpan: ' +
-error.message,
-'error'
-);
-
-
-}
-
-
-btn.disabled =
-false;
-
-
-btn.textContent =
-'💾 SIMPAN DATA';
-
-}
-
 
 
 /* ============================================
