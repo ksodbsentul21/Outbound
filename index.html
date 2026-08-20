@@ -1,776 +1,756 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1"
->
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#ff6a00">
 
 <title>H JOEL LOGISTICS</title>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
-
 <style>
 
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  background: #f2f3f5;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #20252b;
+body{
+  margin:0;
+  background:#f2f3f5;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#20252b;
 }
 
-.app {
-  max-width: 520px;
-  margin: auto;
-  min-height: 100vh;
-  background: white;
+.app{
+  max-width:520px;
+  min-height:100vh;
+  margin:auto;
+  background:white;
 }
 
-
-/* HEADER */
-
-.header {
-  padding: 16px;
-  text-align: center;
-  border-bottom: 4px solid #ff6a00;
+.header{
+  padding:15px;
+  text-align:center;
+  background:white;
+  border-bottom:4px solid #ff6a00;
 }
 
-.logo {
-  width: 100%;
-  max-width: 340px;
-  height: auto;
-  display: block;
-  margin: auto;
+.logo{
+  width:100%;
+  max-width:350px;
+  display:block;
+  margin:auto;
 }
 
-.header-title {
-  margin-top: 8px;
-  font-size: 20px;
-  font-weight: 900;
+.header-title{
+  margin-top:8px;
+  font-size:20px;
+  font-weight:900;
 }
 
-
-/* CONTENT */
-
-.content {
-  padding: 18px;
+.content{
+  padding:18px;
 }
-
 
 /* MENU */
 
-.menu-title {
-  text-align: center;
-  font-weight: 900;
-  font-size: 18px;
-  margin: 12px 0 20px;
+.menu-title{
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  margin:12px 0 20px;
 }
 
-.menu-grid {
-  display: grid;
-  gap: 13px;
+.menu-grid{
+  display:grid;
+  gap:13px;
 }
 
-.menu-btn {
-  min-height: 75px;
-  border: 0;
-  border-radius: 13px;
-  font-size: 17px;
-  font-weight: 900;
-  cursor: pointer;
+.menu-btn{
+  width:100%;
+  min-height:75px;
+  border:0;
+  border-radius:13px;
+  font-size:17px;
+  font-weight:900;
+  cursor:pointer;
 }
 
-.outbound {
-  background: #ff6a00;
-  color: white;
+.outbound{
+  background:#ff6a00;
+  color:white;
 }
 
-.bast {
-  background: #20252b;
-  color: white;
+.bast{
+  background:#20252b;
+  color:white;
 }
 
-.return {
-  background: #148c47;
-  color: white;
+.return{
+  background:#148c47;
+  color:white;
 }
-
 
 /* FORM */
 
-#formPage {
-  display: none;
+#formPage{
+  display:none;
 }
 
-.process-header {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 18px;
+.process-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:18px;
 }
 
-.back-btn {
-  width: auto;
-  min-width: 52px;
-  min-height: 45px;
-  border: 0;
-  border-radius: 8px;
-  background: #eceeef;
-  font-size: 20px;
-  cursor: pointer;
+.back-btn{
+  width:52px;
+  min-height:45px;
+  border:0;
+  border-radius:8px;
+  background:#eceeef;
+  font-size:21px;
+  cursor:pointer;
 }
 
-.process-title {
-  font-size: 19px;
-  font-weight: 900;
+.process-title{
+  font-size:20px;
+  font-weight:900;
 }
-
 
 /* FIELD */
 
-.field {
-  margin-bottom: 15px;
+.field{
+  margin-bottom:15px;
 }
 
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  font-weight: 700;
+label{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  margin-bottom:6px;
 }
 
 input,
 select,
-button {
-  width: 100%;
-  min-height: 49px;
-  border-radius: 9px;
-  font-size: 16px;
+button{
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:16px;
+  border-radius:9px;
 }
 
 input,
-select {
-  border: 1px solid #ccd0d5;
-  padding: 11px;
-  background: white;
+select{
+  width:100%;
+  min-height:49px;
+  padding:11px;
+  background:white;
+  border:1px solid #ccd0d5;
+  outline:none;
 }
 
 input:focus,
-select:focus {
-  outline: 0;
-  border-color: #ff6a00;
+select:focus{
+  border-color:#ff6a00;
+  box-shadow:0 0 0 2px rgba(255,106,0,.10);
 }
 
-.section-title {
-  margin: 22px 0 12px;
-  font-size: 15px;
-  font-weight: 900;
+.section-title{
+  font-size:15px;
+  font-weight:900;
+  margin:20px 0 12px;
 }
 
-.divider {
-  height: 1px;
-  background: #eee;
-  margin: 22px 0;
+.divider{
+  height:1px;
+  background:#eee;
+  margin:22px 0;
 }
-
 
 /* BUTTON */
 
-.btn-orange {
-  border: 0;
-  background: #ff6a00;
-  color: white;
-  font-weight: 900;
+button{
+  cursor:pointer;
 }
 
-.btn-dark {
-  border: 0;
-  background: #20252b;
-  color: white;
-  font-weight: 900;
+.btn-orange,
+.btn-dark,
+.btn-red,
+.btn-green{
+  width:100%;
+  min-height:49px;
+  border:0;
+  font-weight:900;
 }
 
-.btn-red {
-  border: 0;
-  background: #d9342b;
-  color: white;
-  font-weight: 900;
+.btn-orange{
+  background:#ff6a00;
+  color:white;
 }
 
-.btn-green {
-  border: 0;
-  background: #148c47;
-  color: white;
-  font-weight: 900;
+.btn-dark{
+  background:#20252b;
+  color:white;
 }
 
-
-/* PHOTO */
-
-#photoCameraBox {
-  display: none;
-  margin-top: 10px;
+.btn-red{
+  background:#d9342b;
+  color:white;
 }
 
-#photoVideo {
-  width: 100%;
-  max-height: 420px;
-  background: #111;
-  border-radius: 12px;
-  object-fit: cover;
+.btn-green{
+  background:#148c47;
+  color:white;
 }
 
-.photo-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 8px;
+button:disabled{
+  opacity:.5;
 }
 
-#photoPreviewBox {
-  display: none;
-  margin-top: 10px;
+/* RETURN */
+
+#keteranganBox{
+  display:none;
 }
 
-#photoPreview {
-  width: 100%;
-  border-radius: 10px;
+#reasonBox{
+  display:none;
 }
 
+.reason-note{
+  margin-top:5px;
+  color:#888;
+  font-size:11px;
+}
+
+/* FOTO */
+
+#photoCameraBox{
+  display:none;
+  margin-top:10px;
+}
+
+#photoVideo{
+  width:100%;
+  max-height:420px;
+  object-fit:cover;
+  background:#111;
+  border-radius:12px;
+}
+
+.photo-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
+}
+
+#photoPreviewBox{
+  display:none;
+  margin-top:10px;
+}
+
+#photoPreview{
+  display:block;
+  width:100%;
+  max-height:380px;
+  object-fit:contain;
+  border-radius:10px;
+  background:#f5f5f5;
+}
 
 /* SCANNER */
 
-#reader {
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 12px;
-  overflow: hidden;
+#reader{
+  width:100%;
+  margin-top:10px;
+  overflow:hidden;
+  border-radius:12px;
+  background:#111;
 }
 
-.scan-buttons {
-  display: grid;
-  gap: 8px;
+.scan-buttons{
+  display:grid;
+  gap:8px;
 }
-
 
 /* AWB */
 
-.counter-row {
-  margin: 13px 0 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.counter-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:13px 0 8px;
 }
 
-.counter {
-  background: #20252b;
-  color: white;
-  padding: 7px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 13px;
+.counter{
+  background:#20252b;
+  color:white;
+  border-radius:20px;
+  padding:7px 12px;
+  font-size:13px;
+  font-weight:bold;
 }
 
-.clear-btn {
-  width: auto;
-  min-height: 34px;
-  border: 0;
-  background: #eee;
-  font-size: 12px;
+.clear-btn{
+  width:auto;
+  min-height:34px;
+  border:0;
+  background:#eee;
+  padding:6px 12px;
+  font-size:12px;
 }
 
-.awb-list {
-  padding: 9px;
-  background: #f5f6f7;
-  border-radius: 10px;
-  max-height: 280px;
-  overflow-y: auto;
+.awb-list{
+  max-height:280px;
+  overflow-y:auto;
+  background:#f5f6f7;
+  border-radius:10px;
+  padding:9px;
 }
 
-.awb-empty {
-  color: #888;
-  text-align: center;
-  padding: 15px;
+.awb-empty{
+  text-align:center;
+  color:#888;
+  padding:15px;
 }
 
-.awb-item {
-  display: flex;
-  gap: 8px;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 6px;
+.awb-item{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px;
+  background:white;
+  border:1px solid #ddd;
+  border-radius:8px;
+  margin-bottom:6px;
 }
 
-.awb-text {
-  flex: 1;
-  font-weight: bold;
-  word-break: break-all;
+.awb-text{
+  flex:1;
+  font-size:14px;
+  font-weight:bold;
+  word-break:break-all;
 }
 
-.delete-btn {
-  width: auto;
-  min-height: 30px;
-  border: 0;
-  background: #d9342b;
-  color: white;
-  font-size: 11px;
+.delete-btn{
+  width:auto;
+  min-height:31px;
+  border:0;
+  background:#d9342b;
+  color:white;
+  padding:5px 8px;
+  font-size:11px;
 }
-
 
 /* STATUS */
 
-.status {
-  display: none;
-  margin-top: 15px;
-  padding: 12px;
-  text-align: center;
-  border-radius: 9px;
-  font-weight: bold;
+.status{
+  display:none;
+  margin-top:15px;
+  padding:12px;
+  border-radius:9px;
+  text-align:center;
+  font-weight:bold;
+  line-height:1.4;
 }
 
-.status.success {
-  display: block;
-  background: #e1f5e9;
-  color: #14723b;
+.status.success{
+  display:block;
+  background:#e1f5e9;
+  color:#14723b;
 }
 
-.status.error {
-  display: block;
-  background: #fde5e3;
-  color: #b1261c;
+.status.error{
+  display:block;
+  background:#fde5e3;
+  color:#b1261c;
 }
 
-.status.info {
-  display: block;
-  background: #fff0df;
-  color: #975300;
+.status.info{
+  display:block;
+  background:#fff0df;
+  color:#975300;
 }
 
-.footer {
-  text-align: center;
-  padding: 20px;
-  color: #aaa;
-  font-size: 11px;
+.footer{
+  padding:20px;
+  text-align:center;
+  color:#aaa;
+  font-size:11px;
 }
 
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="app">
 
+  <div class="header">
 
-<div class="header">
+    <img
+      src="./H_JOEL_LOGISTICS_logo.png"
+      class="logo"
+      alt="H JOEL LOGISTICS"
+    >
 
-<img
-  src="./H_JOEL_LOGISTICS_logo.png"
-  class="logo"
-  alt="H JOEL LOGISTICS"
->
+    <div class="header-title">
+      OPERASIONAL DISTRIBUSI
+    </div>
 
-<div class="header-title">
-OPERASIONAL DISTRIBUSI
-</div>
+  </div>
 
-</div>
 
+  <div class="content">
 
+    <!-- MENU DEPAN -->
 
-<div class="content">
+    <div id="menuPage">
 
+      <div class="menu-title">
+        PILIH PROSES
+      </div>
 
-<!-- =================================================
-MENU
-================================================= -->
+      <div class="menu-grid">
 
-<div id="menuPage">
+        <button
+          type="button"
+          class="menu-btn outbound"
+          onclick="selectProcess('OUTBOUND')"
+        >
+          📦 OUTBOUND
+        </button>
 
-<div class="menu-title">
-PILIH PROSES
-</div>
+        <button
+          type="button"
+          class="menu-btn bast"
+          onclick="selectProcess('BAST')"
+        >
+          🏭 BAST BACK TO WH
+        </button>
 
-<div class="menu-grid">
+        <button
+          type="button"
+          class="menu-btn return"
+          onclick="selectProcess('RETURN')"
+        >
+          ↩️ RETURN
+        </button>
 
+      </div>
 
-<button
-  class="menu-btn outbound"
-  onclick="selectProcess('OUTBOUND')"
->
-📦 OUTBOUND
-</button>
+    </div>
 
 
-<button
-  class="menu-btn bast"
-  onclick="selectProcess('BAST')"
->
-🏭 BAST BACK TO WH
-</button>
+    <!-- FORM -->
 
+    <div id="formPage">
 
-<button
-  class="menu-btn return"
-  onclick="selectProcess('RETURN')"
->
-↩️ RETURN
-</button>
+      <div class="process-header">
 
+        <button
+          type="button"
+          class="back-btn"
+          onclick="backMenu()"
+        >
+          ←
+        </button>
 
-</div>
+        <div
+          class="process-title"
+          id="processTitle"
+        ></div>
 
-</div>
+      </div>
 
 
+      <div class="field">
 
-<!-- =================================================
-FORM
-================================================= -->
+        <label id="tanggalLabel">
+          Tanggal
+        </label>
 
-<div id="formPage">
+        <input
+          type="date"
+          id="tanggal"
+        >
 
+      </div>
 
-<div class="process-header">
 
-<button
-  class="back-btn"
-  type="button"
-  onclick="backMenu()"
->
-←
-</button>
+      <div class="field">
 
-<div
-  class="process-title"
-  id="processTitle"
->
-</div>
+        <label>
+          Nama Driver
+        </label>
 
-</div>
+        <input
+          type="text"
+          id="namaDriver"
+          placeholder="Masukkan Nama Driver"
+          autocomplete="off"
+        >
 
+      </div>
 
 
-<div class="field">
+      <div class="field">
 
-<label id="tanggalLabel">
-Tanggal
-</label>
+        <label>
+          Plat No
+        </label>
 
-<input
-  type="date"
-  id="tanggal"
->
+        <input
+          type="text"
+          id="platNo"
+          placeholder="Contoh: F 1234 ABC"
+          autocomplete="off"
+          oninput="this.value=this.value.toUpperCase()"
+        >
 
-</div>
+      </div>
 
 
+      <div class="field">
 
-<div class="field">
+        <label>
+          Vendor
+        </label>
 
-<label>
-Nama Driver
-</label>
+        <select id="vendor">
 
-<input
-  type="text"
-  id="namaDriver"
-  placeholder="Masukkan Nama Driver"
-  autocomplete="off"
->
+          <option value="">
+            Memuat Vendor...
+          </option>
 
-</div>
+        </select>
 
+      </div>
 
 
-<div class="field">
+      <!-- KHUSUS RETURN -->
 
-<label>
-Plat No
-</label>
+      <div
+        class="field"
+        id="keteranganBox"
+      >
 
-<input
-  type="text"
-  id="platNo"
-  placeholder="Contoh: F 1234 ABC"
-  autocomplete="off"
-  oninput="this.value=this.value.toUpperCase()"
->
+        <label>
+          Keterangan
+        </label>
 
-</div>
+        <select id="keterangan">
 
+          <option value="">
+            -- Pilih Keterangan --
+          </option>
 
+        </select>
 
-<div class="field">
+      </div>
 
-<label>
-Vendor
-</label>
 
-<select id="vendor">
+      <!-- REASON RETURN - KETIK MANUAL -->
 
-<option value="">
-Memuat Vendor...
-</option>
+      <div
+        class="field"
+        id="reasonBox"
+      >
 
-</select>
+        <label>
+          Reason
+        </label>
 
-</div>
+        <input
+          type="text"
+          id="reason"
+          placeholder="Ketik Reason"
+          autocomplete="off"
+        >
 
+        <div class="reason-note">
+          Reason diisi manual.
+        </div>
 
+      </div>
 
-<!-- KETERANGAN RETURN -->
 
-<div
-  class="field"
-  id="keteranganBox"
-  style="display:none;"
->
+      <div class="divider"></div>
 
-<label>
-Keterangan
-</label>
 
-<select id="keterangan">
+      <!-- FOTO DRIVER -->
 
-<option value="">
--- Pilih Keterangan --
-</option>
+      <div class="section-title">
+        FOTO DRIVER
+      </div>
 
-</select>
 
-</div>
+      <button
+        type="button"
+        class="btn-orange"
+        id="btnOpenPhoto"
+        onclick="openPhotoCamera()"
+      >
+        📷 BUKA KAMERA DRIVER
+      </button>
 
 
+      <div id="photoCameraBox">
 
-<!-- REASON RETURN -->
+        <video
+          id="photoVideo"
+          autoplay
+          playsinline
+          muted
+        ></video>
 
-<div
-  class="field"
-  id="reasonBox"
-  style="display:none;"
->
 
-<label>
-Reason
-</label>
+        <div class="photo-actions">
 
-<input
-  type="text"
-  id="reason"
-  placeholder="Masukkan Reason"
-  autocomplete="off"
->
+          <button
+            type="button"
+            class="btn-green"
+            onclick="capturePhoto()"
+          >
+            📸 AMBIL FOTO
+          </button>
 
-</div>
+          <button
+            type="button"
+            class="btn-red"
+            onclick="closePhotoCamera()"
+          >
+            TUTUP
+          </button>
 
+        </div>
 
+      </div>
 
-<div class="divider"></div>
 
+      <div id="photoPreviewBox">
 
+        <img
+          id="photoPreview"
+          alt="Foto Driver"
+        >
 
-<!-- FOTO -->
+        <button
+          type="button"
+          class="btn-orange"
+          style="margin-top:8px;"
+          onclick="openPhotoCamera()"
+        >
+          🔄 FOTO ULANG
+        </button>
 
-<div class="section-title">
-FOTO DRIVER
-</div>
+      </div>
 
 
-<button
-  type="button"
-  class="btn-orange"
-  id="btnOpenPhoto"
-  onclick="openPhotoCamera()"
->
-📷 BUKA KAMERA DRIVER
-</button>
+      <div class="divider"></div>
 
 
-<div id="photoCameraBox">
+      <!-- SCAN AWB -->
 
-<video
-  id="photoVideo"
-  autoplay
-  playsinline
-  muted
-></video>
+      <div class="section-title">
+        SCAN AWB
+      </div>
 
 
-<div class="photo-actions">
+      <div class="scan-buttons">
 
-<button
-  type="button"
-  class="btn-green"
-  onclick="capturePhoto()"
->
-📸 AMBIL FOTO
-</button>
+        <button
+          type="button"
+          class="btn-dark"
+          id="btnStartScanner"
+          onclick="startScanner()"
+        >
+          📷 MULAI SCAN AWB
+        </button>
 
-<button
-  type="button"
-  class="btn-red"
-  onclick="closePhotoCamera()"
->
-TUTUP
-</button>
 
-</div>
+        <button
+          type="button"
+          class="btn-red"
+          id="btnStopScanner"
+          onclick="stopScanner()"
+          style="display:none;"
+        >
+          ⛔ STOP SCANNER
+        </button>
 
-</div>
+      </div>
 
 
+      <div id="reader"></div>
 
-<div id="photoPreviewBox">
 
-<img
-  id="photoPreview"
-  alt="Foto Driver"
->
+      <div class="counter-row">
 
-<button
-  type="button"
-  class="btn-orange"
-  style="margin-top:8px;"
-  onclick="openPhotoCamera()"
->
-🔄 FOTO ULANG
-</button>
+        <div
+          class="counter"
+          id="awbCounter"
+        >
+          0 AWB
+        </div>
 
-</div>
+        <button
+          type="button"
+          class="clear-btn"
+          onclick="clearAwbs()"
+        >
+          Hapus Semua
+        </button>
 
+      </div>
 
 
-<div class="divider"></div>
+      <div
+        class="awb-list"
+        id="awbList"
+      >
 
+        <div class="awb-empty">
+          Belum ada AWB.
+        </div>
 
+      </div>
 
-<!-- AWB -->
 
-<div class="section-title">
-SCAN AWB
-</div>
+      <div class="divider"></div>
 
 
-<div class="scan-buttons">
+      <button
+        type="button"
+        class="btn-green"
+        id="btnSave"
+        onclick="saveData()"
+      >
+        💾 SIMPAN DATA
+      </button>
 
 
-<button
-  type="button"
-  class="btn-dark"
-  id="btnStartScanner"
-  onclick="startScanner()"
->
-📷 MULAI SCAN AWB
-</button>
+      <div
+        id="status"
+        class="status"
+      ></div>
 
+    </div>
 
-<button
-  type="button"
-  class="btn-red"
-  id="btnStopScanner"
-  onclick="stopScanner()"
-  style="display:none;"
->
-⛔ STOP SCANNER
-</button>
+  </div>
 
 
-</div>
-
-
-<div id="reader"></div>
-
-
-
-<div class="counter-row">
-
-<div
-  class="counter"
-  id="awbCounter"
->
-0 AWB
-</div>
-
-
-<button
-  type="button"
-  class="clear-btn"
-  onclick="clearAwbs()"
->
-Hapus Semua
-</button>
-
-</div>
-
-
-
-<div
-  class="awb-list"
-  id="awbList"
->
-
-<div class="awb-empty">
-Belum ada AWB.
-</div>
-
-</div>
-
-
-
-<div class="divider"></div>
-
-
-
-<button
-  type="button"
-  class="btn-green"
-  id="btnSave"
-  onclick="saveData()"
->
-💾 SIMPAN DATA
-</button>
-
-
-<div
-  id="status"
-  class="status"
-></div>
-
+  <div class="footer">
+    H JOEL LOGISTICS
+  </div>
 
 </div>
-
-
-</div>
-
-
-
-<div class="footer">
-H JOEL LOGISTICS
-</div>
-
-
-</div>
-
 
 
 <script>
-
 
 const API_URL =
 'https://script.google.com/macros/s/AKfycbwvSTmZkm9CGrEW3kJG8Du_THFSNX0fE49y97wElfXzANkfewhp-LuMtyPqZD8P4DWwCg/exec';
@@ -791,31 +771,27 @@ let photoBase64 = '';
 let audioContext = null;
 
 
-
-/* =================================================
+/* =====================================================
 START
-================================================= */
+===================================================== */
 
 document.addEventListener(
-'DOMContentLoaded',
-function() {
+  'DOMContentLoaded',
+  function(){
 
-  setToday();
+    setToday();
 
-  loadValidation();
+    loadValidation();
 
-}
+  }
 );
 
 
-
-/* =================================================
+/* =====================================================
 MENU
-================================================= */
+===================================================== */
 
-function selectProcess(
-  process
-) {
+function selectProcess(process){
 
   currentProcess =
     process;
@@ -845,7 +821,7 @@ function selectProcess(
     );
 
 
-  const ketBox =
+  const keteranganBox =
     document.getElementById(
       'keteranganBox'
     );
@@ -857,9 +833,7 @@ function selectProcess(
     );
 
 
-  if (
-    process === 'OUTBOUND'
-  ) {
+  if(process === 'OUTBOUND'){
 
     title.textContent =
       'OUTBOUND';
@@ -869,7 +843,7 @@ function selectProcess(
       'Tanggal Pick Up';
 
 
-    ketBox.style.display =
+    keteranganBox.style.display =
       'none';
 
 
@@ -879,9 +853,7 @@ function selectProcess(
   }
 
 
-  else if (
-    process === 'BAST'
-  ) {
+  else if(process === 'BAST'){
 
     title.textContent =
       'BAST BACK TO WH';
@@ -891,7 +863,7 @@ function selectProcess(
       'Tanggal Back to WH';
 
 
-    ketBox.style.display =
+    keteranganBox.style.display =
       'none';
 
 
@@ -901,9 +873,7 @@ function selectProcess(
   }
 
 
-  else if (
-    process === 'RETURN'
-  ) {
+  else if(process === 'RETURN'){
 
     title.textContent =
       'RETURN';
@@ -913,7 +883,10 @@ function selectProcess(
       'Tanggal Return';
 
 
-    ketBox.style.display =
+    /*
+    PASTI TAMPIL DI RETURN
+    */
+    keteranganBox.style.display =
       'block';
 
 
@@ -927,15 +900,20 @@ function selectProcess(
 
   clearStatus();
 
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
 }
 
 
-
-/* =================================================
+/* =====================================================
 BACK
-================================================= */
+===================================================== */
 
-async function backMenu() {
+async function backMenu(){
 
   await stopScanner();
 
@@ -954,6 +932,9 @@ async function backMenu() {
     'block';
 
 
+  clearStatus();
+
+
   window.scrollTo(
     0,
     0
@@ -962,12 +943,11 @@ async function backMenu() {
 }
 
 
-
-/* =================================================
+/* =====================================================
 TODAY
-================================================= */
+===================================================== */
 
-function setToday() {
+function setToday(){
 
   const now =
     new Date();
@@ -979,43 +959,32 @@ function setToday() {
 
   const m =
     String(
-      now.getMonth() + 1
-    ).padStart(
-      2,
-      '0'
-    );
+      now.getMonth()+1
+    ).padStart(2,'0');
 
 
   const d =
     String(
       now.getDate()
-    ).padStart(
-      2,
-      '0'
-    );
+    ).padStart(2,'0');
 
 
   document.getElementById(
     'tanggal'
   ).value =
-    y +
-    '-' +
-    m +
-    '-' +
-    d;
+    y+'-'+m+'-'+d;
 
 }
 
 
-
-/* =================================================
+/* =====================================================
 VALIDATION
-================================================= */
+===================================================== */
 
-function loadValidation() {
+function loadValidation(){
 
-  const callback =
-    'validation_' +
+  const callbackName =
+    'validationCallback_' +
     Date.now();
 
 
@@ -1025,8 +994,8 @@ function loadValidation() {
     );
 
 
-  window[callback] =
-    function(data) {
+  window[callbackName] =
+    function(data){
 
 
       const vendor =
@@ -1035,7 +1004,7 @@ function loadValidation() {
         );
 
 
-      const ket =
+      const keterangan =
         document.getElementById(
           'keterangan'
         );
@@ -1045,85 +1014,92 @@ function loadValidation() {
         '<option value="">-- Pilih Vendor --</option>';
 
 
-      ket.innerHTML =
+      keterangan.innerHTML =
         '<option value="">-- Pilih Keterangan --</option>';
 
 
-      if (
+      if(
         data &&
         data.success
-      ) {
+      ){
 
 
-        (data.vendors || [])
-          .forEach(
-            function(v) {
+        const vendors =
+          data.vendors || [];
 
 
-              const option =
-                document.createElement(
-                  'option'
-                );
+        const keterangans =
+          data.keterangans || [];
 
 
-              option.value =
-                v;
+        vendors.forEach(
+          function(item){
 
 
-              option.textContent =
-                v;
-
-
-              vendor.appendChild(
-                option
+            const option =
+              document.createElement(
+                'option'
               );
 
 
-            }
-          );
+            option.value =
+              item;
 
 
-        (data.keterangans || [])
-          .forEach(
-            function(v) {
+            option.textContent =
+              item;
 
 
-              const option =
-                document.createElement(
-                  'option'
-                );
+            vendor.appendChild(
+              option
+            );
 
 
-              option.value =
-                v;
+          }
+        );
 
 
-              option.textContent =
-                v;
+        keterangans.forEach(
+          function(item){
 
 
-              ket.appendChild(
-                option
+            const option =
+              document.createElement(
+                'option'
               );
 
 
-            }
-          );
+            option.value =
+              item;
 
 
-      } else {
+            option.textContent =
+              item;
+
+
+            keterangan.appendChild(
+              option
+            );
+
+
+          }
+        );
+
+
+      }else{
+
 
         showStatus(
-          data?.message ||
           'Validation gagal dimuat.',
           'error'
         );
+
 
       }
 
 
       delete window[
-        callback
+        callbackName
       ];
 
 
@@ -1133,10 +1109,10 @@ function loadValidation() {
 
 
   script.onerror =
-    function() {
+    function(){
 
       showStatus(
-        'Validation gagal dimuat.',
+        'Validation gagal dimuat dari Google Sheet.',
         'error'
       );
 
@@ -1147,7 +1123,7 @@ function loadValidation() {
     API_URL +
     '?action=getValidation' +
     '&callback=' +
-    callback +
+    callbackName +
     '&t=' +
     Date.now();
 
@@ -1159,17 +1135,16 @@ function loadValidation() {
 }
 
 
+/* =====================================================
+FOTO
+===================================================== */
 
-/* =================================================
-PHOTO
-================================================= */
-
-async function openPhotoCamera() {
+async function openPhotoCamera(){
 
   clearStatus();
 
 
-  if (scanner) {
+  if(scanner){
 
     await stopScanner();
 
@@ -1179,7 +1154,7 @@ async function openPhotoCamera() {
   closePhotoCamera();
 
 
-  try {
+  try{
 
 
     photoStream =
@@ -1187,20 +1162,13 @@ async function openPhotoCamera() {
         .mediaDevices
         .getUserMedia({
 
-
-          video: {
-
-            facingMode: {
-              ideal:
-                'environment'
+          video:{
+            facingMode:{
+              ideal:'environment'
             }
-
           },
 
-
-          audio:
-            false
-
+          audio:false
 
         });
 
@@ -1236,11 +1204,14 @@ async function openPhotoCamera() {
     );
 
 
-  } catch(error) {
+  }catch(error){
+
+
+    console.error(error);
 
 
     showStatus(
-      'Kamera tidak dapat dibuka. Izinkan kamera browser.',
+      'Kamera tidak dapat dibuka. Izinkan kamera pada browser.',
       'error'
     );
 
@@ -1250,12 +1221,11 @@ async function openPhotoCamera() {
 }
 
 
+/* =====================================================
+AMBIL FOTO
+===================================================== */
 
-/* =================================================
-CAPTURE PHOTO
-================================================= */
-
-function capturePhoto() {
+function capturePhoto(){
 
   const video =
     document.getElementById(
@@ -1263,9 +1233,10 @@ function capturePhoto() {
     );
 
 
-  if (
-    !video.videoWidth
-  ) {
+  if(
+    !video.videoWidth ||
+    !video.videoHeight
+  ){
 
     showStatus(
       'Kamera belum siap.',
@@ -1291,10 +1262,7 @@ function capturePhoto() {
     video.videoHeight;
 
 
-  if (
-    width > 1280
-  ) {
-
+  if(width > 1280){
 
     height =
       Math.round(
@@ -1307,7 +1275,6 @@ function capturePhoto() {
     width =
       1280;
 
-
   }
 
 
@@ -1319,15 +1286,19 @@ function capturePhoto() {
     height;
 
 
-  canvas
-    .getContext('2d')
-    .drawImage(
-      video,
-      0,
-      0,
-      width,
-      height
+  const context =
+    canvas.getContext(
+      '2d'
     );
+
+
+  context.drawImage(
+    video,
+    0,
+    0,
+    width,
+    height
+  );
 
 
   photoBase64 =
@@ -1353,36 +1324,34 @@ function capturePhoto() {
 
 
   showStatus(
-    'Foto Driver berhasil.',
+    'Foto Driver berhasil diambil.',
     'success'
   );
 
 }
 
 
+/* =====================================================
+CLOSE FOTO
+===================================================== */
 
-/* =================================================
-CLOSE PHOTO
-================================================= */
+function closePhotoCamera(){
 
-function closePhotoCamera() {
-
-  if (
-    photoStream
-  ) {
-
+  if(photoStream){
 
     photoStream
       .getTracks()
       .forEach(
-        track =>
-          track.stop()
+        function(track){
+
+          track.stop();
+
+        }
       );
 
 
     photoStream =
       null;
-
 
   }
 
@@ -1393,7 +1362,7 @@ function closePhotoCamera() {
     );
 
 
-  if (video) {
+  if(video){
 
     video.srcObject =
       null;
@@ -1415,60 +1384,51 @@ function closePhotoCamera() {
 }
 
 
+/* =====================================================
+START SCANNER
+===================================================== */
 
-/* =================================================
-SCANNER
-================================================= */
-
-async function startScanner() {
+async function startScanner(){
 
   clearStatus();
 
 
-  try {
+  try{
 
 
-    if (
-      !audioContext
-    ) {
-
+    if(!audioContext){
 
       audioContext =
-        new (
+        new(
           window.AudioContext ||
           window.webkitAudioContext
         )();
 
-
     }
 
 
-    if (
+    if(
       audioContext.state ===
       'suspended'
-    ) {
-
+    ){
 
       await audioContext.resume();
 
-
     }
 
 
-  } catch(error) {}
+  }catch(error){}
 
 
   closePhotoCamera();
 
 
-  if (scanner) {
-
+  if(scanner){
     return;
-
   }
 
 
-  try {
+  try{
 
 
     const cameras =
@@ -1476,9 +1436,10 @@ async function startScanner() {
         .getCameras();
 
 
-    if (
+    if(
+      !cameras ||
       !cameras.length
-    ) {
+    ){
 
       throw new Error(
         'Kamera tidak ditemukan.'
@@ -1489,19 +1450,24 @@ async function startScanner() {
 
     let cameraId =
       cameras[
-        cameras.length - 1
+        cameras.length-1
       ].id;
 
 
     const rear =
       cameras.find(
-        c =>
-          /back|rear|environment/i
-            .test(c.label)
+        function(camera){
+
+          return /back|rear|environment/i
+            .test(
+              camera.label
+            );
+
+        }
       );
 
 
-    if (rear) {
+    if(rear){
 
       cameraId =
         rear.id;
@@ -1521,38 +1487,25 @@ async function startScanner() {
 
       {
 
-        fps:
-          12,
+        fps:12,
 
         qrbox:
-          function(width) {
-
+          function(width){
 
             let w =
               Math.floor(
-                width *
-                .9
+                width*.90
               );
 
 
-            if (
-              w > 380
-            ) {
-
-              w =
-                380;
-
+            if(w>380){
+              w=380;
             }
 
 
-            return {
-
-              width:
-                w,
-
-              height:
-                140
-
+            return{
+              width:w,
+              height:140
             };
 
           }
@@ -1584,7 +1537,10 @@ async function startScanner() {
     );
 
 
-  } catch(error) {
+  }catch(error){
+
+
+    console.error(error);
 
 
     scanner =
@@ -1602,34 +1558,25 @@ async function startScanner() {
 }
 
 
-
-/* =================================================
+/* =====================================================
 SCAN SUCCESS
-================================================= */
+===================================================== */
 
-function scanSuccess(
-  decoded
-) {
+function scanSuccess(decodedText){
 
-  if (
-    scanLock
-  ) {
-
+  if(scanLock){
     return;
-
   }
 
 
   const awb =
     String(
-      decoded
+      decodedText || ''
     ).trim();
 
 
-  if (!awb) {
-
+  if(!awb){
     return;
-
   }
 
 
@@ -1637,19 +1584,19 @@ function scanSuccess(
     true;
 
 
-  if (
+  if(
     scannedAwbs.includes(
       awb
     )
-  ) {
+  ){
 
 
     duplicateBeep();
 
 
-    if (
+    if(
       navigator.vibrate
-    ) {
+    ){
 
       navigator.vibrate([
         100,
@@ -1661,13 +1608,12 @@ function scanSuccess(
 
 
     showStatus(
-      'AWB sudah pernah discan: ' +
-      awb,
+      'AWB sudah pernah discan: '+awb,
       'error'
     );
 
 
-  } else {
+  }else{
 
 
     scannedAwbs.push(
@@ -1681,9 +1627,9 @@ function scanSuccess(
     successBeep();
 
 
-    if (
+    if(
       navigator.vibrate
-    ) {
+    ){
 
       navigator.vibrate(
         120
@@ -1693,17 +1639,15 @@ function scanSuccess(
 
 
     showStatus(
-      'SCAN BERHASIL: ' +
-      awb,
+      'SCAN BERHASIL: '+awb,
       'success'
     );
-
 
   }
 
 
   setTimeout(
-    function() {
+    function(){
 
       scanLock =
         false;
@@ -1715,30 +1659,24 @@ function scanSuccess(
 }
 
 
-
-/* =================================================
+/* =====================================================
 STOP SCANNER
-================================================= */
+===================================================== */
 
-async function stopScanner() {
+async function stopScanner(){
 
-  if (!scanner) {
-
+  if(!scanner){
     return;
-
   }
 
 
-  try {
-
+  try{
 
     await scanner.stop();
 
-
     scanner.clear();
 
-
-  } catch(error) {}
+  }catch(error){}
 
 
   scanner =
@@ -1759,14 +1697,18 @@ async function stopScanner() {
 }
 
 
+/* =====================================================
+BEEP
+===================================================== */
 
-/* =================================================
-SOUND
-================================================= */
+function successBeep(){
 
-function successBeep() {
+  try{
 
-  try {
+
+    if(!audioContext){
+      return;
+    }
 
 
     const oscillator =
@@ -1806,15 +1748,19 @@ function successBeep() {
     );
 
 
-  } catch(error) {}
+  }catch(error){}
 
 }
 
 
+function duplicateBeep(){
 
-function duplicateBeep() {
+  try{
 
-  try {
+
+    if(!audioContext){
+      return;
+    }
 
 
     const oscillator =
@@ -1854,17 +1800,16 @@ function duplicateBeep() {
     );
 
 
-  } catch(error) {}
+  }catch(error){}
 
 }
 
 
+/* =====================================================
+AWB LIST
+===================================================== */
 
-/* =================================================
-AWB
-================================================= */
-
-function renderAwbs() {
+function renderAwbs(){
 
   const list =
     document.getElementById(
@@ -1879,9 +1824,9 @@ function renderAwbs() {
     ' AWB';
 
 
-  if (
+  if(
     scannedAwbs.length === 0
-  ) {
+  ){
 
 
     list.innerHTML =
@@ -1889,7 +1834,6 @@ function renderAwbs() {
 
 
     return;
-
 
   }
 
@@ -1902,7 +1846,7 @@ function renderAwbs() {
     function(
       awb,
       index
-    ) {
+    ){
 
 
       const row =
@@ -1926,8 +1870,8 @@ function renderAwbs() {
 
 
       text.textContent =
-        (index + 1) +
-        '. ' +
+        (index+1)+
+        '. '+
         awb;
 
 
@@ -1950,7 +1894,7 @@ function renderAwbs() {
 
 
       del.onclick =
-        function() {
+        function(){
 
 
           scannedAwbs.splice(
@@ -1986,30 +1930,25 @@ function renderAwbs() {
 }
 
 
-
-/* =================================================
+/* =====================================================
 CLEAR AWB
-================================================= */
+===================================================== */
 
-function clearAwbs() {
+function clearAwbs(){
 
-  if (
-    !scannedAwbs.length
-  ) {
-
+  if(
+    scannedAwbs.length === 0
+  ){
     return;
-
   }
 
 
-  if (
+  if(
     !confirm(
       'Hapus semua AWB?'
     )
-  ) {
-
+  ){
     return;
-
   }
 
 
@@ -2022,13 +1961,11 @@ function clearAwbs() {
 }
 
 
+/* =====================================================
+RESET
+===================================================== */
 
-/* =================================================
-RESET SEMUA
-================================================= */
-
-function resetApplication() {
-
+function resetApplication(){
 
   document.getElementById(
     'namaDriver'
@@ -2054,6 +1991,9 @@ function resetApplication() {
     0;
 
 
+  /*
+  REASON IKUT DIKOSONGKAN
+  */
   document.getElementById(
     'reason'
   ).value =
@@ -2125,12 +2065,11 @@ function resetApplication() {
 }
 
 
-
-/* =================================================
+/* =====================================================
 SAVE
-================================================= */
+===================================================== */
 
-async function saveData() {
+async function saveData(){
 
   clearStatus();
 
@@ -2165,14 +2104,16 @@ async function saveData() {
     ).value;
 
 
+  /*
+  REASON MANUAL
+  */
   const reason =
     document.getElementById(
       'reason'
     ).value.trim();
 
 
-
-  if (!tanggal) {
+  if(!tanggal){
 
     return showStatus(
       'Tanggal wajib diisi.',
@@ -2182,7 +2123,7 @@ async function saveData() {
   }
 
 
-  if (!driver) {
+  if(!driver){
 
     return showStatus(
       'Nama Driver wajib diisi.',
@@ -2192,7 +2133,7 @@ async function saveData() {
   }
 
 
-  if (!plat) {
+  if(!plat){
 
     return showStatus(
       'Plat No wajib diisi.',
@@ -2202,7 +2143,7 @@ async function saveData() {
   }
 
 
-  if (!vendor) {
+  if(!vendor){
 
     return showStatus(
       'Vendor wajib dipilih.',
@@ -2212,11 +2153,11 @@ async function saveData() {
   }
 
 
-  if (
+  if(
     currentProcess ===
     'RETURN' &&
     !keterangan
-  ) {
+  ){
 
     return showStatus(
       'Keterangan Return wajib dipilih.',
@@ -2226,11 +2167,14 @@ async function saveData() {
   }
 
 
-  if (
+  /*
+  REASON WAJIB KHUSUS RETURN
+  */
+  if(
     currentProcess ===
     'RETURN' &&
     !reason
-  ) {
+  ){
 
     return showStatus(
       'Reason wajib diisi.',
@@ -2240,9 +2184,7 @@ async function saveData() {
   }
 
 
-  if (
-    !photoBase64
-  ) {
+  if(!photoBase64){
 
     return showStatus(
       'Foto Driver wajib diambil.',
@@ -2252,9 +2194,9 @@ async function saveData() {
   }
 
 
-  if (
+  if(
     scannedAwbs.length === 0
-  ) {
+  ){
 
     return showStatus(
       'Belum ada AWB.',
@@ -2262,7 +2204,6 @@ async function saveData() {
     );
 
   }
-
 
 
   const btn =
@@ -2279,8 +2220,7 @@ async function saveData() {
     'MENYIMPAN...';
 
 
-
-  try {
+  try{
 
 
     await stopScanner();
@@ -2291,46 +2231,38 @@ async function saveData() {
 
     const payload = {
 
-
       action:
         'save',
-
 
       process:
         currentProcess,
 
-
       tanggal:
         tanggal,
-
 
       namaDriver:
         driver,
 
-
       platNo:
         plat,
-
 
       vendor:
         vendor,
 
-
       keterangan:
         keterangan,
 
-
+      /*
+      REASON DIKIRIM KE APPS SCRIPT
+      */
       reason:
         reason,
-
 
       awbs:
         scannedAwbs,
 
-
       fotoDriver:
         photoBase64
-
 
     };
 
@@ -2345,11 +2277,9 @@ async function saveData() {
           method:
             'POST',
 
-          headers: {
-
+          headers:{
             'Content-Type':
               'text/plain;charset=utf-8'
-
           },
 
           body:
@@ -2362,15 +2292,19 @@ async function saveData() {
       );
 
 
+    const responseText =
+      await response.text();
+
+
     const result =
       JSON.parse(
-        await response.text()
+        responseText
       );
 
 
-    if (
+    if(
       !result.success
-    ) {
+    ){
 
       throw new Error(
         result.message ||
@@ -2380,61 +2314,57 @@ async function saveData() {
     }
 
 
-    /*
-    INFORMASI BERHASIL
-    */
     alert(
-
       result.jumlah +
       ' AWB berhasil disimpan ke ' +
       result.sheet
-
     );
 
 
     /*
-    SEMUA DIKOSONGKAN
-    DAN KEMBALI KE MENU DEPAN
+    SETELAH BERHASIL
+    KEMBALI KE MENU DEPAN
     */
     resetApplication();
 
 
-  } catch(error) {
+  }catch(error){
+
+
+    console.error(error);
 
 
     showStatus(
-
-      'Gagal menyimpan: ' +
+      'Gagal menyimpan: '+
       error.message,
-
       'error'
-
     );
+
+
+  }finally{
+
+
+    btn.disabled =
+      false;
+
+
+    btn.textContent =
+      '💾 SIMPAN DATA';
 
 
   }
 
-
-  btn.disabled =
-    false;
-
-
-  btn.textContent =
-    '💾 SIMPAN DATA';
-
 }
 
 
-
-/* =================================================
+/* =====================================================
 STATUS
-================================================= */
+===================================================== */
 
 function showStatus(
   message,
   type
-) {
-
+){
 
   const status =
     document.getElementById(
@@ -2443,20 +2373,16 @@ function showStatus(
 
 
   status.className =
-    'status ' +
-    type;
+    'status '+type;
 
 
   status.textContent =
     message;
 
-
 }
 
 
-
-function clearStatus() {
-
+function clearStatus(){
 
   const status =
     document.getElementById(
@@ -2471,13 +2397,9 @@ function clearStatus() {
   status.textContent =
     '';
 
-
 }
-
 
 </script>
 
-
 </body>
-
 </html>
